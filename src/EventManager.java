@@ -15,6 +15,14 @@ public class EventManager {
      * For weight to work noticeably, weight and luck should be comparable.
      */
     public EventManager() {
+        /*
+        [EventId=event]
+        1=babysitter
+        2=cat
+        10=investigation
+        11=catacombsEntrance
+        12=catacombs
+         */
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
         babysitter.setDescription("Every hero has to start somewhere... The local school's teacher has asked you to escort the children to the nearby village.");
@@ -32,13 +40,13 @@ public class EventManager {
         cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 1));
 
         WorldEvent investigation = new WorldEvent(1, 0, 0, 0, 0);
-        events.put(3, investigation);
+        events.put(10, investigation);
         investigation.setDescription("You've heard rumors of a mysterious figure roaming near the catacombs. Should you investigate?");
         investigation.setOption(0, new Option("Yes", "You arrive at night. As you approach the hooded figure, it runs into the catacombs.", 0, 0, 0, 0, 0, 0));
         investigation.setOption(1, new Option("No", "Some things are best left in mystery...", 0, 0, 0, 0, 0, 0));
 
         WorldEvent catacombsEntrance = new WorldEvent(0, 0, 0, 0, 0);
-        events.put(4, catacombsEntrance);
+        events.put(11, catacombsEntrance);
         investigation.options[0].setNextEvent(4);
         catacombsEntrance.setDescription("The mysterious figure ran into the catacombs. What will you do?");
         catacombsEntrance.setOption(0, new Option("Chase it into the catacombs.", "As you run into the catacombs, a sense of dread befalls you.", 0, 0, 0, 0, 0, -3));
@@ -46,7 +54,7 @@ public class EventManager {
         catacombsEntrance.setOption(2, new Option("Walk away.", "As you walk back, you hear faint echoes coming from the catacombs. None of your business.", 0, 0, 0, 0, 0, 0));
 
         WorldEvent catacombs = new WorldEvent(0, 0, 0, 0, 0);
-        events.put(5, catacombs);
+        events.put(12, catacombs);
         catacombsEntrance.options[0].setNextEvent(5);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
         catacombs.setOption(0, new Option("Draw your sword and get ready to fight.", "You manage to defeat the demon, but it's cursed you!", -10, 10, 0, 0, 0, 0));
