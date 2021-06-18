@@ -14,6 +14,11 @@ public class WorldEvent {
         this.loyaltyWeight = loyaltyWeight;
     }
 
+    /**
+     * Return the weight of an event to be used for random generation.
+     * Is affected by hero statistics and the type of event.
+     * @return positive int
+     */
     public int fullWeight() {
         return baseWeight + (int) (Hero.health * healthWeight + Hero.fame * fameWeight + Hero.money * moneyWeight + Hero.loyalty * loyaltyWeight + Hero.luck);
     }

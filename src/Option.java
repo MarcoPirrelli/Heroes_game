@@ -30,6 +30,9 @@ public class Option {
         this.nextEvent = nextEvent;
     }
 
+    /**
+     * Updates the hero's statistics as a consequence of picking this option.
+     */
     public void pick() {
         Hero.health += deltaHealth;
         if (Hero.health < 0) Hero.health = 0;

@@ -7,6 +7,10 @@ public class EventManager {
     WorldEvent babysitter, cat, investigation, catacombsEntrance, catacombs;
     int completedEvents = 0;
 
+    /**
+     * Constructor for EventManager.
+     * Initializes all events.
+     */
     public EventManager() {
         int num = 1;
         babysitter = new WorldEvent(num, 1, 0, 0, 0, 0);
@@ -52,7 +56,7 @@ public class EventManager {
 
     }
 
-    public WorldEvent getRandomEvent() {
+    private WorldEvent getRandomEvent() {
         ArrayList<WorldEvent> possibleEvents = new ArrayList<>();
         if (completedEvents == 0) {
             possibleEvents.add(babysitter);
@@ -73,6 +77,11 @@ public class EventManager {
         return null; //should never get here
     }
 
+    /**
+     * Function which sets the new current event.
+     * If the option previously chosen by the user calls for a chain event, it will be selected.
+     * If there's no predetermined event to be played next, a random one will be chosen.
+     */
     public void getEvent() {
         if (nextEvent != null) {
             currentEvent = nextEvent;
@@ -81,6 +90,10 @@ public class EventManager {
             currentEvent = getRandomEvent();
     }
 
+    /**
+     * Updates the hero's statistics when an option is chosen.
+     * @param n The option number (0=North, 1=South, 2=West, 3=East)
+     */
     public void pickOption(int n) {
         currentEvent.options[n].pick();
         completedEvents++;
@@ -88,6 +101,11 @@ public class EventManager {
             nextEvent = currentEvent.options[n].nextEvent;
     }
 
+    /**
+     * Returns the internal number of the current event.
+     * The number is defined in the EventManager constructor and is easily subject to change.
+     * @return int (1 is the first event)
+     */
     public int getEventNumber() {
         return currentEvent.num;
     }

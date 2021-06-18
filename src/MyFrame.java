@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class MyFrame extends JFrame implements ActionListener {
 
     //remember to change it
-    String path_resources = "D:/Altro/ProgettoEsame/Resources/";
+    String path_resources = "Resources/";
     Font f = new Font("serif", Font.PLAIN, 10);
 
     EventManager ev = new EventManager();

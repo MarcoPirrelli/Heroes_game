@@ -10,6 +10,11 @@ public class Hero {
     final static int WAND = 0;
     final static int CURSE = 1;
 
+
+    /**
+     * Resets the hero's statistics and generates a new random name.
+     * Should be called when a new game is started.
+     */
     public static void reset() {
         String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};
         Random rand = new Random();
@@ -24,6 +29,10 @@ public class Hero {
             artefacts[i] = false;
     }
 
+    /**
+     * Current hero's name.
+     * @return String with the name
+     */
     public static String getHeroName () {
         return name;
     }
