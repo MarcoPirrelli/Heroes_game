@@ -157,7 +157,7 @@ public class MyFrame extends JFrame implements ActionListener {
             nametext.setBounds(50,30, 160,50);
             nametext.setForeground(Color.WHITE);
             nametext.setFont(nametext.getFont().deriveFont(size0));
-            nametext.setText(ev.getHeroName()); //the hero name is generated on EventManager
+            nametext.setText(Hero.getHeroName()); //the hero name is generated on EventManager
 
 
             this.add(eventimage, 2, 0);
