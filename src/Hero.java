@@ -18,7 +18,7 @@ public class Hero {
     public static void reset() {
         String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};
         Random rand = new Random();
-        name=names[rand.nextInt(names.length)];
+        name = names[rand.nextInt(names.length)];
         health = 80;
         fame = 50;
         money = 50;
@@ -31,9 +31,10 @@ public class Hero {
 
     /**
      * Current hero's name.
+     *
      * @return String with the name
      */
-    public static String getHeroName () {
+    public static String getHeroName() {
         return name;
     }
 
@@ -57,11 +58,11 @@ public class Hero {
         return mana;
     }
 
-    public static boolean hasWand(){
+    public static boolean hasWand() {
         return artefacts[WAND];
     }
 
-    public static boolean hasCurse(){
+    public static boolean hasCurse() {
         return artefacts[CURSE];
     }
 }

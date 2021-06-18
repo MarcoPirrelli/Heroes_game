@@ -1,12 +1,10 @@
 public class WorldEvent {
-    int num;
     String description;
     Option[] options = new Option[4];
     int baseWeight;
     double healthWeight, fameWeight, moneyWeight, loyaltyWeight; //weight per point
 
-    public WorldEvent(int num, int baseWeight, int healthWeight, int fameWeight, int moneyWeight, int loyaltyWeight) {
-        this.num = num;
+    public WorldEvent(int baseWeight, int healthWeight, int fameWeight, int moneyWeight, int loyaltyWeight) {
         this.baseWeight = baseWeight;
         this.healthWeight = healthWeight;
         this.fameWeight = fameWeight;
@@ -17,6 +15,7 @@ public class WorldEvent {
     /**
      * Returns the weight of an event to be used for random generation.
      * Is affected by hero statistics and the type of event.
+     *
      * @return positive int
      */
     public int fullWeight() {
