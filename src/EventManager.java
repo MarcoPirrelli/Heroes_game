@@ -103,7 +103,7 @@ public class EventManager {
 
     /**
      * Returns the internal number of the current event.
-     * The number is defined in the EventManager constructor and is easily subject to change.
+     * The number is defined in the EventManager constructor and is often subject to change.
      * @return int (1 is the first event)
      */
     public int getEventNumber() {

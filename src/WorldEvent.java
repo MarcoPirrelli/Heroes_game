@@ -15,7 +15,7 @@ public class WorldEvent {
     }
 
     /**
-     * Return the weight of an event to be used for random generation.
+     * Returns the weight of an event to be used for random generation.
      * Is affected by hero statistics and the type of event.
      * @return positive int
      */

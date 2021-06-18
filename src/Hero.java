@@ -36,4 +36,32 @@ public class Hero {
     public static String getHeroName () {
         return name;
     }
+
+    public static int getHealth() {
+        return health;
+    }
+
+    public static int getFame() {
+        return fame;
+    }
+
+    public static int getMoney() {
+        return money;
+    }
+
+    public static int getLoyalty() {
+        return loyalty;
+    }
+
+    public static int getMana() {
+        return mana;
+    }
+
+    public static boolean hasWand(){
+        return artefacts[WAND];
+    }
+
+    public static boolean hasCurse(){
+        return artefacts[CURSE];
+    }
 }
