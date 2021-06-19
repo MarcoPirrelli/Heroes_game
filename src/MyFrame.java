@@ -209,9 +209,10 @@ public class MyFrame extends JFrame implements ActionListener {
             //clicking makes the shields to appear and disappear
             if (a == 0) {
 
+                if (ev.getOptionNumber() == 4){
                 JButton[] d1 = {b_n, b_s, b_w, b_e};
 
-                float size = 15;
+                float size = 20;
                 for (JButton b : d1){
                     this.add(b, 3, 0);
                     b.setContentAreaFilled(false);
@@ -219,44 +220,10 @@ public class MyFrame extends JFrame implements ActionListener {
                     b.setFont(nametext.getFont().deriveFont(size));
                 }
 
-
-
-                String text_n = ev.getDescN();
-                String[] descr =  {ev.getDescN(), ev.getDescS(), ev.getDescW(), ev.getDescE()};
-
-                int i =  0;
-                for (String de : descr){
-
-              /*   if (de.length() <= 25) {
-                    if(i == 0){
-                        b_n.setText(de);
-                }
-                    else if(i == 1){
-                        b_s.setText(de);
-                    }
-                    else if(i == 2){
-                        b_w.setText(de);
-                    }
-                    else if(i == 3){
-                        b_e.setText(de);
-                    }
-                }
-
-               /* else if (de.length() > 25 && de.length() <= 50){
-                    int c = 24;
-                    while (de.charAt(c) != '.'&& de.charAt(c) != ' ' && de.charAt(c) != ','){
-                        c++;
-                    }
-
-                       b_n.setText("<html>"+ de.substring(0, c + 1)+ "<br>" + text.substring(c + 1, text.length()) + "<html>");
-
-                }
-                i++;
-                } */
-                    b_n.setText(ev.getDescN());
-                    b_s.setText(ev.getDescS());
-                    b_w.setText(ev.getDescW());
-                    b_e.setText(ev.getDescE());
+                    setDescriptionButton(b_n, ev.getDescN());
+                    setDescriptionButton(b_s, ev.getDescS());
+                    setDescriptionButton(b_w, ev.getDescW());
+                    setDescriptionButton(b_e, ev.getDescE());
 
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
@@ -266,7 +233,46 @@ public class MyFrame extends JFrame implements ActionListener {
                     a = 1;
 
                 }
+                else if (ev.getOptionNumber() == 3){
+
+                    JButton[] d1 = {b_n, b_s, b_w};
+
+                    float size = 20;
+                    for (JButton b : d1){
+                        this.add(b, 3, 0);
+                        b.setContentAreaFilled(false);
+                        b.setBorderPainted(false);
+                        b.setFont(nametext.getFont().deriveFont(size));
+                    }
+
+                    setDescriptionButton(b_n, ev.getDescN());
+                    setDescriptionButton(b_s, ev.getDescS());
+                    setDescriptionButton(b_w, ev.getDescW());
+
+                    b_n.setBounds(820, 80, 280, 330);
+                    b_s.setBounds(820, 580, 280, 330);
+                    b_w.setBounds(565, 350, 280, 330);
             }
+                else if (ev.getOptionNumber() == 2){
+
+                    JButton[] d1 = {b_n, b_s};
+
+                    float size = 20;
+                    for (JButton b : d1){
+                        this.add(b, 3, 0);
+                        b.setContentAreaFilled(false);
+                        b.setBorderPainted(false);
+                        b.setFont(nametext.getFont().deriveFont(size));
+                    }
+
+                    setDescriptionButton(b_n, ev.getDescN());
+                    setDescriptionButton(b_s, ev.getDescS());
+
+                    b_n.setBounds(820, 80, 280, 330);
+                    b_s.setBounds(820, 580, 280, 330);
+                }
+            }
+
 
             else if (a == 1) {
                 this.remove(b_n);
@@ -287,8 +293,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_n);
 
-            text = ev.getResultN();
-            setDescription();
+            setDescription(ev.getResultN());
             //Consequences on statistics?
         }
 
@@ -299,8 +304,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_s);
 
-            text = ev.getResultS();
-            setDescription();
+            setDescription(ev.getResultS());
         }
 
         if (e.getSource() == b_w){
@@ -310,8 +314,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_w);
 
-            text = ev.getResultW();
-            setDescription();
+            setDescription(ev.getResultW());
         }
 
         if (e.getSource() == b_e){
@@ -322,44 +325,86 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_w);
             this.remove(b_e);
 
-            text = ev.getResultE();
-            setDescription();
+            setDescription(ev.getResultE());
         }
 
     }
 
-    public void setDescription(){
+    public void setDescriptionButton(JButton b, String textbutton){
+
+        if(textbutton.length() <= 20){
+            b.setText(textbutton);
+        }
+        else if(textbutton.length() <= 40) {
+            int c = 15;
+            while (textbutton.charAt(c) != '.'&& textbutton.charAt(c) != ' ' && textbutton.charAt(c) != ','){
+                c++;
+            }
+            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c + 1) + "<br>" + textbutton.substring(c + 1,textbutton.length()) + "</div><html>");
+        }
+        else{
+            int c = 15;
+            while (textbutton.charAt(c) != '.'&& textbutton.charAt(c) != ' ' && textbutton.charAt(c) != ','){
+                c++;
+            }
+            int d = 35;
+            while (textbutton.charAt(d) != '.'&& textbutton.charAt(d) != ' ' && textbutton.charAt(d) != ','){
+                d++;
+            }
+            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c + 1) + "<br>" + textbutton.substring(c+1, d+1)+ "<br>" + textbutton.substring(d + 1, textbutton.length()) + "</div><html>");
+        }
+
+    }
+    public void setDescription(String description){
 
         eventimage.setIcon(new ImageIcon(path_resources + "e" + event + ".jpg"));
         eventimage.setBounds(760,160,400, 640);
 
         //text event on screen so that every line isn't interrupted
         int length = text.length();
-        if (text.length() <= 40) {
-            eventtext.setText(text);
+        if (description.length() <= 40) {
+            eventtext.setText(description);
         }
 
-        else if (text.length() > 40 && text.length() <= 80 ){
+        else if ( description.length() <= 80 ){
             int   c = 35;
-            while (text.charAt(c) != '.'&& text.charAt(c) != ' ' && text.charAt(c) != ','){
+            while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
                 c++;
             }
-            eventtext.setText("<html>"+text.substring(0, c + 1)+ "<br>" + text.substring(c + 1, text.length()) + "<html>");
+            eventtext.setText("<html><div style='text-align: center;'>"+description.substring(0, c + 1)+ "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
         }
 
-        else if (text.length() > 80 ){
+        else if (description.length() <= 120) {
             int   c = 35;
             int   d = 75;
-            while (text.charAt(c) != '.'&& text.charAt(c) != ' ' && text.charAt(c) != ','){
+            while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
                 c++;
             }
-            while (text.charAt(d) != '.'&& text.charAt(d) != ' ' && text.charAt(d) != ','){
+            while (description.charAt(d) != '.'&& description.charAt(d) != ' ' && description.charAt(d) != ','){
                 d++;
             }
-            eventtext.setText("<html>"+text.substring(0, c + 1)+ "<br>"+text.substring(c + 1, d)+ "<br>" + text.substring(d + 1, text.length()) + "<html>");
+            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c + 1)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, description.length()) + "</div><html>");
 
         }
-        eventtext.setBounds(720,825, 470, 130);
+
+        else {
+            int   c = 35;
+            int   d = 75;
+            int   e = 100;
+            while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
+                c++;
+            }
+            while (description.charAt(d) != '.'&& description.charAt(d) != ' ' && description.charAt(d) != ','){
+                d++;
+            }
+            while (description.charAt(e) != '.'&& description.charAt(e) != ' ' && description.charAt(e) != ','){
+                e++;
+            }
+            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c + 1)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, e) + "<br>" + description.substring(e+1, description.length()) + "</div><html>");
+
+        }
+
+        eventtext.setBounds(720,825, 470, 150);
     }
 
 
@@ -378,8 +423,7 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void run() {
             //event image on screen
-            text = ev.getEventDescription();
-            setDescription();
+            setDescription(ev.getEventDescription());
 
         }
     };

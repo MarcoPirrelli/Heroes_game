@@ -26,7 +26,7 @@ public class EventManager {
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
         babysitter.setDescription("Every hero has to start somewhere... The local school's teacher has asked you to escort the children to the nearby village.");
-        babysitter.setOption(0, new Option("Accept", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 0, 0, 0));
+        babysitter.setOption(0, new Option("Accept.", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 0, 0, 0));
         babysitter.setOption(1, new Option("Accept and buy them breakfast.", "You treat the children to a tasty breakfast on the road. That's all it takes to get them to like you.", 2, 10, -5, 0, 0, 0));
         babysitter.setOption(2, new Option("Refuse.", "Sometimes you'd rather just sleep...", 5, 0, 0, 0, 0, 0));
         babysitter.setOption(3, new Option("Accept, but kill the children on the way there.", "The village won't forget that.", 0, -25, 0, 0, 0, 0));
@@ -37,7 +37,7 @@ public class EventManager {
         cat.setOption(0, new Option("Climb the tree and grab the cat.", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 0, 0, 0));
         cat.setOption(1, new Option("Pet the cat and bring it back to the lady.", "The cat seems to like you.", 0, 5, 0, 0, 0, 1));
         cat.setOption(2, new Option("Walk away.", "The lady seems disappointed.", 0, -3, 0, 0, 0, 0));
-        cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 1));
+       // cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 1));
 
         WorldEvent investigation = new WorldEvent(1, 0, 0, 0, 0);
         events.put(10, investigation);
@@ -126,7 +126,15 @@ public class EventManager {
         return events.get(currentId).description;
     }
 
-    public String getDescN() {
+    public int getOptionNumber() {
+        int i = 0;
+        while ( i <= 3 && events.get(currentId).options[i] != null ){
+            i++;
+        }
+        return i;
+    }
+
+        public String getDescN() {
         return events.get(currentId).options[0].description;
     }
 
