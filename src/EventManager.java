@@ -37,7 +37,7 @@ public class EventManager {
         cat.setOption(0, new Option("Climb the tree and grab the cat.", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 0, 0, 0));
         cat.setOption(1, new Option("Pet the cat and bring it back to the lady.", "The cat seems to like you.", 0, 5, 0, 0, 0, 1));
         cat.setOption(2, new Option("Walk away.", "The lady seems disappointed.", 0, -3, 0, 0, 0, 0));
-       // cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 1));
+        cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 1));
 
         WorldEvent investigation = new WorldEvent(1, 0, 0, 0, 0);
         events.put(10, investigation);
