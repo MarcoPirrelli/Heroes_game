@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.TimerTask;
 
 public class Hero {
     static String name;
@@ -10,15 +11,23 @@ public class Hero {
     final static int WAND = 0;
     final static int CURSE = 1;
 
+    static int age;
 
     /**
      * Resets the hero's statistics and generates a new random name.
      * Should be called when a new game is started.
      */
     public static void reset() {
-        String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};
+        //String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};
+        String[] names = new String[]{"Certosino", "Guglielmo"};
         Random rand = new Random();
         name = names[rand.nextInt(names.length)];
+
+        Random randnumb = new Random();
+        int max = 55;
+        int min = 13;
+        age = rand.nextInt((max-min +1) + min);
+
         health = 80;
         fame = 50;
         money = 50;
@@ -36,6 +45,10 @@ public class Hero {
      */
     public static String getHeroName() {
         return name;
+    }
+
+    public static int getAge(){
+        return age;
     }
 
     public static int getHealth() {
@@ -65,4 +78,6 @@ public class Hero {
     public static boolean hasCurse() {
         return artefacts[CURSE];
     }
+
+
 }

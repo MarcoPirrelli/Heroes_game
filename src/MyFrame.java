@@ -2,11 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.util.*;
 import java.util.Timer;
-import java.util.concurrent.TimeUnit;
-
 
 
 public class MyFrame extends JFrame implements ActionListener {
@@ -27,7 +24,8 @@ public class MyFrame extends JFrame implements ActionListener {
     JLabel backgroundimage;
     JLabel eventimage;
     JLabel eventtext;
-    JLabel nametext;
+    JLabel heroname;
+    JLabel heroimage;
 
     //JButtons
     private final JButton b_newgame, b_load, b_settings, b_exit;
@@ -37,7 +35,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
     //Variables
     int a = 0;
-    int event = 0;
     String text = "";
     String name;
     String[] menubuttons = new String[4];
@@ -99,11 +96,12 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         //Timer
-        time = 15;
+        time = ev.myhero.getAge();
         textyear = new JLabel(String.valueOf(time));
 
-        //Hero Name
-        nametext = new JLabel(name);
+        //Her
+        heroname = new JLabel(name);
+        heroimage = new JLabel(new ImageIcon());
 
         //Menu Frame
         frame.add(backgroundimage, 1, 0);  //c'è anche la versione con l'indice e basta ma non funziona
@@ -134,8 +132,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
             ev.getEvent();
 
-            event = ev.getEventNumber();
-
             //remove menubuttons
             this.remove(b_newgame);
             this.remove(b_load);
@@ -152,12 +148,16 @@ public class MyFrame extends JFrame implements ActionListener {
             click.setBorderPainted(false);
             click.setBounds(0, 0, 1920, 1080);
 
-            this.add(nametext, 2,0);
+            this.add(heroname, 2,0);
             float size0 = 25;
-            nametext.setBounds(50,30, 160,50);
-            nametext.setForeground(Color.WHITE);
-            nametext.setFont(nametext.getFont().deriveFont(size0));
-            nametext.setText(Hero.getHeroName()); //the hero name is generated on EventManager
+            heroname.setBounds(70,30, 200,50);
+            heroname.setForeground(Color.WHITE);
+            heroname.setFont(heroname.getFont().deriveFont(size0));
+            heroname.setText(ev.myhero.getHeroName());
+
+            this.add(heroimage, 2,0);
+            heroimage.setIcon(new ImageIcon(path_resources + "Heroes/" + ev.myhero.getHeroName() + ".jpg"));
+            heroimage.setBounds(50, 90, 150,150);
 
 
             this.add(eventimage, 2, 0);
@@ -169,7 +169,7 @@ public class MyFrame extends JFrame implements ActionListener {
             textyear.setBounds(50, 900, 200, 200);
             textyear.setFont(textyear.getFont().deriveFont(size1));
             textyear.setForeground(Color.WHITE);
-            timertime.schedule(timerchange, 5000, 5000); //the time changes every 5 sec
+            timertime.schedule(timerchange, 5000, 5000); //the age changes every 5 sec
 
         }
 
@@ -207,7 +207,8 @@ public class MyFrame extends JFrame implements ActionListener {
         if(e.getSource() == click) {
 
             //clicking makes the shields to appear and disappear
-            if (a == 0) {
+        switch (a) {
+            case 0:
 
                 if (ev.getOptionNumber() == 4){
                 JButton[] d1 = {b_n, b_s, b_w, b_e};
@@ -217,7 +218,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     this.add(b, 3, 0);
                     b.setContentAreaFilled(false);
                     b.setBorderPainted(false);
-                    b.setFont(nametext.getFont().deriveFont(size));
+                    b.setFont(heroname.getFont().deriveFont(size));
                 }
 
                     setDescriptionButton(b_n, ev.getDescN());
@@ -242,7 +243,7 @@ public class MyFrame extends JFrame implements ActionListener {
                         this.add(b, 3, 0);
                         b.setContentAreaFilled(false);
                         b.setBorderPainted(false);
-                        b.setFont(nametext.getFont().deriveFont(size));
+                        b.setFont(heroname.getFont().deriveFont(size));
                     }
 
                     setDescriptionButton(b_n, ev.getDescN());
@@ -262,7 +263,7 @@ public class MyFrame extends JFrame implements ActionListener {
                         this.add(b, 3, 0);
                         b.setContentAreaFilled(false);
                         b.setBorderPainted(false);
-                        b.setFont(nametext.getFont().deriveFont(size));
+                        b.setFont(heroname.getFont().deriveFont(size));
                     }
 
                     setDescriptionButton(b_n, ev.getDescN());
@@ -271,10 +272,11 @@ public class MyFrame extends JFrame implements ActionListener {
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
                 }
-            }
 
 
-            else if (a == 1) {
+            break;
+
+            case 1:
                 this.remove(b_n);
                 this.remove(b_s);
                 this.remove(b_w);
@@ -282,12 +284,23 @@ public class MyFrame extends JFrame implements ActionListener {
 
                 a = 0;
 
-            }
+            break;
+
+            case 2:
+                ev.getEvent();
+                this.add(eventimage, 2, 0);
+                this.add(eventtext, 2,0);
+                setDescription(ev.getEventDescription());
+                a = 0;
+
+
+        }
+
         }
 
         if (e.getSource() == b_n){
 
-            a = 0;
+            a = 2;
             this.remove(b_s);
             this.remove(b_w);
             this.remove(b_e);
@@ -298,7 +311,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == b_s){
-            a = 0;
+            a = 2;
             this.remove(b_n);
             this.remove(b_w);
             this.remove(b_e);
@@ -308,7 +321,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == b_w){
-            a = 0;
+            a = 2;
             this.remove(b_n);
             this.remove(b_s);
             this.remove(b_e);
@@ -318,7 +331,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == b_e){
-            a = 0;
+            a = 2;
 
             this.remove(b_n);
             this.remove(b_s);
@@ -357,7 +370,7 @@ public class MyFrame extends JFrame implements ActionListener {
     }
     public void setDescription(String description){
 
-        eventimage.setIcon(new ImageIcon(path_resources + "e" + event + ".jpg"));
+        eventimage.setIcon(new ImageIcon(path_resources + "e" + ev.getEventNumber() + ".jpg"));
         eventimage.setBounds(760,160,400, 640);
 
         //text event on screen so that every line isn't interrupted
@@ -390,7 +403,7 @@ public class MyFrame extends JFrame implements ActionListener {
         else {
             int   c = 35;
             int   d = 75;
-            int   e = 100;
+            int   e = 110;
             while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
                 c++;
             }
@@ -412,8 +425,8 @@ public class MyFrame extends JFrame implements ActionListener {
     TimerTask timerchange = new TimerTask() {
         @Override
         public void run() {
-            time++;
-            textyear.setText(String.valueOf(time));
+            //time++;
+            textyear.setText(String.valueOf(ev.getAge()));
 
         }
     };
@@ -423,10 +436,13 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void run() {
             //event image on screen
+
             setDescription(ev.getEventDescription());
+
 
         }
     };
+
 
 
 }

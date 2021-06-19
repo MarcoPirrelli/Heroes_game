@@ -1,12 +1,14 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class EventManager {
     int currentId;
     int nextId = 0;
     HashMap<Integer, WorldEvent> events = new HashMap<>();
     int completedEvents = 0;
+    Hero myhero = new Hero();
+
+    int age;
+    Timer aging = new Timer();
 
     /**
      * Constructor for EventManager.
@@ -63,6 +65,10 @@ public class EventManager {
         catacombs.options[1].setItem(Hero.WAND);
         catacombs.setOption(2, new Option("Magic: Banish the demon back to hell.", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
         catacombs.options[2].setMagic(true);
+
+        myhero.reset();
+        age = myhero.getAge();
+        aging.schedule(changeage, 5000, 5000);
 
     }
 
@@ -134,7 +140,7 @@ public class EventManager {
         return i;
     }
 
-        public String getDescN() {
+    public String getDescN() {
         return events.get(currentId).options[0].description;
     }
 
@@ -165,4 +171,16 @@ public class EventManager {
     public String getResultE() {
         return events.get(currentId).options[3].result;
     }
+
+    TimerTask changeage = new TimerTask() {
+        @Override
+        public void run() {
+            age++;
+        }
+    };
+
+    public int getAge(){
+        return age;
+    }
+
 }

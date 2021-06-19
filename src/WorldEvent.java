@@ -1,3 +1,5 @@
+import java.util.TimerTask;
+
 public class WorldEvent {
     String description;
     Option[] options = new Option[4];
@@ -29,5 +31,6 @@ public class WorldEvent {
     public void setOption(int n, Option option) {
         options[n] = option;
     }
+
 
 }
