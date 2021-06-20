@@ -6,8 +6,6 @@ public class EventManager {
     HashMap<Integer, WorldEvent> events = new HashMap<>();
     int completedEvents = 0;
 
-    Timer aging = new Timer();
-
     /**
      * Constructor for EventManager.
      * Initializes all events with the corresponding weight.
@@ -83,6 +81,7 @@ public class EventManager {
 
         //Dovranno essere spostati
         Hero.reset();
+        Timer aging = new Timer();
         aging.schedule(Hero.changeAge, 5000, 5000);
     }
 
