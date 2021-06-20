@@ -1,12 +1,10 @@
-import java.util.TimerTask;
-
 public class WorldEvent {
     String description;
     Option[] options = new Option[4];
     int baseWeight;
     double healthWeight, fameWeight, moneyWeight, loyaltyWeight; //weight per point
 
-    public WorldEvent(int baseWeight, int healthWeight, int fameWeight, int moneyWeight, int loyaltyWeight) {
+    public WorldEvent(int baseWeight, double healthWeight, double fameWeight, double moneyWeight, double loyaltyWeight) {
         this.baseWeight = baseWeight;
         this.healthWeight = healthWeight;
         this.fameWeight = fameWeight;
@@ -21,7 +19,9 @@ public class WorldEvent {
      * @return positive int
      */
     public int fullWeight() {
-        return baseWeight + (int) (Hero.health * healthWeight + Hero.fame * fameWeight + Hero.money * moneyWeight + Hero.loyalty * loyaltyWeight + Hero.luck);
+        int fw = baseWeight + (int) (Hero.health * healthWeight + Hero.fame * fameWeight + Hero.money * moneyWeight + Hero.loyalty * loyaltyWeight + Hero.luck);
+        if (fw < 0) return 0;
+        return fw;
     }
 
     public void setDescription(String description) {

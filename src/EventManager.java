@@ -38,9 +38,9 @@ public class EventManager {
         cat.setOption(0, new Option("Climb the tree and grab the cat.", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 0, 0, 0));
         cat.setOption(1, new Option("Pet the cat and bring it back to the lady.", "The cat seems to like you.", 0, 5, 0, 0, 0, 1));
         cat.setOption(2, new Option("Walk away.", "The lady seems disappointed.", 0, -3, 0, 0, 0, 0));
-        cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 1));
+        cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 0));
 
-        WorldEvent investigation = new WorldEvent(1, 0, 0, 0, 0);
+        WorldEvent investigation = new WorldEvent(5, 0, 0, 0, 0);
         events.put(10, investigation);
         investigation.setDescription("You've heard rumors of a mysterious figure roaming near the catacombs. Should you investigate?");
         investigation.setOption(0, new Option("Yes", "You arrive at night. As you approach the hooded figure, it runs into the catacombs.", 0, 0, 0, 0, 0, 0));
@@ -65,6 +65,19 @@ public class EventManager {
         catacombs.setOption(2, new Option("Magic: Banish the demon back to hell.", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
         catacombs.options[2].setMagic(true);
 
+        WorldEvent potionMerchant = new WorldEvent(3,-0.3,0,0,0);
+        events.put(20, potionMerchant);
+        potionMerchant.setDescription("You arrive at a potion merchant's stand.");
+        potionMerchant.setOption(0, new Option("Buy an health potion", "You drink the health potion and feel rejuvenated", 10,0,-10,0,0,0));
+        potionMerchant.setOption(1, new Option("Don't buy anything.", "You bought nothing", 0,0,0,0,0,0));
+        potionMerchant.setOption(2, new Option("Buy a mana potion", "You drink the mana potion and you suddenly feel attuned to the elements", 0,0,-10,0,10,1));
+
+        WorldEvent massacre = new WorldEvent(0,0,0,0,0.1);
+        events.put(21, massacre);
+        massacre.setDescription("The king has requested you assistance in culling a village");
+        massacre.setOption(0, new Option("Accept", "You must to do what the king requests to not get on his bad side...", 0,-25,15,10,0,0));
+        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0,0,0,0,-10,0));
+
 
         Hero.reset();
         age = Hero.getAge();
@@ -78,7 +91,7 @@ public class EventManager {
             possibleEvents.add(1);
             possibleEvents.add(2);
         } else {
-            possibleEvents.add(3);
+            possibleEvents.add(10);
         }
         int weightSum = 0;
         for (int i : possibleEvents) {

@@ -63,7 +63,7 @@ public class Option {
         else {
             Hero.luck += deltaLuck;
             if (Hero.luck < 0) Hero.luck = 0;
-            else if (Hero.luck > 100) Hero.luck = 100;
+            else if (Hero.luck > 20) Hero.luck = 20;
         }
 
         if (item != -1) Hero.artefacts[item] = true;
