@@ -94,6 +94,8 @@ public class EventManager {
             possibleEvents.add(2);
         } else {
             possibleEvents.add(10);
+            possibleEvents.add(20);
+            possibleEvents.add(21);
         }
         int weightSum = 0;
         for (int i : possibleEvents) {
