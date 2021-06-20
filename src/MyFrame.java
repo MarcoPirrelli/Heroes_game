@@ -321,7 +321,8 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_n);
 
-            Hero.setLoyalty(ev.getDeltaLoyalty(0));
+           //Hero.setLoyalty(ev.getDeltaLoyalty(0));
+            ev.pickOption(0);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
 
             setDescription(ev.getResult(0));

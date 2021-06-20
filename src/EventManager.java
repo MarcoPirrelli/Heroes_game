@@ -27,7 +27,7 @@ public class EventManager {
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
         babysitter.setDescription("Every hero has to start somewhere... The local school's teacher has asked you to escort the children to the nearby village.");
-        babysitter.setOption(0, new Option("Accept.", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 0, 0, 0));
+        babysitter.setOption(0, new Option("Accept.", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 20, 0, 0));
         babysitter.setOption(1, new Option("Accept and buy them breakfast.", "You treat the children to a tasty breakfast on the road. That's all it takes to get them to like you.", 2, 10, -5, 0, 0, 0));
         babysitter.setOption(2, new Option("Refuse.", "Sometimes you'd rather just sleep...", 5, 0, 0, 0, 0, 0));
         babysitter.setOption(3, new Option("Accept, but kill the children on the way there.", "The village won't forget that.", 0, -25, 0, 0, 0, 0));
