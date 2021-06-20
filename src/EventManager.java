@@ -5,7 +5,6 @@ public class EventManager {
     int nextId = 0;
     HashMap<Integer, WorldEvent> events = new HashMap<>();
     int completedEvents = 0;
-    Hero myhero = new Hero();
 
     int age;
     Timer aging = new Timer();
@@ -66,8 +65,9 @@ public class EventManager {
         catacombs.setOption(2, new Option("Magic: Banish the demon back to hell.", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
         catacombs.options[2].setMagic(true);
 
-        myhero.reset();
-        age = myhero.getAge();
+
+        Hero.reset();
+        age = Hero.getAge();
         aging.schedule(changeage, 5000, 5000);
 
     }
