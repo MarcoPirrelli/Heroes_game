@@ -65,19 +65,19 @@ public class EventManager {
         catacombs.setOption(2, new Option("Magic: Banish the demon back to hell.", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
         catacombs.options[2].setMagic(true);
 
-        WorldEvent potionMerchant = new WorldEvent(3,-0.3,0,0,0);
+        WorldEvent potionMerchant = new WorldEvent(5,-0.3,0,0,0);
         events.put(20, potionMerchant);
         potionMerchant.setDescription("You arrive at a potion merchant's stand.");
         potionMerchant.setOption(0, new Option("Buy an health potion", "You drink the health potion and feel rejuvenated", 10,0,-10,0,0,0));
         potionMerchant.setOption(1, new Option("Don't buy anything.", "You bought nothing", 0,0,0,0,0,0));
         potionMerchant.setOption(2, new Option("Buy a mana potion", "You drink the mana potion and you suddenly feel attuned to the elements", 0,0,-10,0,10,1));
+        potionMerchant.options[2].setMagic(true);
 
         WorldEvent massacre = new WorldEvent(0,0,0,0,0.1);
         events.put(21, massacre);
         massacre.setDescription("The king has requested you assistance in culling a village");
         massacre.setOption(0, new Option("Accept", "You must to do what the king requests to not get on his bad side...", 0,-25,15,10,0,0));
         massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0,0,0,0,-10,0));
-
 
         Hero.reset();
         age = Hero.getAge();
