@@ -24,7 +24,7 @@ public class Hero {
         name = names[rand.nextInt(names.length)];
 
         Random randnumb = new Random();
-        int max = 55;
+        int max = 35;
         int min = 13;
         age = rand.nextInt((max-min +1) + min);
 
@@ -37,6 +37,28 @@ public class Hero {
         for (int i = 0; i < 2; i++)
             artefacts[i] = false;
     }
+
+    /**
+     * Changing statistics of the hero
+     *
+     * @param value
+     */
+    public static void setHealth(int value) {
+        health = health + value;
+    }
+
+    public static void setFame(int value) {
+        fame = fame + value;
+    }
+
+    public static void setMoney(int value) {
+        money = money + value;
+    }
+
+    public static void setLoyalty(int value) {
+        loyalty = loyalty + value;
+    }
+
 
     /**
      * Current hero's name.

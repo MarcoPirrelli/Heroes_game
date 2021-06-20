@@ -140,37 +140,30 @@ public class EventManager {
         return i;
     }
 
-    public String getDescN() {
-        return events.get(currentId).options[0].description;
+    public String getDesc(int n) {
+        return events.get(currentId).options[n].description;
     }
 
-    public String getDescS() {
-        return events.get(currentId).options[1].description;
+    public String getResult(int n) {
+        return events.get(currentId).options[n].result;
     }
 
-    public String getDescW() {
-        return events.get(currentId).options[2].description;
+    public int getDeltaHealth(int n){
+        return events.get(currentId).options[n].deltaHealth;
     }
 
-    public String getDescE() {
-        return events.get(currentId).options[3].description;
+    public int getDeltaFame(int n){
+        return events.get(currentId).options[n].deltaFame;
     }
 
-    public String getResultN() {
-        return events.get(currentId).options[0].result;
+    public int getDeltaMoney(int n){
+        return events.get(currentId).options[n].deltaMoney;
     }
 
-    public String getResultS() {
-        return events.get(currentId).options[1].result;
+    public int getDeltaLoyalty(int n) {
+        return events.get(currentId).options[n].deltaLoyalty;
     }
 
-    public String getResultW() {
-        return events.get(currentId).options[2].result;
-    }
-
-    public String getResultE() {
-        return events.get(currentId).options[3].result;
-    }
 
     TimerTask changeage = new TimerTask() {
         @Override

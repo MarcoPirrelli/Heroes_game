@@ -17,6 +17,7 @@ public class MyFrame extends JFrame implements ActionListener {
     //Hero Time
     int time;
     JLabel textyear;
+    JLabel textheroage;
     Timer timertime = new Timer();
     Timer timerevent = new Timer();
 
@@ -26,6 +27,7 @@ public class MyFrame extends JFrame implements ActionListener {
     JLabel eventtext;
     JLabel heroname;
     JLabel heroimage;
+    JLabel loyaltyimage;
 
     //JButtons
     private final JButton b_newgame, b_load, b_settings, b_exit;
@@ -37,7 +39,6 @@ public class MyFrame extends JFrame implements ActionListener {
     int a = 0;
     String text = "";
     String name;
-    String[] menubuttons = new String[4];
 
 
     MyFrame () {
@@ -95,8 +96,11 @@ public class MyFrame extends JFrame implements ActionListener {
             b.setVerticalTextPosition(JButton.CENTER);
         }
 
+        loyaltyimage = new JLabel(new ImageIcon());
+
         //Timer
-        time = ev.myhero.getAge();
+        time = 0;
+        textheroage = new JLabel(String.valueOf(ev.myhero.getAge()));
         textyear = new JLabel(String.valueOf(time));
 
         //Her
@@ -165,11 +169,22 @@ public class MyFrame extends JFrame implements ActionListener {
             timerevent.schedule(taskevent, 2000); //delay for the animation
 
             this.add(textyear,2,0);
-            float size1 = 30;
+            float size1 = 20;
             textyear.setBounds(50, 900, 200, 200);
             textyear.setFont(textyear.getFont().deriveFont(size1));
             textyear.setForeground(Color.WHITE);
-            timertime.schedule(timerchange, 5000, 5000); //the age changes every 5 sec
+            timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
+
+            this.add(textheroage,2,0);
+            float size2 = 20;
+            textheroage.setBounds(90, 55, 200, 50);
+            textheroage.setFont(textheroage.getFont().deriveFont(size2));
+            textheroage.setForeground(Color.WHITE);
+
+
+            this.add(loyaltyimage, 2, 0);
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ev.myhero.getLoyalty() + ".png"));
+            loyaltyimage.setBounds(700, 0, 150, 130);
 
         }
 
@@ -221,10 +236,10 @@ public class MyFrame extends JFrame implements ActionListener {
                     b.setFont(heroname.getFont().deriveFont(size));
                 }
 
-                    setDescriptionButton(b_n, ev.getDescN());
-                    setDescriptionButton(b_s, ev.getDescS());
-                    setDescriptionButton(b_w, ev.getDescW());
-                    setDescriptionButton(b_e, ev.getDescE());
+                    setDescriptionButton(b_n, ev.getDesc(0));
+                    setDescriptionButton(b_s, ev.getDesc(1));
+                    setDescriptionButton(b_w, ev.getDesc(2));
+                    setDescriptionButton(b_e, ev.getDesc(3));
 
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
@@ -246,9 +261,9 @@ public class MyFrame extends JFrame implements ActionListener {
                         b.setFont(heroname.getFont().deriveFont(size));
                     }
 
-                    setDescriptionButton(b_n, ev.getDescN());
-                    setDescriptionButton(b_s, ev.getDescS());
-                    setDescriptionButton(b_w, ev.getDescW());
+                    setDescriptionButton(b_n, ev.getDesc(1));
+                    setDescriptionButton(b_s, ev.getDesc(2));
+                    setDescriptionButton(b_w, ev.getDesc(3));
 
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
@@ -266,8 +281,8 @@ public class MyFrame extends JFrame implements ActionListener {
                         b.setFont(heroname.getFont().deriveFont(size));
                     }
 
-                    setDescriptionButton(b_n, ev.getDescN());
-                    setDescriptionButton(b_s, ev.getDescS());
+                    setDescriptionButton(b_n, ev.getDesc(1));
+                    setDescriptionButton(b_s, ev.getDesc(2));
 
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
@@ -306,7 +321,11 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_n);
 
-            setDescription(ev.getResultN());
+            ev.myhero.setLoyalty(ev.getDeltaLoyalty(0));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ev.myhero.getLoyalty() + ".png"));
+
+            setDescription(ev.getResult(0));
+
             //Consequences on statistics?
         }
 
@@ -317,7 +336,10 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_s);
 
-            setDescription(ev.getResultS());
+            setDescription(ev.getResult(1));
+
+            ev.myhero.setLoyalty(ev.getDeltaLoyalty(0));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ev.myhero.getLoyalty() + ".png"));
         }
 
         if (e.getSource() == b_w){
@@ -327,7 +349,10 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
             this.remove(b_w);
 
-            setDescription(ev.getResultW());
+            setDescription(ev.getResult(2));
+
+            ev.myhero.setLoyalty(ev.getDeltaLoyalty(0));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ev.myhero.getLoyalty() + ".png"));
         }
 
         if (e.getSource() == b_e){
@@ -338,7 +363,10 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_w);
             this.remove(b_e);
 
-            setDescription(ev.getResultE());
+            setDescription(ev.getResult(3));
+
+            ev.myhero.setLoyalty(ev.getDeltaLoyalty(0));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ev.myhero.getLoyalty() + ".png"));
         }
 
     }
@@ -370,6 +398,7 @@ public class MyFrame extends JFrame implements ActionListener {
     }
     public void setDescription(String description){
 
+        //va cambiato con l'immagine risultante
         eventimage.setIcon(new ImageIcon(path_resources + "e" + ev.getEventNumber() + ".jpg"));
         eventimage.setBounds(760,160,400, 640);
 
@@ -425,8 +454,9 @@ public class MyFrame extends JFrame implements ActionListener {
     TimerTask timerchange = new TimerTask() {
         @Override
         public void run() {
-            //time++;
-            textyear.setText(String.valueOf(ev.getAge()));
+            time++;
+            textheroage.setText("Age: " + String.valueOf(ev.getAge()));
+            textyear.setText("Years of service: " + time);
 
         }
     };
@@ -436,6 +466,8 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void run() {
             //event image on screen
+            eventimage.setIcon(new ImageIcon(path_resources + "e" + ev.getEventNumber() + ".jpg"));
+            eventimage.setBounds(760,160,400, 640);
 
             setDescription(ev.getEventDescription());
 
