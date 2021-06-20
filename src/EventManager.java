@@ -23,6 +23,8 @@ public class EventManager {
         10=investigation
         11=catacombsEntrance
         12=catacombs
+        20=potionMerchant
+        21=massacre
          */
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
