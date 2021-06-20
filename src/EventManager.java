@@ -65,27 +65,27 @@ public class EventManager {
         catacombs.setOption(2, new Option("Magic: Banish the demon back to hell.", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
         catacombs.options[2].setMagic(true);
 
-        WorldEvent exorcist = new WorldEvent(15,0,0,0,0);
+        WorldEvent exorcist = new WorldEvent(15, 0, 0, 0, 0);
         events.put(13, exorcist);
         exorcist.setDescription("An old man in a tunic approaches you saying he can perceive a curse upon you. He claims he can exorcise it.");
-        exorcist.setOption(0, new Option("Ask him to exorcise the curse.", "The old man chants words you can't understand. The curse has been lifted.", 0,0,0,0,-15,0));
+        exorcist.setOption(0, new Option("Ask him to exorcise the curse.", "The old man chants words you can't understand. The curse has been lifted.", 0, 0, 0, 0, -15, 0));
         exorcist.options[0].setItem(Hero.CURSE, -1);
-        exorcist.setOption(1, new Option("Refuse.", "The old man walks away yelling that you will only bring misfortune.", 0,-10,0,0,0,0));
-        exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0,0,0,0,0,0));
+        exorcist.setOption(1, new Option("Refuse.", "The old man walks away yelling that you will only bring misfortune.", 0, -10, 0, 0, 0, 0));
+        exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0, 0, 0, 0, 0, 0));
 
-        WorldEvent potionMerchant = new WorldEvent(10,-0.3,0,0,0);
+        WorldEvent potionMerchant = new WorldEvent(10, -0.3, 0, 0, 0);
         events.put(20, potionMerchant);
         potionMerchant.setDescription("You arrive at a potion merchant's stand.");
-        potionMerchant.setOption(0, new Option("Buy a health potion", "You drink the health potion and feel rejuvenated", 10,0,-10,0,0,0));
-        potionMerchant.setOption(1, new Option("Don't buy anything.", "You bought nothing", 0,0,0,0,0,0));
-        potionMerchant.setOption(2, new Option("Buy a mana potion", "You drink the mana potion and you suddenly feel attuned to the elements", 0,0,-10,0,10,1));
+        potionMerchant.setOption(0, new Option("Buy a health potion", "You drink the health potion and feel rejuvenated", 10, 0, -10, 0, 0, 0));
+        potionMerchant.setOption(1, new Option("Don't buy anything.", "You bought nothing", 0, 0, 0, 0, 0, 0));
+        potionMerchant.setOption(2, new Option("Buy a mana potion", "You drink the mana potion and you suddenly feel attuned to the elements", 0, 0, -10, 0, 10, 1));
         potionMerchant.options[2].setMagic(true);
 
-        WorldEvent massacre = new WorldEvent(0,0,0,0,0.2);
+        WorldEvent massacre = new WorldEvent(0, 0, 0, 0, 0.2);
         events.put(21, massacre);
         massacre.setDescription("The king has requested your assistance in culling a village");
-        massacre.setOption(0, new Option("Accept", "You must to do what the king requests to not get on his bad side...", 0,-25,15,10,0,0));
-        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0,0,0,0,-10,0));
+        massacre.setOption(0, new Option("Accept", "You must to do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
+        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0, 0, 0, 0, -10, 0));
 
 
         //Dovranno essere spostati
@@ -103,7 +103,7 @@ public class EventManager {
             possibleEvents.add(10);
             possibleEvents.add(20);
             possibleEvents.add(21);
-            if(Hero.hasCurse())
+            if (Hero.hasCurse())
                 possibleEvents.add(13);
         }
         int weightSum = 0;
@@ -135,7 +135,7 @@ public class EventManager {
     /**
      * Updates the hero's statistics when an option is chosen.
      *
-     * @param n The option number (0=North, 1=South, 2=West, 3=East)
+     * @param n The option number (0 to 3)
      */
     public void pickOption(int n) {
         events.get(currentId).options[n].pick();
@@ -154,35 +154,59 @@ public class EventManager {
         return currentId;
     }
 
+    /**
+     * Returns the current event's initial description.
+     *
+     * @return String (Could be several lines long)
+     */
     public String getEventDescription() {
         return events.get(currentId).description;
     }
 
+    /**
+     * Returns the number of AVAILABLE options for the current event.
+     * If an option is only available to mages, it will not be counted.
+     *
+     * @return int (1 to 4)
+     */
     public int getOptionNumber() {
         int i = 0;
-        while ( i <= 3 && events.get(currentId).options[i] != null ){
-            i++;
+        for (Option o : events.get(currentId).options) {
+            if (o != null && (!o.magic || Hero.hasWand()))
+                i++;
         }
         return i;
     }
 
+    /**
+     * Returns the initial prompt for an option.
+     *
+     * @param n The option number (0 to 3)
+     * @return String (Normally pretty short)
+     */
     public String getDesc(int n) {
         return events.get(currentId).options[n].description;
     }
 
+    /**
+     * Returns the result of the event according to which option was picked.
+     *
+     * @param n The option number (0 to 3)
+     * @return String (Could be several lines long)
+     */
     public String getResult(int n) {
         return events.get(currentId).options[n].result;
     }
 
-    public int getDeltaHealth(int n){
+    public int getDeltaHealth(int n) {
         return events.get(currentId).options[n].deltaHealth;
     }
 
-    public int getDeltaFame(int n){
+    public int getDeltaFame(int n) {
         return events.get(currentId).options[n].deltaFame;
     }
 
-    public int getDeltaMoney(int n){
+    public int getDeltaMoney(int n) {
         return events.get(currentId).options[n].deltaMoney;
     }
 
