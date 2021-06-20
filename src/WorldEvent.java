@@ -20,8 +20,7 @@ public class WorldEvent {
      */
     public int fullWeight() {
         int fw = baseWeight + (int) (Hero.health * healthWeight + Hero.fame * fameWeight + Hero.money * moneyWeight + Hero.loyalty * loyaltyWeight + Hero.luck);
-        if (fw < 0) return 0;
-        return fw;
+        return Math.max(fw, 0);
     }
 
     public void setDescription(String description) {
@@ -31,6 +30,4 @@ public class WorldEvent {
     public void setOption(int n, Option option) {
         options[n] = option;
     }
-
-
 }

@@ -1,11 +1,12 @@
 public class Option {
     String description;
     String result;
-    int deltaHealth, deltaFame, deltaMoney, deltaLoyalty, deltaMana, deltaLuck;
 
     boolean magic = false;
-    int item = -1;
     int nextId = 0;
+    int deltaHealth, deltaFame, deltaMoney, deltaLoyalty, deltaMana, deltaLuck;
+    int[] deltaArtefacts = new int[Hero.ART_NUM];
+
 
     public Option(String description, String result, int deltaHealth, int deltaFame, int deltaMoney, int deltaLoyalty, int deltaMana, int deltaLuck) {
         this.description = description;
@@ -16,14 +17,21 @@ public class Option {
         this.deltaLoyalty = deltaLoyalty;
         this.deltaMana = deltaMana;
         this.deltaLuck = deltaLuck;
+
+        for (int i = 0; i < Hero.ART_NUM; i++) {
+            deltaArtefacts[i] = 0;
+        }
     }
 
     public void setMagic(boolean magic) {
         this.magic = magic;
     }
 
-    public void setItem(int item) {
-        this.item = item;
+    public void setItem(int item, int action) {
+        if (item >= Hero.ART_NUM || action > 1 || action < -1) {
+            return;
+        }
+        deltaArtefacts[item] = action;
     }
 
     public void setNextEvent(int nextId) {
@@ -66,6 +74,11 @@ public class Option {
             else if (Hero.luck > 20) Hero.luck = 20;
         }
 
-        if (item != -1) Hero.artefacts[item] = true;
+        for (int i = 0; i < Hero.ART_NUM; i++) {
+            if (deltaArtefacts[i] == 1)
+                Hero.artefacts[i] = true;
+            else if (deltaArtefacts[i] == -1)
+                Hero.artefacts[i] = false;
+        }
     }
 }

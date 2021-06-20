@@ -8,11 +8,11 @@ public class Hero {
     static int health, fame, money, loyalty;
     static int mana;
     static int luck;
-    static boolean[] artefacts = new boolean[2];
 
+    final static int ART_NUM = 2;
     final static int WAND = 0;
     final static int CURSE = 1;
-
+    static boolean[] artefacts = new boolean[ART_NUM];
 
     /**
      * Resets the hero's statistics and generates a new random name.
@@ -85,6 +85,5 @@ public class Hero {
     public static boolean hasCurse() {
         return artefacts[CURSE];
     }
-
 
 }

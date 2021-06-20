@@ -20,6 +20,7 @@ public class EventManager {
         10=investigation
         11=catacombsEntrance
         12=catacombs
+        13=exorcist
         20=potionMerchant
         21=massacre
          */
@@ -58,11 +59,19 @@ public class EventManager {
         catacombsEntrance.options[0].setNextEvent(12);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
         catacombs.setOption(0, new Option("Draw your sword and get ready to fight.", "You manage to defeat the demon, but it's cursed you!", -10, 10, 0, 0, 0, 0));
-        catacombs.options[0].setItem(Hero.CURSE);
+        catacombs.options[0].setItem(Hero.CURSE, 1);
         catacombs.setOption(1, new Option("Bargain for a pact with the demon.", "The demon seems to have taken a liking to you, and it gifts you a magic wand!", 0, 0, 0, 0, 0, 0));
-        catacombs.options[1].setItem(Hero.WAND);
+        catacombs.options[1].setItem(Hero.WAND, 1);
         catacombs.setOption(2, new Option("Magic: Banish the demon back to hell.", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
         catacombs.options[2].setMagic(true);
+
+        WorldEvent exorcist = new WorldEvent(15,0,0,0,0);
+        events.put(13, exorcist);
+        exorcist.setDescription("An old man in a tunic approaches you saying he can perceive a curse upon you. He claims he can exorcise it.");
+        exorcist.setOption(0, new Option("Ask him to exorcise the curse.", "The old man chants words you can't understand. The curse has been lifted.", 0,0,0,0,-15,0));
+        exorcist.options[0].setItem(Hero.CURSE, -1);
+        exorcist.setOption(1, new Option("Refuse.", "The old man walks away yelling that you will only bring misfortune.", 0,-10,0,0,0,0));
+        exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0,0,0,0,0,0));
 
         WorldEvent potionMerchant = new WorldEvent(10,-0.3,0,0,0);
         events.put(20, potionMerchant);
@@ -94,6 +103,8 @@ public class EventManager {
             possibleEvents.add(10);
             possibleEvents.add(20);
             possibleEvents.add(21);
+            if(Hero.hasCurse())
+                possibleEvents.add(13);
         }
         int weightSum = 0;
         for (int i : possibleEvents) {
