@@ -3,6 +3,8 @@ import java.util.TimerTask;
 
 public class Hero {
     static String name;
+    static int age;
+
     static int health, fame, money, loyalty;
     static int mana;
     static int luck;
@@ -11,7 +13,6 @@ public class Hero {
     final static int WAND = 0;
     final static int CURSE = 1;
 
-    static int age;
 
     /**
      * Resets the hero's statistics and generates a new random name.
@@ -23,10 +24,9 @@ public class Hero {
         Random rand = new Random();
         name = names[rand.nextInt(names.length)];
 
-        Random randnumb = new Random();
         int max = 35;
         int min = 13;
-        age = rand.nextInt((max-min +1) + min);
+        age = rand.nextInt(max - min + 1) + min;
 
         health = 80;
         fame = 50;
@@ -38,27 +38,12 @@ public class Hero {
             artefacts[i] = false;
     }
 
-    /**
-     * Changing statistics of the hero
-     *
-     * @param value
-     */
-    public static void setHealth(int value) {
-        health = health + value;
-    }
-
-    public static void setFame(int value) {
-        fame = fame + value;
-    }
-
-    public static void setMoney(int value) {
-        money = money + value;
-    }
-
-    public static void setLoyalty(int value) {
-        loyalty = loyalty + value;
-    }
-
+    static TimerTask changeAge = new TimerTask() {
+        @Override
+        public void run() {
+            age++;
+        }
+    };
 
     /**
      * Current hero's name.
@@ -69,7 +54,7 @@ public class Hero {
         return name;
     }
 
-    public static int getAge(){
+    public static int getAge() {
         return age;
     }
 

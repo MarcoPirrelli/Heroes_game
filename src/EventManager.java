@@ -6,7 +6,6 @@ public class EventManager {
     HashMap<Integer, WorldEvent> events = new HashMap<>();
     int completedEvents = 0;
 
-    int age;
     Timer aging = new Timer();
 
     /**
@@ -50,7 +49,7 @@ public class EventManager {
 
         WorldEvent catacombsEntrance = new WorldEvent(0, 0, 0, 0, 0);
         events.put(11, catacombsEntrance);
-        investigation.options[0].setNextEvent(4);
+        investigation.options[0].setNextEvent(11);
         catacombsEntrance.setDescription("The mysterious figure ran into the catacombs. What will you do?");
         catacombsEntrance.setOption(0, new Option("Chase it into the catacombs.", "As you run into the catacombs, a sense of dread befalls you.", 0, 0, 0, 0, 0, -3));
         catacombsEntrance.setOption(1, new Option("The stone archway marking the entrance of the catacombs seems frail. Perhaps you could collapse it to block the entrance...", "After only a few blows, the entrance collapses.", 0, -5, 0, 0, 0, 0));
@@ -58,7 +57,7 @@ public class EventManager {
 
         WorldEvent catacombs = new WorldEvent(0, 0, 0, 0, 0);
         events.put(12, catacombs);
-        catacombsEntrance.options[0].setNextEvent(5);
+        catacombsEntrance.options[0].setNextEvent(12);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
         catacombs.setOption(0, new Option("Draw your sword and get ready to fight.", "You manage to defeat the demon, but it's cursed you!", -10, 10, 0, 0, 0, 0));
         catacombs.options[0].setItem(Hero.CURSE);
@@ -77,14 +76,14 @@ public class EventManager {
 
         WorldEvent massacre = new WorldEvent(0,0,0,0,0.2);
         events.put(21, massacre);
-        massacre.setDescription("The king has requested you assistance in culling a village");
+        massacre.setDescription("The king has requested your assistance in culling a village");
         massacre.setOption(0, new Option("Accept", "You must to do what the king requests to not get on his bad side...", 0,-25,15,10,0,0));
         massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0,0,0,0,-10,0));
 
-        Hero.reset();
-        age = Hero.getAge();
-        aging.schedule(changeage, 5000, 5000);
 
+        //Dovranno essere spostati
+        Hero.reset();
+        aging.schedule(Hero.changeAge, 5000, 5000);
     }
 
     private int getRandomEvent() {
@@ -179,18 +178,6 @@ public class EventManager {
 
     public int getDeltaLoyalty(int n) {
         return events.get(currentId).options[n].deltaLoyalty;
-    }
-
-
-    TimerTask changeage = new TimerTask() {
-        @Override
-        public void run() {
-            age++;
-        }
-    };
-
-    public int getAge(){
-        return age;
     }
 
 }

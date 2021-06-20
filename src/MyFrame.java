@@ -74,7 +74,7 @@ public class MyFrame extends JFrame implements ActionListener {
         //Event Image and Description
         eventimage = new JLabel(new ImageIcon());
         eventtext = new JLabel("Questo è l'evento");
-        eventtext.setHorizontalAlignment(SwingConstants.CENTER);;
+        eventtext.setHorizontalAlignment(SwingConstants.CENTER);
         float size = 20;
         eventtext.setFont(eventtext.getFont().deriveFont(size));
 
@@ -261,9 +261,9 @@ public class MyFrame extends JFrame implements ActionListener {
                         b.setFont(heroname.getFont().deriveFont(size));
                     }
 
-                    setDescriptionButton(b_n, ev.getDesc(1));
-                    setDescriptionButton(b_s, ev.getDesc(2));
-                    setDescriptionButton(b_w, ev.getDesc(3));
+                    setDescriptionButton(b_n, ev.getDesc(0));
+                    setDescriptionButton(b_s, ev.getDesc(1));
+                    setDescriptionButton(b_w, ev.getDesc(2));
 
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
@@ -281,8 +281,8 @@ public class MyFrame extends JFrame implements ActionListener {
                         b.setFont(heroname.getFont().deriveFont(size));
                     }
 
-                    setDescriptionButton(b_n, ev.getDesc(1));
-                    setDescriptionButton(b_s, ev.getDesc(2));
+                    setDescriptionButton(b_n, ev.getDesc(0));
+                    setDescriptionButton(b_s, ev.getDesc(1));
 
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
@@ -339,7 +339,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
             setDescription(ev.getResult(1));
 
-            Hero.setLoyalty(ev.getDeltaLoyalty(0));
+            //Hero.setLoyalty(ev.getDeltaLoyalty(0));
+            ev.pickOption(1);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         }
 
@@ -352,7 +353,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
             setDescription(ev.getResult(2));
 
-            Hero.setLoyalty(ev.getDeltaLoyalty(0));
+            //Hero.setLoyalty(ev.getDeltaLoyalty(0));
+            ev.pickOption(2);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         }
 
@@ -365,8 +367,9 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
 
             setDescription(ev.getResult(3));
+            ev.pickOption(3);
 
-            Hero.setLoyalty(ev.getDeltaLoyalty(0));
+            //Hero.setLoyalty(ev.getDeltaLoyalty(0));
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         }
 
@@ -456,7 +459,7 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void run() {
             time++;
-            textheroage.setText("Age: " + String.valueOf(ev.getAge()));
+            textheroage.setText("Age: " + String.valueOf(Hero.getAge()));
             textyear.setText("Years of service: " + time);
 
         }
