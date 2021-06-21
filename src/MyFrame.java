@@ -39,11 +39,12 @@ public class MyFrame extends JFrame implements ActionListener {
     private final JButton b_newgame, b_load, b_settings, b_exit;
     private final JButton b_back;
     private final JButton click;
-    //private final JButton b_n, b_s, b_w, b_e;
     private final JButton b_w, b_e, b_n, b_s;
+    JButton[] menubutton;
 
-    //Variables
-    int a = 0;
+        //Variables
+    int a = 100;
+    int b = 0;
     String text = "";
     String name;
 
@@ -63,9 +64,9 @@ public class MyFrame extends JFrame implements ActionListener {
         b_settings = new JButton("Settings");
         b_exit = new JButton("Exit");
 
-        JButton[] d0 = {b_newgame, b_load, b_settings, b_exit};
+        menubutton = new JButton[]{b_newgame, b_load, b_settings, b_exit};
 
-        for (JButton b : d0){
+        for (JButton b : menubutton){
             b.addActionListener(this);
             b.setIcon(new ImageIcon (path_resources + "buttonstart.png"));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
@@ -134,7 +135,12 @@ public class MyFrame extends JFrame implements ActionListener {
         frame.getActionMap().put("Escape", new Escape());
 
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
-        frame.getActionMap().put("Down", new GoDown());
+         frame.getActionMap().put("Down", new GoDown());
+
+        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
+        frame.getActionMap().put("Continue", new Continue());
+
+        //frame.getActionMap().put("none", new Continue());
 
         setContentPane(frame);
         //setSize(Toolkit.getDefaultToolkit().getScreenSize());  //prova con uno di questi due a vedere se funziona?
@@ -154,61 +160,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         if(e.getSource() == b_newgame){
 
-            ev.getEvent();
-
-            //remove menubuttons
-            this.remove(b_newgame);
-            this.remove(b_load);
-            this.remove(b_settings);
-            this.remove(b_exit);
-            this.remove(b_back);
-
-            //Add and setting things
-            backgroundimage.setIcon(new ImageIcon(path_resources + "arazzogif.gif"));
-
-            this.add(click, 3,0);
-            click.setOpaque(false);
-            click.setContentAreaFilled(false);
-            click.setBorderPainted(false);
-            click.setBounds(0, 0, width, height);
-
-            this.add(heroname, 2,0);
-            float size0 = 25;
-            heroname.setBounds(70,30, 200,50);
-            heroname.setForeground(Color.WHITE);
-            heroname.setFont(heroname.getFont().deriveFont(size0));
-            heroname.setText(Hero.getHeroName());
-
-            this.add(heroimage, 2,0);
-            heroimage.setIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".jpg"));
-            heroimage.setBounds(50, 90, 150,150);
-
-
-            this.add(eventimage, 2, 0);
-            this.add(eventtext, 2,0);
-            timerevent.schedule(taskevent, 2000); //delay for the animation
-
-            this.add(textyear,2,0);
-            float size1 = 20;
-            textyear.setBounds(50, 900, 200, 200);
-            textyear.setFont(textyear.getFont().deriveFont(size1));
-            textyear.setForeground(Color.WHITE);
-            timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
-
-            this.add(textheroage,2,0);
-            float size2 = 20;
-            textheroage.setBounds(90, 55, 200, 50);
-            textheroage.setFont(textheroage.getFont().deriveFont(size2));
-            textheroage.setForeground(Color.WHITE);
-
-
-            this.add(loyaltyimage, 2, 0);
-            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
-            loyaltyimage.setBounds(700, 0, 150, 130);
-
-            backgroundimage.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
-            backgroundimage.getActionMap().put("Continue", new Continue());
-
+            newGame();
         }
 
         if(e.getSource() == b_load){
@@ -534,6 +486,65 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
+    public void newGame(){
+        ev.getEvent();
+
+        //remove menubuttons
+        this.remove(b_newgame);
+        this.remove(b_load);
+        this.remove(b_settings);
+        this.remove(b_exit);
+        this.remove(b_back);
+
+        //Add and setting things
+        backgroundimage.setIcon(new ImageIcon(path_resources + "arazzogif.gif"));
+
+        this.add(click, 3,0);
+        click.setOpaque(false);
+        click.setContentAreaFilled(false);
+        click.setBorderPainted(false);
+        click.setBounds(0, 0, width, height);
+
+        this.add(heroname, 2,0);
+        float size0 = 25;
+        heroname.setBounds(70,30, 200,50);
+        heroname.setForeground(Color.WHITE);
+        heroname.setFont(heroname.getFont().deriveFont(size0));
+        heroname.setText(Hero.getHeroName());
+
+        this.add(heroimage, 2,0);
+        heroimage.setIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".jpg"));
+        heroimage.setBounds(50, 90, 150,150);
+
+
+        this.add(eventimage, 2, 0);
+        this.add(eventtext, 2,0);
+        timerevent.schedule(taskevent, 2000); //delay for the animation
+
+        this.add(textyear,2,0);
+        float size1 = 20;
+        textyear.setBounds(50, 900, 200, 200);
+        textyear.setFont(textyear.getFont().deriveFont(size1));
+        textyear.setForeground(Color.WHITE);
+        timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
+
+        this.add(textheroage,2,0);
+        float size2 = 20;
+        textheroage.setBounds(90, 55, 200, 50);
+        textheroage.setFont(textheroage.getFont().deriveFont(size2));
+        textheroage.setForeground(Color.WHITE);
+
+
+        this.add(loyaltyimage, 2, 0);
+        loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+        loyaltyimage.setBounds(700, 0, 150, 130);
+
+
+
+        a = 0;
+
+    }
+
     //timer for time
     TimerTask timerchange = new TimerTask() {
         @Override
@@ -584,12 +595,22 @@ public class MyFrame extends JFrame implements ActionListener {
     private class SelectNorth extends AbstractAction{
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if(a == 1){
             if (ev.getOptionNumber() == 3 || ev.getOptionNumber() == 4){
                 KeyConsequence(2);
                 a = 2;
             } }
+            /*else if(a == 100){
+                if (b < 3)   {
+                    b++;
+                }
+                else {
+                    b = 0;
+                }
 
+
+            } */
         }
     }
 
@@ -639,6 +660,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
                     a = 1;
                     break;
+
+
             }
         }
     }
@@ -651,10 +674,36 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
-    private class GoDown extends AbstractAction {
+    /**
+     * the space key select the focused button; so for the menu --> change the focus
+     * (if not the space triggers the new game and I can't stop it;
+     * in game this problem is being taken care of in a different way that here it didnt work)
+     */
+   private class GoDown extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //System.exit(0);
+
+            if (b < 3)   {
+                b++;
+            }
+            else {
+                b = 0;
+            }
+
+            if (b == 0) {
+               b_newgame.requestFocus();
+            }
+            if (b == 1) {
+                b_load.requestFocus();
+            }
+            if (b == 2) {
+                b_settings.requestFocus();
+            }
+            if (b == 3) {
+                b_exit.requestFocus();
+            }
+
+
         }
     }
 }
