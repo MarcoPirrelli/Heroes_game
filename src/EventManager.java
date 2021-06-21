@@ -35,7 +35,7 @@ public class EventManager {
         WorldEvent cat = new WorldEvent(1, 0, 0, 0, 0);
         events.put(2, cat);
         cat.setDescription("Every hero has to start somewhere... A lady has asked you to rescue her cat from a tree.");
-        cat.setOption(0, new Option("Climb the tree and grab the cat.", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 0, 0, 0));
+        cat.setOption(0, new Option("Climb the tree and grab the cat.", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 30, 0, 0));
         cat.setOption(1, new Option("Pet the cat and bring it back to the lady.", "The cat seems to like you.", 0, 5, 0, 0, 0, 1));
         cat.setOption(2, new Option("Walk away.", "The lady seems disappointed.", 0, -3, 0, 0, 0, 0));
         cat.setOption(3, new Option("Chop down the tree.", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 0));
@@ -84,7 +84,7 @@ public class EventManager {
         WorldEvent massacre = new WorldEvent(0, 0, 0, 0, 0.2);
         events.put(21, massacre);
         massacre.setDescription("The king has requested your assistance in culling a village");
-        massacre.setOption(0, new Option("Accept", "You must to do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
+        massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
         massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0, 0, 0, 0, -10, 0));
 
 

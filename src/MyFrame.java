@@ -2,8 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.Timer;
+
+
 
 
 public class MyFrame extends JFrame implements ActionListener {
@@ -11,6 +14,9 @@ public class MyFrame extends JFrame implements ActionListener {
     //remember to change it
     String path_resources = "Resources/";
     Font f = new Font("serif", Font.PLAIN, 10);
+
+    int width = 1920;
+    int height = 1080;
 
     EventManager ev = new EventManager();
 
@@ -40,6 +46,7 @@ public class MyFrame extends JFrame implements ActionListener {
     String text = "";
     String name;
 
+    boolean KeyPressed = false;
 
     MyFrame () {
 
@@ -120,11 +127,24 @@ public class MyFrame extends JFrame implements ActionListener {
         b_settings.setBounds(1200,400,590,100);
         b_exit.setBounds(1200,550,590,100);
 
+        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
+        frame.getActionMap().put("Escape", new Escape());
+
+        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
+        frame.getActionMap().put("Down", new GoDown());
+
         setContentPane(frame);
-        setSize(1920, 1080);
+        //setSize(Toolkit.getDefaultToolkit().getScreenSize());  //prova con uno di questi due a vedere se funziona?
+         setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        setUndecorated(true);
+      //setSize(width, height);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
+
+
+
 
 
     }
@@ -150,7 +170,7 @@ public class MyFrame extends JFrame implements ActionListener {
             click.setOpaque(false);
             click.setContentAreaFilled(false);
             click.setBorderPainted(false);
-            click.setBounds(0, 0, 1920, 1080);
+            click.setBounds(0, 0, width, height);
 
             this.add(heroname, 2,0);
             float size0 = 25;
@@ -185,6 +205,9 @@ public class MyFrame extends JFrame implements ActionListener {
             this.add(loyaltyimage, 2, 0);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
             loyaltyimage.setBounds(700, 0, 150, 130);
+
+            backgroundimage.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
+            backgroundimage.getActionMap().put("Continue", new Continue());
 
         }
 
@@ -225,69 +248,8 @@ public class MyFrame extends JFrame implements ActionListener {
         switch (a) {
             case 0:
 
-                if (ev.getOptionNumber() == 4){
-                JButton[] d1 = {b_n, b_s, b_w, b_e};
-
-                float size = 20;
-                for (JButton b : d1){
-                    this.add(b, 3, 0);
-                    b.setContentAreaFilled(false);
-                    b.setBorderPainted(false);
-                    b.setFont(heroname.getFont().deriveFont(size));
-                }
-
-                    setDescriptionButton(b_n, ev.getDesc(0));
-                    setDescriptionButton(b_s, ev.getDesc(1));
-                    setDescriptionButton(b_w, ev.getDesc(2));
-                    setDescriptionButton(b_e, ev.getDesc(3));
-
-                    b_n.setBounds(820, 80, 280, 330);
-                    b_s.setBounds(820, 580, 280, 330);
-                    b_w.setBounds(565, 350, 280, 330);
-                    b_e.setBounds(1045, 350, 280, 330);
-
-                    a = 1;
-
-                }
-                else if (ev.getOptionNumber() == 3){
-
-                    JButton[] d1 = {b_n, b_s, b_w};
-
-                    float size = 20;
-                    for (JButton b : d1){
-                        this.add(b, 3, 0);
-                        b.setContentAreaFilled(false);
-                        b.setBorderPainted(false);
-                        b.setFont(heroname.getFont().deriveFont(size));
-                    }
-
-                    setDescriptionButton(b_n, ev.getDesc(0));
-                    setDescriptionButton(b_s, ev.getDesc(1));
-                    setDescriptionButton(b_w, ev.getDesc(2));
-
-                    b_n.setBounds(820, 80, 280, 330);
-                    b_s.setBounds(820, 580, 280, 330);
-                    b_w.setBounds(565, 350, 280, 330);
-            }
-                else if (ev.getOptionNumber() == 2){
-
-                    JButton[] d1 = {b_n, b_s};
-
-                    float size = 20;
-                    for (JButton b : d1){
-                        this.add(b, 3, 0);
-                        b.setContentAreaFilled(false);
-                        b.setBorderPainted(false);
-                        b.setFont(heroname.getFont().deriveFont(size));
-                    }
-
-                    setDescriptionButton(b_n, ev.getDesc(0));
-                    setDescriptionButton(b_s, ev.getDesc(1));
-
-                    b_n.setBounds(820, 80, 280, 330);
-                    b_s.setBounds(820, 580, 280, 330);
-                }
-
+                setButtons();
+                a = 1;
 
             break;
 
@@ -296,6 +258,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 this.remove(b_s);
                 this.remove(b_w);
                 this.remove(b_e);
+
+
 
                 a = 0;
 
@@ -308,6 +272,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 setDescription(ev.getEventDescription());
                 a = 0;
 
+                break;
+
 
         }
 
@@ -316,65 +282,51 @@ public class MyFrame extends JFrame implements ActionListener {
         if (e.getSource() == b_n){
 
             a = 2;
-            this.remove(b_s);
-            this.remove(b_w);
-            this.remove(b_e);
-            this.remove(b_n);
+            removeButtons();
 
-           //Hero.setLoyalty(ev.getDeltaLoyalty(0));
             ev.pickOption(0);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
 
             setDescription(ev.getResult(0));
-
-            //Consequences on statistics?
         }
 
         if (e.getSource() == b_s){
             a = 2;
-            this.remove(b_n);
-            this.remove(b_w);
-            this.remove(b_e);
-            this.remove(b_s);
 
+            removeButtons();
             setDescription(ev.getResult(1));
 
-            //Hero.setLoyalty(ev.getDeltaLoyalty(0));
             ev.pickOption(1);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         }
 
         if (e.getSource() == b_w){
             a = 2;
-            this.remove(b_n);
-            this.remove(b_s);
-            this.remove(b_e);
-            this.remove(b_w);
 
+            removeButtons();
             setDescription(ev.getResult(2));
 
-            //Hero.setLoyalty(ev.getDeltaLoyalty(0));
             ev.pickOption(2);
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         }
 
         if (e.getSource() == b_e){
             a = 2;
-
-            this.remove(b_n);
-            this.remove(b_s);
-            this.remove(b_w);
-            this.remove(b_e);
+            removeButtons();
 
             setDescription(ev.getResult(3));
             ev.pickOption(3);
 
-            //Hero.setLoyalty(ev.getDeltaLoyalty(0));
             loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         }
 
     }
 
+    /**
+     * set description of the options
+     * @param b
+     * @param textbutton
+     */
     public void setDescriptionButton(JButton b, String textbutton){
 
         if(textbutton.length() <= 20){
@@ -400,6 +352,11 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
     }
+
+    /**
+     * set description of the event/consequences
+     * @param description
+     */
     public void setDescription(String description){
 
         //va cambiato con l'immagine risultante
@@ -453,6 +410,136 @@ public class MyFrame extends JFrame implements ActionListener {
         eventtext.setBounds(720,825, 470, 150);
     }
 
+    public void KeyConsequence(int n){
+
+        setDescription(ev.getResult(n));
+
+        removeButtons();
+
+        ev.pickOption(n);
+        loyaltyimage.setIcon(new ImageIcon("Resources/" + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+        loyaltyimage.setBounds(700, 0, 150, 130);
+
+
+    }
+
+    public void setButtons (){
+         if (ev.getOptionNumber() == 4){
+                JButton[] d1 = {b_n, b_s, b_w, b_e};
+
+                float size = 20;
+                for (JButton b : d1){
+                    this.add(b, 3, 0);
+                    b.setContentAreaFilled(false);
+                    b.setBorderPainted(false);
+                    b.setFont(heroname.getFont().deriveFont(size));
+                }
+
+                    setDescriptionButton(b_n, ev.getDesc(0));
+                    setDescriptionButton(b_s, ev.getDesc(1));
+                    setDescriptionButton(b_w, ev.getDesc(2));
+                    setDescriptionButton(b_e, ev.getDesc(3));
+
+                    b_n.setBounds(820, 80, 280, 330);
+                    b_s.setBounds(820, 580, 280, 330);
+                    b_w.setBounds(565, 350, 280, 330);
+                    b_e.setBounds(1045, 350, 280, 330);
+
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+                    b_n.getActionMap().put("North", new SelectNorth());
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+                    b_n.getActionMap().put("South", new SelectSouth());
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
+                    b_n.getActionMap().put("West", new SelectWest());
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "East");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("D"), "East");
+                    b_n.getActionMap().put("East", new SelectEast());
+
+
+                }
+                else if (ev.getOptionNumber() == 3){
+
+                    JButton[] d1 = {b_n, b_s, b_w};
+
+                    float size = 20;
+                    for (JButton b : d1){
+                        this.add(b, 3, 0);
+                        b.setContentAreaFilled(false);
+                        b.setBorderPainted(false);
+                        b.setFont(heroname.getFont().deriveFont(size));
+                    }
+
+                    setDescriptionButton(b_n, ev.getDesc(0));
+                    setDescriptionButton(b_s, ev.getDesc(1));
+                    setDescriptionButton(b_w, ev.getDesc(2));
+
+                    b_n.setBounds(820, 80, 280, 330);
+                    b_s.setBounds(820, 580, 280, 330);
+                    b_w.setBounds(565, 350, 280, 330);
+
+                    //Key binding KeyEvent.VK_SPACE
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+                    b_n.getActionMap().put("North", new SelectNorth());
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+                    b_n.getActionMap().put("South", new SelectSouth());
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
+                    b_n.getActionMap().put("West", new SelectWest());
+
+            }
+                else if (ev.getOptionNumber() == 2){
+
+                    JButton[] d1 = {b_n, b_s};
+
+                    float size = 20;
+                    for (JButton b : d1){
+                        this.add(b, 3, 0);
+                        b.setContentAreaFilled(false);
+                        b.setBorderPainted(false);
+                        b.setFont(heroname.getFont().deriveFont(size));
+                    }
+
+                    setDescriptionButton(b_n, ev.getDesc(0));
+                    setDescriptionButton(b_s, ev.getDesc(1));
+
+                    b_n.setBounds(820, 80, 280, 330);
+                    b_s.setBounds(820, 580, 280, 330);
+
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+                    b_n.getActionMap().put("North", new SelectNorth());
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+                    b_n.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+                    b_n.getActionMap().put("South", new SelectSouth());
+                }
+    }
+
+    public void removeButtons(){
+        if (ev.getOptionNumber() == 4){
+            this.remove(b_s);
+            this.remove(b_n);
+            this.remove(b_w);
+            this.remove(b_e);
+        }
+
+        else if (ev.getOptionNumber() ==3){
+            this.remove(b_s);
+            this.remove(b_n);
+            this.remove(b_w);
+        }
+
+        else if (ev.getOptionNumber() ==2){
+            this.remove(b_s);
+            this.remove(b_n);
+        }
+        repaint();  //to remove components it is better to call it
+
+    }
 
     //timer for time
     TimerTask timerchange = new TimerTask() {
@@ -480,5 +567,104 @@ public class MyFrame extends JFrame implements ActionListener {
     };
 
 
+    private class SelectNorth extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           if(a == 1){
+           KeyConsequence(0);
+           a = 2;
+           }
 
+        }
+    }
+
+    private class SelectSouth extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(a == 1){
+            KeyConsequence(1);
+            a = 2;
+            }
+        }
+    }
+
+    private class SelectWest extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(a == 1){
+            if (ev.getOptionNumber() == 3 || ev.getOptionNumber() == 4){
+                KeyConsequence(2);
+                a = 2;
+            } }
+
+        }
+    }
+
+    private class SelectEast extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(a == 1){
+            if( ev.getOptionNumber() == 4){
+                KeyConsequence(3);
+                a = 2;
+            }}
+        }
+    }
+
+    private class Continue extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            switch (a){
+                case 0:
+
+                    add(eventimage, 2, 0);
+                    add(eventtext, 2,0);
+
+                    setButtons();
+                    repaint();
+
+                    setDescription(ev.getEventDescription());
+                    a = 1;
+                    break;
+
+                case 1:
+                    remove(b_n);
+                    remove(b_s);
+                    remove(b_e);
+                    remove(b_w);
+                    repaint();
+                    a = 0;
+                break;
+
+                case 2:
+                    ev.getEvent();
+                    add(eventimage, 2, 0);
+                    add(eventtext, 2,0);
+
+                    setButtons();
+                    repaint();
+
+                    setDescription(ev.getEventDescription());
+
+                    a = 1;
+                    break;
+            }
+        }
+    }
+
+
+    private class Escape extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+
+    private class GoDown extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //System.exit(0);
+        }
+    }
 }
