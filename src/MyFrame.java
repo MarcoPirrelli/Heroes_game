@@ -27,6 +27,8 @@ public class MyFrame extends JFrame implements ActionListener {
     Timer timertime = new Timer();
     Timer timerevent = new Timer();
 
+    JPanel buttonspanel;
+
     //JLabel
     JLabel backgroundimage;
     JLabel eventimage;
@@ -54,6 +56,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         JLayeredPane frame = new JLayeredPane();
 
+
         //Background Image
         backgroundimage = new JLabel(new ImageIcon());
         backgroundimage.setIcon(new ImageIcon(path_resources + "startgif.gif"));
@@ -64,6 +67,8 @@ public class MyFrame extends JFrame implements ActionListener {
         b_settings = new JButton("Settings");
         b_exit = new JButton("Exit");
 
+       // frame.add(b_newgame,  BorderLayout.PAGE_START);
+
         menubutton = new JButton[]{b_newgame, b_load, b_settings, b_exit};
 
         for (JButton b : menubutton){
@@ -72,6 +77,8 @@ public class MyFrame extends JFrame implements ActionListener {
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
         }
+
+
 
         //Settings Button
         b_back = new JButton("Menu");
@@ -118,14 +125,28 @@ public class MyFrame extends JFrame implements ActionListener {
         heroname = new JLabel(name);
         heroimage = new JLabel(new ImageIcon());
 
+        /*
+        GridBagConstraints c = new GridBagConstraints();
+        buttonspanel = new JPanel(new GridBagLayout());
+
+        buttonspanel.add(b_newgame);
+        buttonspanel.setOpaque(false);
+
+        frame.add(buttonspanel, 3, 0);
+        buttonspanel.setBounds(0,0, 1920, 1080);
+        b_newgame.setContentAreaFilled(false);
+        b_newgame.setBorderPainted(false);*/
+
         //Menu Frame
         frame.add(backgroundimage, 1, 0);  //c'è anche la versione con l'indice e basta ma non funziona
-        frame.add(b_newgame, 3,0);
+        backgroundimage.setBounds(0,0, 1920,1080);
+        frame.add(b_newgame,3,0);
         frame.add(b_load, 3,0);
         frame.add(b_settings, 3,0);
         frame.add(b_exit, 3,0);
 
-        backgroundimage.setBounds(0,0, 1920,1080);
+
+
         b_newgame.setBounds(1200,100, 590, 100);
         b_load.setBounds(1200,250,590,100);
         b_settings.setBounds(1200,400,590,100);
@@ -159,7 +180,6 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == b_newgame){
-
             newGame();
         }
 
