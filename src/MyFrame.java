@@ -15,8 +15,15 @@ public class MyFrame extends JFrame implements ActionListener {
     String path_resources = "Resources/";
     Font f = new Font("serif", Font.PLAIN, 10);
 
-    int width = 1920;
-    int height = 1080;
+   /* int width = 1920;
+    int height = 1080;*/
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = screenSize.width;
+    int height = screenSize.height;
+
+    int widthbs = (int)(width/3);
+    int heightbs = (int)(height/10);
 
     EventManager ev = new EventManager();
 
@@ -27,7 +34,7 @@ public class MyFrame extends JFrame implements ActionListener {
     Timer timertime = new Timer();
     Timer timerevent = new Timer();
 
-    JPanel buttonspanel;
+
 
     //JLabel
     JLabel backgroundimage;
@@ -43,23 +50,25 @@ public class MyFrame extends JFrame implements ActionListener {
     private final JButton click;
     private final JButton b_w, b_e, b_n, b_s;
     JButton[] menubutton;
+    JPanel buttonspanel;
 
-        //Variables
+    //Variables
     int a = 100;
     int b = 0;
     String text = "";
     String name;
 
-    boolean KeyPressed = false;
 
     MyFrame () {
 
         JLayeredPane frame = new JLayeredPane();
 
+        JPanel back = new JPanel(new BorderLayout());
 
         //Background Image
         backgroundimage = new JLabel(new ImageIcon());
-        backgroundimage.setIcon(new ImageIcon(path_resources + "startgif.gif"));
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "startgif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        back.add(backgroundimage);
 
         //Menu Buttons
         b_newgame = new JButton("New Game");
@@ -67,18 +76,53 @@ public class MyFrame extends JFrame implements ActionListener {
         b_settings = new JButton("Settings");
         b_exit = new JButton("Exit");
 
-       // frame.add(b_newgame,  BorderLayout.PAGE_START);
+        // frame.add(b_newgame,  BorderLayout.PAGE_START);
 
         menubutton = new JButton[]{b_newgame, b_load, b_settings, b_exit};
 
         for (JButton b : menubutton){
             b.addActionListener(this);
-            b.setIcon(new ImageIcon (path_resources + "buttonstart.png"));
+            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT))));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
         }
 
+        //Button
+        JPanel buttonspanel = new JPanel(new GridBagLayout());
+        GridBagConstraints con = new GridBagConstraints();
 
+        Insets i = new Insets(0,0,height/45,0);
+        con.gridx = 2;
+        con.gridy = 0;
+        con.weightx = 2;
+        con.insets = i;
+        buttonspanel.add(b_newgame, con);
+
+        con.gridx = 2;
+        con.gridy = 1;
+        buttonspanel.add(b_load, con);
+
+        con.gridx = 2;
+        con.gridy = 2;
+        buttonspanel.add(b_settings, con);
+
+        con.gridx = 2;
+        con.gridy = 3;
+        buttonspanel.add(b_exit, con);
+
+        JLabel none = new JLabel();
+        con.gridx = 0;
+        con.gridy = 0;
+        buttonspanel.add(none, con);
+
+        JLabel none1 = new JLabel();
+        con.gridx = 1;
+        con.gridy = 0;
+        buttonspanel.add(none1, con);
+
+        buttonspanel.setOpaque(false);
 
         //Settings Button
         b_back = new JButton("Menu");
@@ -138,7 +182,8 @@ public class MyFrame extends JFrame implements ActionListener {
         b_newgame.setBorderPainted(false);*/
 
         //Menu Frame
-        frame.add(backgroundimage, 1, 0);  //c'è anche la versione con l'indice e basta ma non funziona
+
+        /*/frame.add(backgroundimage, 1, 0);  //c'è anche la versione con l'indice e basta ma non funziona
         backgroundimage.setBounds(0,0, 1920,1080);
         frame.add(b_newgame,3,0);
         frame.add(b_load, 3,0);
@@ -151,12 +196,17 @@ public class MyFrame extends JFrame implements ActionListener {
         b_load.setBounds(1200,250,590,100);
         b_settings.setBounds(1200,400,590,100);
         b_exit.setBounds(1200,550,590,100);
+*/
+        frame.add(back, 0,0);
+        frame.add(buttonspanel, 3,0);
+        back.setBounds(0,0,width,height);
+        buttonspanel.setBounds(0,0 , width, 4*height/5);
 
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         frame.getActionMap().put("Escape", new Escape());
 
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
-         frame.getActionMap().put("Down", new GoDown());
+        frame.getActionMap().put("Down", new GoDown());
 
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         frame.getActionMap().put("Continue", new Continue());
@@ -164,17 +214,15 @@ public class MyFrame extends JFrame implements ActionListener {
         //frame.getActionMap().put("none", new Continue());
 
         setContentPane(frame);
-        //setSize(Toolkit.getDefaultToolkit().getScreenSize());  //prova con uno di questi due a vedere se funziona?
-         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setUndecorated(true);
-      //setSize(width, height);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
 
 
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
