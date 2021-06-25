@@ -331,11 +331,28 @@ public class EventManager {
             System.exit(0);
         }
     }
-    /*
-    while(r.next()){
-        i=r.getInt("SaveId");
-        arraypulsanti[i].setText(r.getString("HeroName"));
-        arraypulsanti[i].setText(r.getInt>("HeroAge"));
+
+    /**
+     * Returns a ResultSet containing the saves' information meant for display.
+     * <p>
+     * Example usage:
+     * ResultSet r = ev.getAllSaves();
+     * while(r.next()){
+     * i=r.getInt("SaveId");
+     * arraypulsanti[i].setText(r.getString("HeroName"));
+     * ...
+     * }
+     *
+     * @return ResultSet with 0 to MAX_SAVES rows
+     */
+    public ResultSet getAllSaves() {
+        ResultSet ret = null;
+        try {
+            ret = statement.executeQuery("select SaveId, HeroName, HeroAge, Completed from saves");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return ret;
     }
-    */
 }

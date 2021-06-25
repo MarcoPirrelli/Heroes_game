@@ -1,13 +1,11 @@
 Hero.java
  Hero
+EventManager.java
+ EventManager
 Option.java
  Option
 WorldEvent.java
  WorldEvent
-EventManager.java
- EventManager
-Start.java
- Start
 MyFrame.java
  MyFrame
  MyFrame$1
@@ -19,3 +17,5 @@ MyFrame.java
  MyFrame$SelectNorth
  MyFrame$SelectSouth
  MyFrame$SelectWest
+Start.java
+ Start
