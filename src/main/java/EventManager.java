@@ -148,7 +148,7 @@ public class EventManager {
             nextId = 0;
         } else
             currentId = getRandomEvent();
-        //save();
+           save();
     }
 
     /**

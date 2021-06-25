@@ -553,7 +553,9 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     public void newGame(){
+        ev.setSaveSlot(2);
         ev.getEvent();
+
 
         //remove menubuttons
         this.remove(b_newgame);
