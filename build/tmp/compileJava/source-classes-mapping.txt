@@ -4,10 +4,10 @@ WorldEvent.java
  WorldEvent
 Option.java
  Option
-EventManager.java
- EventManager
 Start.java
  Start
+EventManager.java
+ EventManager
 MyFrame.java
  MyFrame
  MyFrame$1
