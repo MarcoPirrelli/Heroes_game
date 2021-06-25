@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class MyFrame extends JFrame implements ActionListener {
 
     //remember to change it
-    String path_resources = "Resources/";
+    String path_resources = "src/main/resources/";
     Font f = new Font("serif", Font.PLAIN, 10);
 
    /* int width = 1920;
@@ -425,7 +425,7 @@ public class MyFrame extends JFrame implements ActionListener {
         removeButtons();
 
         ev.pickOption(n);
-        loyaltyimage.setIcon(new ImageIcon("Resources/" + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+        loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
         loyaltyimage.setBounds(700, 0, 150, 130);
 
 
