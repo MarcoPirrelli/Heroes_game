@@ -71,7 +71,7 @@ public class EventManager {
         investigation.options[0].setNextEvent(11);
         catacombsEntrance.setDescription("The mysterious figure ran into the catacombs. What will you do?");
         catacombsEntrance.setOption(0, new Option("Chase it into the catacombs.", "As you run into the catacombs, a sense of dread befalls you.", 0, 0, 0, 0, 0, -3));
-        catacombsEntrance.setOption(1, new Option("The stone archway marking the entrance of the catacombs seems frail. Perhaps you could collapse it to block the entrance...", "After only a few blows, the entrance collapses.", 0, -5, 0, 0, 0, 0));
+        catacombsEntrance.setOption(1, new Option("Collapse the entrance.", "After only a few blows, the entrance collapses.", 0, -5, 0, 0, 0, 0));
         catacombsEntrance.setOption(2, new Option("Walk away.", "As you walk back, you hear faint echoes coming from the catacombs. None of your business.", 0, 0, 0, 0, 0, 0));
 
         WorldEvent catacombs = new WorldEvent(0, 0, 0, 0, 0);
@@ -103,7 +103,7 @@ public class EventManager {
 
         WorldEvent massacre = new WorldEvent(0, 0, 0, 0, 0.2);
         events.put(21, massacre);
-        massacre.setDescription("The king has requested your assistance in culling a village");
+        massacre.setDescription("The king has requested your assistance in culling a village.");
         massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
         massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased", 0, 0, 0, 0, -10, 0));
 

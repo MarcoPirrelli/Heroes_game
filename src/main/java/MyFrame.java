@@ -345,7 +345,7 @@ public class MyFrame extends JFrame implements ActionListener {
             while (textbutton.charAt(c) != '.'&& textbutton.charAt(c) != ' ' && textbutton.charAt(c) != ','){
                 c++;
             }
-            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c + 1) + "<br>" + textbutton.substring(c + 1,textbutton.length()) + "</div><html>");
+            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1,textbutton.length()) + "</div><html>");
         }
         else{
             int c = 15;
@@ -356,7 +356,7 @@ public class MyFrame extends JFrame implements ActionListener {
             while (textbutton.charAt(d) != '.'&& textbutton.charAt(d) != ' ' && textbutton.charAt(d) != ','){
                 d++;
             }
-            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c + 1) + "<br>" + textbutton.substring(c+1, d+1)+ "<br>" + textbutton.substring(d + 1, textbutton.length()) + "</div><html>");
+            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c+1, d)+ "<br>" + textbutton.substring(d + 1, textbutton.length()) + "</div><html>");
         }
 
     }
@@ -382,7 +382,7 @@ public class MyFrame extends JFrame implements ActionListener {
             while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
                 c++;
             }
-            eventtext.setText("<html><div style='text-align: center;'>"+description.substring(0, c + 1)+ "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
+            eventtext.setText("<html><div style='text-align: center;'>"+description.substring(0, c)+ "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
         }
 
         else if (description.length() <= 120) {
@@ -394,7 +394,7 @@ public class MyFrame extends JFrame implements ActionListener {
             while (description.charAt(d) != '.'&& description.charAt(d) != ' ' && description.charAt(d) != ','){
                 d++;
             }
-            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c + 1)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, description.length()) + "</div><html>");
+            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, description.length()) + "</div><html>");
 
         }
 
@@ -411,7 +411,7 @@ public class MyFrame extends JFrame implements ActionListener {
             while (description.charAt(e) != '.'&& description.charAt(e) != ' ' && description.charAt(e) != ','){
                 e++;
             }
-            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c + 1)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, e) + "<br>" + description.substring(e+1, description.length()) + "</div><html>");
+            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, e) + "<br>" + description.substring(e+1, description.length()) + "</div><html>");
 
         }
 
@@ -553,9 +553,8 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     public void newGame(){
-        ev.setSaveSlot(2);
+        ev.setSaveSlot(1);
         ev.getEvent();
-
 
         //remove menubuttons
         this.remove(b_newgame);
