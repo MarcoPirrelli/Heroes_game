@@ -88,7 +88,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         //Button
-        JPanel buttonspanel = new JPanel(new GridBagLayout());
+        buttonspanel = new JPanel(new GridBagLayout());
         GridBagConstraints con = new GridBagConstraints();
 
         Insets i = new Insets(0,0,height/45,0);
@@ -167,44 +167,22 @@ public class MyFrame extends JFrame implements ActionListener {
         heroname = new JLabel(name);
         heroimage = new JLabel(new ImageIcon());
 
-        /*
-        GridBagConstraints c = new GridBagConstraints();
-        buttonspanel = new JPanel(new GridBagLayout());
 
-        buttonspanel.add(b_newgame);
-        buttonspanel.setOpaque(false);
-
-        frame.add(buttonspanel, 3, 0);
-        buttonspanel.setBounds(0,0, 1920, 1080);
-        b_newgame.setContentAreaFilled(false);
-        b_newgame.setBorderPainted(false);*/
-
-        //Menu Frame
-
-        /*/frame.add(backgroundimage, 1, 0);  //c'è anche la versione con l'indice e basta ma non funziona
-        backgroundimage.setBounds(0,0, 1920,1080);
-        frame.add(b_newgame,3,0);
-        frame.add(b_load, 3,0);
-        frame.add(b_settings, 3,0);
-        frame.add(b_exit, 3,0);
-
-
-
-        b_newgame.setBounds(1200,100, 590, 100);
-        b_load.setBounds(1200,250,590,100);
-        b_settings.setBounds(1200,400,590,100);
-        b_exit.setBounds(1200,550,590,100);
-*/
         frame.add(back, 0,0);
         frame.add(buttonspanel, 3,0);
         back.setBounds(0,0,width,height);
         buttonspanel.setBounds(0,0 , width, 4*height/5);
 
+
+        //tastiera
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         frame.getActionMap().put("Escape", new Escape());
 
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
         frame.getActionMap().put("Down", new GoDown());
+
+        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "Up");
+        frame.getActionMap().put("Up", new GoUp());
 
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         frame.getActionMap().put("Continue", new Continue());
@@ -234,17 +212,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == b_settings){
-
-            this.remove(b_newgame);
-            this.remove(b_load);
-            this.remove(b_settings);
-            this.remove(b_exit);
-
-            backgroundimage.setIcon(new ImageIcon(path_resources + "settings.jpg"));
-            this.add(b_back, 3, 0);
-            b_back.setBounds(1200,100, 590, 100);
-
-
+            settings();
         }
 
         if(e.getSource() == b_exit) {
@@ -253,10 +221,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
         if(e.getSource() == b_back){
 
-            this.add(b_newgame, 3, 0);
-            this.add(b_load,3 ,0);
-            this.add(b_settings, 3,0);
-            this.add(b_exit, 3,0);
+            this.remove(b_back);
+            this.add(buttonspanel, 3, 0);
 
         }
 
@@ -296,7 +262,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
             removeButtons();
             ev.pickOption(0);
-            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 + ".png"));
             setDescription(ev.getResult(0));
             a = 2;
         }
@@ -306,7 +272,7 @@ public class MyFrame extends JFrame implements ActionListener {
             removeButtons();
             ev.pickOption(1);
             setDescription(ev.getResult(1));
-            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 + ".png"));
             a = 2;
         }
 
@@ -315,7 +281,7 @@ public class MyFrame extends JFrame implements ActionListener {
             removeButtons();
             ev.pickOption(2);
             setDescription(ev.getResult(2));
-            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty0" + (int)Hero.getLoyalty()/10 + ".png"));
             a = 2;
         }
 
@@ -324,11 +290,96 @@ public class MyFrame extends JFrame implements ActionListener {
             removeButtons();
             ev.pickOption(3);
             setDescription(ev.getResult(3));
-            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
+            loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 + ".png"));
             a = 2;
         }
 
     }
+
+    /**
+     * new game :)
+     */
+
+    public void newGame(){
+
+        ev.setSaveSlot(1);
+        ev.getEvent();
+
+        //remove menubuttons
+        this.remove(buttonspanel);
+
+
+        //Add and setting things
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+
+        this.add(click, 3,0);
+        click.setOpaque(false);
+        click.setContentAreaFilled(false);
+        click.setBorderPainted(false);
+        click.setBounds(0, 0, width, height);
+
+        this.add(heroname, 2,0);
+        float size0 = 25;
+        heroname.setBounds(70,30, 200,50);
+        heroname.setForeground(Color.WHITE);
+        heroname.setFont(heroname.getFont().deriveFont(size0));
+        heroname.setText(Hero.getHeroName());
+
+        this.add(heroimage, 2,0);
+        heroimage.setIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".jpg"));
+        heroimage.setBounds(50, 90, 150,150);
+
+
+        this.add(eventimage, 2, 0);
+        this.add(eventtext, 2,0);
+        timerevent.schedule(taskevent, 2000); //delay for the animation
+
+        this.add(textyear,2,0);
+        float size1 = 20;
+        textyear.setBounds(50, 900, 200, 200);
+        textyear.setFont(textyear.getFont().deriveFont(size1));
+        textyear.setForeground(Color.WHITE);
+        timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
+
+        this.add(textheroage,2,0);
+        float size2 = 20;
+        textheroage.setBounds(90, 55, 200, 50);
+        textheroage.setFont(textheroage.getFont().deriveFont(size2));
+        textheroage.setForeground(Color.WHITE);
+
+
+        this.add(loyaltyimage, 2, 0);
+        int l = (int)Hero.getLoyalty()/10;
+        loyaltyimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty05" + ".png").getImage().getScaledInstance(150,130, Image.SCALE_DEFAULT)));
+        loyaltyimage.setBounds(700, 0, 150, 130);
+
+
+
+        a = 0;
+
+    }
+
+    /**
+     * LOAD
+     */
+    public void load(){
+
+    }
+
+    /**
+     * SETTINGS
+     */
+
+    public void settings(){
+
+        this.remove(buttonspanel);
+
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "settings.jpg").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        this.add(b_back, 3, 0);
+        b_back.setBounds(1200,100, 590, 100);
+
+    }
+
 
     /**
      * set description of the options
@@ -340,26 +391,33 @@ public class MyFrame extends JFrame implements ActionListener {
         if(textbutton.length() <= 20){
             b.setText(textbutton);
         }
-        else if(textbutton.length() <= 40) {
-            int c = 15;
-            while (textbutton.charAt(c) != '.'&& textbutton.charAt(c) != ' ' && textbutton.charAt(c) != ','){
-                c++;
+
+        else {
+            int c = 20;
+            while (textbutton.charAt(c) != ' '){
+                c--;
             }
-            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1,textbutton.length()) + "</div><html>");
-        }
-        else{
-            int c = 15;
-            while (textbutton.charAt(c) != '.'&& textbutton.charAt(c) != ' ' && textbutton.charAt(c) != ','){
-                c++;
+
+            int d = textbutton.length() - c;
+
+            if (d <= 20 ){
+                b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1,textbutton.length()) + "</div><html>");
             }
-            int d = 35;
-            while (textbutton.charAt(d) != '.'&& textbutton.charAt(d) != ' ' && textbutton.charAt(d) != ','){
-                d++;
+
+            else{
+                int e = c + 20;
+                while (textbutton.charAt(e) != ' '){
+                    e--;
+                }
+
+                b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1,e)  + "<br>" + textbutton.substring(e+1)+ "</div><html>");
+
             }
-            b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c+1, d)+ "<br>" + textbutton.substring(d + 1, textbutton.length()) + "</div><html>");
+
         }
 
     }
+
 
     /**
      * set description of the event/consequences
@@ -372,46 +430,44 @@ public class MyFrame extends JFrame implements ActionListener {
         eventimage.setBounds(760,160,400, 640);
 
         //text event on screen so that every line isn't interrupted
-        int length = text.length();
-        if (description.length() <= 40) {
+        if(description.length() <= 40){
             eventtext.setText(description);
         }
 
-        else if ( description.length() <= 80 ){
-            int   c = 35;
-            while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
-                c++;
-            }
-            eventtext.setText("<html><div style='text-align: center;'>"+description.substring(0, c)+ "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
-        }
-
-        else if (description.length() <= 120) {
-            int   c = 35;
-            int   d = 75;
-            while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
-                c++;
-            }
-            while (description.charAt(d) != '.'&& description.charAt(d) != ' ' && description.charAt(d) != ','){
-                d++;
-            }
-            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, description.length()) + "</div><html>");
-
-        }
-
         else {
-            int   c = 35;
-            int   d = 75;
-            int   e = 110;
-            while (description.charAt(c) != '.'&& description.charAt(c) != ' ' && description.charAt(c) != ','){
-                c++;
+            int c = 40;
+            while (description.charAt(c) != ' '){
+                c--;
             }
-            while (description.charAt(d) != '.'&& description.charAt(d) != ' ' && description.charAt(d) != ','){
-                d++;
+
+            int d = description.length() - c;
+
+            if (d <= 40 ){
+                eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,description.length()) + "</div><html>");
             }
-            while (description.charAt(e) != '.'&& description.charAt(e) != ' ' && description.charAt(e) != ','){
-                e++;
+
+            else{
+                int e = c + 40;
+                while (description.charAt(e) != ' '){
+                    e--;
+                }
+
+                int f = description.length() - c - e;
+                if (f <= 40){
+                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1)+ "</div><html>");
+                }
+
+                else {
+                    int g = c + e + 40;
+                    while (description.charAt(g) != ' '){
+                        g--;
+                    }
+
+                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1, g)+ "<br>" +description.substring(g+1) + "</div><html>");
+                }
+
+
             }
-            eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c)+ "<br>"+ description.substring(c + 1, d)+ "<br>" + description.substring(d + 1, e) + "<br>" + description.substring(e+1, description.length()) + "</div><html>");
 
         }
 
@@ -552,65 +608,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
-    public void newGame(){
-        ev.setSaveSlot(1);
-        ev.getEvent();
-
-        //remove menubuttons
-        this.remove(b_newgame);
-        this.remove(b_load);
-        this.remove(b_settings);
-        this.remove(b_exit);
-        this.remove(b_back);
-
-        //Add and setting things
-        backgroundimage.setIcon(new ImageIcon(path_resources + "arazzogif.gif"));
-
-        this.add(click, 3,0);
-        click.setOpaque(false);
-        click.setContentAreaFilled(false);
-        click.setBorderPainted(false);
-        click.setBounds(0, 0, width, height);
-
-        this.add(heroname, 2,0);
-        float size0 = 25;
-        heroname.setBounds(70,30, 200,50);
-        heroname.setForeground(Color.WHITE);
-        heroname.setFont(heroname.getFont().deriveFont(size0));
-        heroname.setText(Hero.getHeroName());
-
-        this.add(heroimage, 2,0);
-        heroimage.setIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".jpg"));
-        heroimage.setBounds(50, 90, 150,150);
-
-
-        this.add(eventimage, 2, 0);
-        this.add(eventtext, 2,0);
-        timerevent.schedule(taskevent, 2000); //delay for the animation
-
-        this.add(textyear,2,0);
-        float size1 = 20;
-        textyear.setBounds(50, 900, 200, 200);
-        textyear.setFont(textyear.getFont().deriveFont(size1));
-        textyear.setForeground(Color.WHITE);
-        timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
-
-        this.add(textheroage,2,0);
-        float size2 = 20;
-        textheroage.setBounds(90, 55, 200, 50);
-        textheroage.setFont(textheroage.getFont().deriveFont(size2));
-        textheroage.setForeground(Color.WHITE);
-
-
-        this.add(loyaltyimage, 2, 0);
-        loyaltyimage.setIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() + ".png"));
-        loyaltyimage.setBounds(700, 0, 150, 130);
-
-
-
-        a = 0;
-
-    }
 
     //timer for time
     TimerTask timerchange = new TimerTask() {
@@ -760,6 +757,34 @@ public class MyFrame extends JFrame implements ActionListener {
 
             if (b == 0) {
                b_newgame.requestFocus();
+            }
+            if (b == 1) {
+                b_load.requestFocus();
+            }
+            if (b == 2) {
+                b_settings.requestFocus();
+            }
+            if (b == 3) {
+                b_exit.requestFocus();
+            }
+
+
+        }
+    }
+
+    private class GoUp extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if (b > 0)   {
+                b--;
+            }
+            else {
+                b = 3;
+            }
+
+            if (b == 0) {
+                b_newgame.requestFocus();
             }
             if (b == 1) {
                 b_load.requestFocus();
