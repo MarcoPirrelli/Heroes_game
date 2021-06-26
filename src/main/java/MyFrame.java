@@ -350,8 +350,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
         this.add(loyaltyimage, 2, 0);
         int l = (int)Hero.getLoyalty()/10;
-        loyaltyimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty05" + ".png").getImage().getScaledInstance(150,130, Image.SCALE_DEFAULT)));
-        loyaltyimage.setBounds(700, 0, 150, 130);
+        loyaltyimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty05" + ".png").getImage().getScaledInstance(120,91, Image.SCALE_DEFAULT)));
+        loyaltyimage.setBounds(700, 0, 120, 91);
 
 
 
