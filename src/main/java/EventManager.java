@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Timer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -148,7 +147,7 @@ public class EventManager {
             nextId = 0;
         } else
             currentId = getRandomEvent();
-           save();
+        save();
     }
 
     /**
@@ -233,12 +232,18 @@ public class EventManager {
         return events.get(currentId).options[n].deltaLoyalty;
     }
 
-    public int firstEmptySlot(){
-        int first=0;
+    /**
+     * Returns the first empty save slot number (>= 1).
+     * If all save slots are full, returns 0.
+     *
+     * @return positive int
+     */
+    public int firstEmptySlot() {
+        int first = 0;
         try {
             ResultSet r = statement.executeQuery("select SaveId from saves order by 1");
-            for(int i = 1; i<=MAX_SAVES; i++){
-                if(!r.next() || r.getInt("SaveId")>i) {
+            for (int i = 1; i <= MAX_SAVES; i++) {
+                if (!r.next() || r.getInt("SaveId") > i) {
                     first = i;
                     break;
                 }
@@ -250,17 +255,28 @@ public class EventManager {
         return first;
     }
 
+    /**
+     * Sets which save slot the EventManager saves the current game to.
+     *
+     * @param saveSlot int between 1 and MAX_SAVES
+     */
     public void setSaveSlot(int saveSlot) {
         this.saveSlot = saveSlot;
     }
 
-    public void load(int SaveId) {
+    /**
+     * Load a game from a previous save.
+     *
+     * @param saveId int between 1 and MAX_SAVES
+     */
+    public void load(int saveId) {
         try {
-            ResultSet r = statement.executeQuery("select * from saves where SaveId=" + SaveId);
+            ResultSet r = statement.executeQuery("select * from saves where SaveId=" + saveId);
             if (r.isAfterLast()) return;
             saveSlot = r.getInt("SaveId");
             Hero.name = r.getString("HeroName");
             Hero.age = r.getInt("HeroAge");
+            Hero.yearsOfService = r.getInt("Service");
             Hero.health = r.getInt("Health");
             Hero.fame = r.getInt("Fame");
             Hero.money = r.getInt("Money");
@@ -277,9 +293,14 @@ public class EventManager {
         }
     }
 
-    public void deleteSave(int saveId){
+    /**
+     * Delete a game save to free up a slot.
+     *
+     * @param saveId int between 1 and MAX_SAVES
+     */
+    public void deleteSave(int saveId) {
         try {
-            statement.executeUpdate("delete from saves where SaveId= "+saveId);
+            statement.executeUpdate("delete from saves where SaveId= " + saveId);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -287,12 +308,13 @@ public class EventManager {
     }
 
     private void save() throws RuntimeException {
-        if(saveSlot <= 0 || saveSlot > MAX_SAVES) throw new RuntimeException("Error: Illegal save slot!");
+        if (saveSlot <= 0 || saveSlot > MAX_SAVES) throw new RuntimeException("Error: Illegal save slot!");
         try {
             String sql = "insert or replace into saves values(" +
                     saveSlot + ", " +
                     "'" + Hero.name + "'" + ", " +
                     Hero.age + ", " +
+                    Hero.yearsOfService + ", " +
                     Hero.health + ", " +
                     Hero.fame + ", " +
                     Hero.money + ", " +
@@ -302,18 +324,35 @@ public class EventManager {
                     completedEvents + ", " +
                     currentId + ", " +
                     (Hero.artefacts[Hero.WAND] ? 1 : 0) + ", " +
-                    (Hero.artefacts[Hero.CURSE] ? 1 : 0) +")";
+                    (Hero.artefacts[Hero.CURSE] ? 1 : 0) + ")";
             statement.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
         }
     }
-    /*
-    while(r.next()){
-        i=r.getInt("SaveId");
-        arraypulsanti[i].setText(r.getString("HeroName"));
-        arraypulsanti[i].setText(r.getInt>("HeroAge"));
+
+    /**
+     * Returns a ResultSet containing the saves' information meant for display.
+     * <p>
+     * Example usage:
+     * ResultSet r = ev.getAllSaves();
+     * while(r.next()){
+     * i=r.getInt("SaveId");
+     * arraypulsanti[i].setText(r.getString("HeroName"));
+     * ...
+     * }
+     *
+     * @return ResultSet with 0 to MAX_SAVES rows
+     */
+    public ResultSet getAllSaves() {
+        ResultSet ret = null;
+        try {
+            ret = statement.executeQuery("select SaveId, HeroName, HeroAge, Completed from saves");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return ret;
     }
-    */
 }

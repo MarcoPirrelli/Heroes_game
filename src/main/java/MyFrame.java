@@ -159,11 +159,10 @@ public class MyFrame extends JFrame implements ActionListener {
         loyaltyimage = new JLabel(new ImageIcon());
 
         //Timer
-        time = 0;
         textheroage = new JLabel(String.valueOf(Hero.getAge()));
-        textyear = new JLabel(String.valueOf(time));
+        textyear = new JLabel(String.valueOf(Hero.getYearsOfService()));
 
-        //Her
+        //Hero
         heroname = new JLabel(name);
         heroimage = new JLabel(new ImageIcon());
 
@@ -613,10 +612,10 @@ public class MyFrame extends JFrame implements ActionListener {
     TimerTask timerchange = new TimerTask() {
         @Override
         public void run() {
-            time++;
             Hero.age++;
+            Hero.yearsOfService++;
             textheroage.setText("Age: " + String.valueOf(Hero.getAge()));
-            textyear.setText("Years of service: " + time);
+            textyear.setText("Years of service: " + Hero.getYearsOfService());
 
         }
     };

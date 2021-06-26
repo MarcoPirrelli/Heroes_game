@@ -4,7 +4,7 @@ import java.util.TimerTask;
 public class Hero {
     static String name;
     static int age;
-    static int years;
+    static int yearsOfService;
 
     static int health, fame, money, loyalty;
     static int mana;
@@ -28,6 +28,7 @@ public class Hero {
         int max = 35;
         int min = 13;
         age = rand.nextInt(max - min + 1) + min;
+        yearsOfService = 0;
 
         health = 80;
         fame = 50;
@@ -50,6 +51,10 @@ public class Hero {
 
     public static int getAge() {
         return age;
+    }
+
+    public static int getYearsOfService() {
+        return yearsOfService;
     }
 
     public static int getHealth() {
