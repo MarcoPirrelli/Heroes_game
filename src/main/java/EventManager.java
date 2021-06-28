@@ -1,10 +1,7 @@
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class EventManager {
     int currentId;
@@ -14,6 +11,7 @@ public class EventManager {
 
     Connection connection;
     Statement statement;
+    PreparedStatement saveStatement;
     int saveSlot;
     final int MAX_SAVES = 4;
 
@@ -28,9 +26,37 @@ public class EventManager {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src\\main\\resources\\databases\\project.db");
             statement = connection.createStatement();
+            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
+        }
+        try {
+            statement.executeQuery("select SaveId, HeroName, HeroAge, Service, Health, Fame, Money, Loyalty, Mana, Luck, Completed, EventId, Wand, Curse from saves");
+        } catch (SQLException e) {
+            try {
+                statement.executeUpdate("drop table if exists saves");
+                statement.executeUpdate("""
+                        create table saves(
+                        SaveId int primary key,
+                        HeroName text not null,
+                        HeroAge int check(HeroAge >= 0),
+                        Service int check(Service >= 0),
+                        Health int check(Health between 0 and 100),
+                        Fame int check(Fame between 0 and 100),
+                        Money int check(Money between 0 and 100),
+                        Loyalty int check(Loyalty between 0 and 100),
+                        Mana int check(Mana between 0 and 100),
+                        Luck int check(Luck >= 0),
+                        Completed int check(Completed >= 0),
+                        EventId int check(EventId >= 0),
+                        Wand int check(Wand in (0, 1)),
+                        Curse int check(Curse in (0, 1)));""");
+            }
+            catch (Exception e2){
+                e2.printStackTrace();
+                System.exit(0);
+            }
         }
         /*
         [EventId=event]
@@ -310,22 +336,22 @@ public class EventManager {
     private void save() throws RuntimeException {
         if (saveSlot <= 0 || saveSlot > MAX_SAVES) throw new RuntimeException("Error: Illegal save slot!");
         try {
-            String sql = "insert or replace into saves values(" +
-                    saveSlot + ", " +
-                    "'" + Hero.name + "'" + ", " +
-                    Hero.age + ", " +
-                    Hero.yearsOfService + ", " +
-                    Hero.health + ", " +
-                    Hero.fame + ", " +
-                    Hero.money + ", " +
-                    Hero.loyalty + ", " +
-                    Hero.mana + ", " +
-                    Hero.luck + ", " +
-                    completedEvents + ", " +
-                    currentId + ", " +
-                    (Hero.artefacts[Hero.WAND] ? 1 : 0) + ", " +
-                    (Hero.artefacts[Hero.CURSE] ? 1 : 0) + ")";
-            statement.executeUpdate(sql);
+            saveStatement.setInt(1, saveSlot);
+            saveStatement.setString(2, Hero.name);
+            saveStatement.setInt(3, Hero.age);
+            saveStatement.setInt(4, Hero.yearsOfService);
+            saveStatement.setInt(5, Hero.health);
+            saveStatement.setInt(6, Hero.fame);
+            saveStatement.setInt(7, Hero.money);
+            saveStatement.setInt(8, Hero.loyalty);
+            saveStatement.setInt(9, Hero.mana);
+            saveStatement.setInt(10, Hero.luck);
+            saveStatement.setInt(11, completedEvents);
+            saveStatement.setInt(12, currentId);
+            saveStatement.setInt(13, (Hero.artefacts[Hero.WAND] ? 1 : 0));
+            saveStatement.setInt(14, (Hero.artefacts[Hero.CURSE] ? 1 : 0));
+
+            saveStatement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
