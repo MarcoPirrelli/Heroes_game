@@ -26,7 +26,6 @@ public class EventManager {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src\\main\\resources\\databases\\project.db");
             statement = connection.createStatement();
-            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -51,12 +50,17 @@ public class EventManager {
                         Completed int check(Completed >= 0),
                         EventId int check(EventId >= 0),
                         Wand int check(Wand in (0, 1)),
-                        Curse int check(Curse in (0, 1)));""");
-            }
-            catch (Exception e2){
+                        Curse int check(Curse in (0, 1)))""");
+            } catch (Exception e2) {
                 e2.printStackTrace();
                 System.exit(0);
             }
+        }
+        try {
+            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
         }
         /*
         [EventId=event]
