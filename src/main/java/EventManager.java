@@ -76,7 +76,7 @@ public class EventManager {
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
         babysitter.setDescription("Every hero has to start somewhere... The local school's teacher has asked you to escort the children to the nearby village.");
-        babysitter.setOption(0, new Option("Accept", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 20, 0, 0));
+        babysitter.setOption(0, new Option("Accept", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 0, 0, 0));
         babysitter.setOption(1, new Option("Accept and buy them breakfast", "You treat the children to a tasty breakfast on the road. That's all it takes to get them to like you.", 2, 10, -5, 0, 0, 0));
         babysitter.setOption(2, new Option("Refuse", "Sometimes you'd rather just sleep...", 5, 0, 0, 0, 0, 0));
         babysitter.setOption(3, new Option("Accept, but kill the children on the way there", "The village won't forget that.", 0, -25, 0, 0, 0, 0));
@@ -84,12 +84,12 @@ public class EventManager {
         WorldEvent cat = new WorldEvent(1, 0, 0, 0, 0);
         events.put(2, cat);
         cat.setDescription("Every hero has to start somewhere... A lady has asked you to rescue her cat from a tree.");
-        cat.setOption(0, new Option("Climb the tree and grab the cat", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 30, 0, 0));
+        cat.setOption(0, new Option("Climb the tree and grab the cat", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 0, 0, 0));
         cat.setOption(1, new Option("Pet the cat and bring it back to the lady", "The cat seems to like you.", 0, 5, 0, 0, 0, 1));
         cat.setOption(2, new Option("Walk away", "The lady seems disappointed.", 0, -3, 0, 0, 0, 0));
         cat.setOption(3, new Option("Chop down the tree", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 0));
 
-        WorldEvent investigation = new WorldEvent(10, 0, 0, 0, 0);
+        WorldEvent investigation = new WorldEvent(20, 0, 0, 0, 0);
         events.put(10, investigation);
         investigation.setDescription("You've heard rumors of a mysterious figure roaming near the catacombs. Should you investigate?");
         investigation.setOption(0, new Option("Yes", "You arrive at night. As you approach the hooded figure, it runs into the catacombs.", 0, 0, 0, 0, 0, 0));
@@ -99,19 +99,19 @@ public class EventManager {
         events.put(11, catacombsEntrance);
         investigation.options[0].setNextEvent(11);
         catacombsEntrance.setDescription("The mysterious figure ran into the catacombs. What will you do?");
-        catacombsEntrance.setOption(0, new Option("Chase it into the catacombs", "As you run into the catacombs, a sense of dread befalls you.", 0, 0, 0, 0, 0, -3));
-        catacombsEntrance.setOption(1, new Option("Collapse the entrance", "After only a few blows, the entrance collapses.", 0, -5, 0, 0, 0, 0));
+        catacombsEntrance.setOption(0, new Option("Chase it into the catacombs", "As you run into the catacombs, a sense of dread befalls you.", 0, 0, 0, 0, 0, -1));
+        catacombsEntrance.setOption(1, new Option("Collapse the entrance", "After only a few blows, the entrance collapses.", 0, -5, 10, 0, 0, 0));
         catacombsEntrance.setOption(2, new Option("Walk away", "As you walk back, you hear faint echoes coming from the catacombs. None of your business.", 0, 0, 0, 0, 0, 0));
 
         WorldEvent catacombs = new WorldEvent(0, 0, 0, 0, 0);
         events.put(12, catacombs);
         catacombsEntrance.options[0].setNextEvent(12);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
-        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 10, 0, 0, 0, 0));
+        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 15, 0, 0, 0, 0));
         catacombs.options[0].setItem(Hero.CURSE, 1);
-        catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon seems to have taken a liking to you, and it gifts you a magic wand!", 0, 0, 0, 0, 0, 0));
+        catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3));
         catacombs.options[1].setItem(Hero.WAND, 1);
-        catacombs.setOption(2, new Option("Magic: Banish the demon back to hell", "With a zap of your magic wand, the demon is sent back to hell. How ironic...", 0, 15, 0, 0, 0, 0));
+        catacombs.setOption(2, new Option("Banish the demon with a spell", "With a zap of your magic wand, the demon is sent back to hell.", 0, 15, 0, 0, -20, 0));
         catacombs.options[2].setMagic(true);
 
         WorldEvent exorcist = new WorldEvent(15, 0, 0, 0, 0);
@@ -119,10 +119,10 @@ public class EventManager {
         exorcist.setDescription("An old man in a tunic approaches you saying he can perceive a curse upon you. He claims he can exorcise it.");
         exorcist.setOption(0, new Option("Ask him to exorcise the curse", "The old man chants words you can't understand. The curse has been lifted.", 0, 0, 0, 0, -15, 0));
         exorcist.options[0].setItem(Hero.CURSE, -1);
-        exorcist.setOption(1, new Option("Refuse", "The old man walks away yelling that you will only bring misfortune.", 0, -10, 0, 0, 0, 0));
+        exorcist.setOption(1, new Option("Refuse", "The old man walks away yelling that you will only bring misfortune to the realm.", 0, -10, 0, 0, 0, 0));
         exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0, 0, 0, 0, 0, 0));
 
-        WorldEvent potionMerchant = new WorldEvent(10, -0.3, 0, 0, 0);
+        WorldEvent potionMerchant = new WorldEvent(25, -0.4, 0, 0, 0);
         events.put(20, potionMerchant);
         potionMerchant.setDescription("You arrive at a potion merchant's stand.");
         potionMerchant.setOption(0, new Option("Buy a health potion", "You drink the health potion and feel rejuvenated.", 10, 0, -10, 0, 0, 0));
@@ -134,7 +134,39 @@ public class EventManager {
         events.put(21, massacre);
         massacre.setDescription("The king has requested your assistance in culling a village.");
         massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
-        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased.", 0, 0, 0, 0, -10, 0));
+        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased.", 0, 0, 0, -10, 0, 0));
+
+        WorldEvent slimes = new WorldEvent(40,0,0,0,0);
+        events.put(22, slimes);
+        slimes.setDescription("You've run into some slimes in the swamp.");
+        slimes.setOption(0, new Option("Fight the slimes", "Killing slimes with a sword can be tough, but you managed to pull through.", -10, 10, 0, 0, 0,0));
+        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -20, 0, 0, 0, 0,0));
+        slimes.setOption(2,new Option("Cast an explosion spell", "That worked better than you expected.", 0,10,0,0,-10,0));
+        slimes.options[2].setMagic(true);
+
+        WorldEvent crystals = new WorldEvent(10, 0, 0,0.1,0);
+        events.put(23, crystals);
+        crystals.setDescription("The merchants guild has asked you to recover a lost shipment of magic crystals.");
+        crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0,0,10,0,30,0));
+        crystals.setOption(1, new Option("Refuse", "The merchants are disappointed.",0,-5,0,0,0, 0));
+
+        WorldEvent dice1 = new WorldEvent(20, 0, 0, 0, 0);
+        events.put(30, dice1);
+        dice1.setDescription("A man has challenged you to a game of dice for money.");
+        dice1.setOption(0, new Option("Throw the dice", "You lost. Better luck next time!", 0, 0, -15, 0, 0, 0));
+        dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0,-1,0,0,0,0));
+
+        WorldEvent dice2 = new WorldEvent(5, 0, 0, 0, 0);
+        events.put(31, dice2);
+        dice2.setDescription("A man has challenged you to a game of dice for money.");
+        dice2.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 1));
+        dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0,-1,0,0,0,0));
+
+        WorldEvent dice3 = new WorldEvent(5, 0, 0, 0, 0);
+        events.put(32, dice3);
+        dice3.setDescription("A man has challenged you to a game of dice for money.");
+        dice3.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 0));
+        dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0,-1,0,0,0,0));
 
 
         //Dovranno essere spostati
@@ -150,6 +182,11 @@ public class EventManager {
             possibleEvents.add(10);
             possibleEvents.add(20);
             possibleEvents.add(21);
+            possibleEvents.add(22);
+            possibleEvents.add(23);
+            possibleEvents.add(30);
+            possibleEvents.add(31);
+            possibleEvents.add(32);
             if (Hero.hasCurse())
                 possibleEvents.add(13);
         }
