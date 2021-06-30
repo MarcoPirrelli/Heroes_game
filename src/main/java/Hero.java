@@ -15,6 +15,7 @@ public class Hero {
     final static int CURSE = 1;
     static boolean[] artefacts = new boolean[ART_NUM];
 
+
     /**
      * Resets the hero's statistics and generates a new random name.
      * Should be called when a new game is started.
@@ -77,12 +78,11 @@ public class Hero {
         return mana;
     }
 
-    public static boolean hasWand() {
-        return artefacts[WAND];
-    }
+    public static boolean hasWand() { return artefacts[WAND]; }
 
     public static boolean hasCurse() {
         return artefacts[CURSE];
     }
+
 
 }

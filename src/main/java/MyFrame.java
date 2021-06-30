@@ -56,6 +56,15 @@ public class MyFrame extends JFrame implements ActionListener {
     JPanel statisticspanel;
     GridBagConstraints con1;
 
+    //Artifacts
+    JLabel art0;
+    JLabel art1;
+    JLabel art2;
+    JLabel art3;
+    JLabel art;
+    JPanel artifactspanel;
+    GridBagConstraints con3;
+
     //JButtons
     private final JButton b_newgame, b_load, b_settings, b_exit;
     private final JButton b_back;
@@ -63,6 +72,9 @@ public class MyFrame extends JFrame implements ActionListener {
     private final JButton b_w, b_e, b_n, b_s;
     JButton[] menubutton;
     JPanel buttonspanel;
+    private final JButton b_slot0, b_slot1, b_slot2;
+    JButton[] slotbutton;
+    JPanel slotpanel;
 
     //Variables
     int a = 100;
@@ -82,7 +94,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         //Background Image
         backgroundimage = new JLabel(new ImageIcon());
-        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "startgif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         back.add(backgroundimage);
 
         //Menu Buttons
@@ -95,13 +107,13 @@ public class MyFrame extends JFrame implements ActionListener {
 
         for (JButton b : menubutton){
             b.addActionListener(this);
-            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT))));
+            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT)));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
         }
-        b_newgame.setIcon((new ImageIcon(new ImageIcon(path_resources + "buttonstartsel.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT))));
+        b_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstartsel.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT)));
 
 
         buttonspanel = new JPanel(new GridBagLayout());
@@ -170,6 +182,8 @@ public class MyFrame extends JFrame implements ActionListener {
             b.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo1.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
         }
 
 
@@ -232,11 +246,88 @@ public class MyFrame extends JFrame implements ActionListener {
         con2.gridheight = 2;
         heropanel.add(heroimage, con2);
 
-
-
-
         heropanel.setOpaque(false);
 
+        //Artifacts
+
+        art0 = new JLabel();
+        art1 = new JLabel();
+        art2 = new JLabel();
+        art3 = new JLabel();
+        art = new JLabel();
+
+        art0.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
+        art1.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
+        art2.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
+        art3.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
+        art.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts.png").getImage().getScaledInstance(width/5, height*10/63, Image.SCALE_DEFAULT)));
+
+        artifactspanel = new JPanel(new GridBagLayout());
+        con3 = new GridBagConstraints();
+
+        Insets i3 = new Insets(0,7,0,8);
+        con3.gridx = 0;
+        con3.gridy = 1;
+        con3.insets = i3;
+        artifactspanel.add(art0, con3);
+
+        con3.gridx = 1;
+        con3.gridy = 1;
+
+        artifactspanel.add(art1, con3);
+
+        con3.gridx = 2;
+        con3.gridy = 1;
+        artifactspanel.add(art2, con3);
+
+        con3.gridx = 3;
+        con3.gridy = 1;
+        artifactspanel.add(art3, con3);
+
+      /*  con3.gridx = 0;
+        con3.gridx = 0;
+
+        con3.gridwidth = 5;
+        con3.anchor = GridBagConstraints.FIRST_LINE_START;
+        artifactspanel.add(art, con3);*/
+
+
+        artifactspanel.setOpaque(false);
+
+        //LOAD
+        b_slot0 = new JButton();
+        b_slot1 = new JButton();
+        b_slot2 = new JButton();
+
+        JButton [] slotbutton = {b_slot0, b_slot1, b_slot2};
+        for (JButton b : slotbutton){
+            b.addActionListener(this);
+            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT)));
+            b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
+            b.setVerticalTextPosition(JButton.CENTER);
+            b.setContentAreaFilled(false);
+            b.setBorderPainted(false);
+        }
+
+        slotpanel = new JPanel(new GridBagLayout());
+        GridBagConstraints con4 = new GridBagConstraints();
+
+        Insets i4 = new Insets(0,0,height/45,0);
+        con4.gridx = 0;
+        con4.gridy = 0;
+        con.weightx = 2;
+        con4.insets = i;
+        slotpanel.add(b_slot0, con4);
+
+        con4.gridx = 0;
+        con4.gridy = 1;
+        slotpanel.add(b_slot1, con4);
+
+        con4.gridx = 0;
+        con4.gridy = 2;
+        slotpanel.add(b_slot2, con4);
+
+        slotpanel.setOpaque(false);
 
 
         frame.add(back, 0,0);
@@ -305,7 +396,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == b_load){
-            //if games are saved, here we will load them!
+            load();
         }
 
         if(e.getSource() == b_settings){
@@ -328,14 +419,14 @@ public class MyFrame extends JFrame implements ActionListener {
             //clicking makes the shields to appear and disappear
         switch (a) {
             case 0:
-                setButtons();
+                setShields();
                 a = 1;
 
             break;
 
             case 1:
 
-                removeButtons();
+                removeShields();
                 a = 0;
 
             break;
@@ -356,27 +447,27 @@ public class MyFrame extends JFrame implements ActionListener {
 
         if (e.getSource() == b_w){
 
-            removeButtons();
-            KeyConsequence(0);
+            removeShields();
+            OptionConsequence(0);
             a = 2;
         }
 
         if (e.getSource() == b_e){
 
-            KeyConsequence(1);
+            OptionConsequence(1);
             a = 2;
         }
 
         if (e.getSource() == b_n){
 
-            KeyConsequence(2);
+            OptionConsequence(2);
             a = 2;
         }
 
         if (e.getSource() == b_s){
 
-            removeButtons();
-            KeyConsequence(3);
+            removeShields();
+            OptionConsequence(3);
             a = 2;
         }
 
@@ -425,7 +516,7 @@ public class MyFrame extends JFrame implements ActionListener {
         this.add(eventimage, 2, 0);
         this.add(eventtext, 2,0);
         eventtext.setFont(eventtext.getFont().deriveFont(size1));
-        timerevent.schedule(taskevent, 2000); //delay for the animation
+        timerevent.schedule(taskevent, 700); //delay for the animation
 
         this.add(textyear,2,0);
         textyear.setBounds(width/38, (height - height/6), width/9, height/5);
@@ -439,10 +530,15 @@ public class MyFrame extends JFrame implements ActionListener {
         moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int)Hero.getMoney()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int)Hero.getMana()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
+
         this.add(statisticspanel, 2, 0);
         int widthstat = width*100/355;
         statisticspanel.setBounds((width - widthstat)/2, height/91, widthstat, height/10);
 
+        this.add(artifactspanel, 3, 0);
+        artifactspanel.setBounds(width*10/14, height*10/12, width/5, height*10/63);
+        this.add(art, 2, 0);
+        art.setBounds(width*10/14, height*1000/1244, width/5, height*10/63);
 
         a = 0;
 
@@ -452,6 +548,10 @@ public class MyFrame extends JFrame implements ActionListener {
      * LOAD
      */
     public void load(){
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        this.add(slotpanel, 2, 0);
+        slotpanel.setBounds(width/4,height/4, width, height);
+        this.remove(buttonspanel);
 
     }
 
@@ -463,9 +563,135 @@ public class MyFrame extends JFrame implements ActionListener {
 
         this.remove(buttonspanel);
 
-        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "settings.jpg").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b3.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         this.add(b_back, 3, 0);
         b_back.setBounds(1200,100, 590, 100);
+
+    }
+
+    public void setShields(){
+        if (ev.getOptionNumber() == 4){
+            JButton[] d1 = {b_w, b_e, b_n, b_s};
+
+            float size = 20;
+            for (JButton b : d1){
+                this.add(b, 3, 0);
+                b.setContentAreaFilled(false);
+                b.setBorderPainted(false);
+                b.setFont(heroname.getFont().deriveFont(size));
+            }
+
+            setDescriptionShields(b_w, ev.getDesc(0));
+            setDescriptionShields(b_e, ev.getDesc(1));
+            setDescriptionShields(b_n, ev.getDesc(2));
+            setDescriptionShields(b_s, ev.getDesc(3));
+
+
+            b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
+            b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
+            b_n.setBounds(width*100/234, height*10/135, widthshield, heightshield);
+            b_s.setBounds(width*100/234, height*100/186, widthshield, heightshield);
+                   /* b_w.setBounds(565, 350, 280, 330);
+                    b_e.setBounds(, 350, 280, 330);
+                    b_n.setBounds(820, 80, 280, 330);
+                    b_s.setBounds(820, 580, 280, 330);
+*/
+
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+            b_w.getActionMap().put("North", new SelectNorth());
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+            b_w.getActionMap().put("South", new SelectSouth());
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
+            b_w.getActionMap().put("West", new SelectWest());
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "East");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("D"), "East");
+            b_w.getActionMap().put("East", new SelectEast());
+
+
+        }
+        else if (ev.getOptionNumber() == 3){
+
+            JButton[] d1 = {b_w, b_e, b_n};
+
+            float size = 20;
+            for (JButton b : d1){
+                this.add(b, 3, 0);
+                b.setContentAreaFilled(false);
+                b.setBorderPainted(false);
+                b.setFont(heroname.getFont().deriveFont(size));
+            }
+
+            setDescriptionShields(b_w, ev.getDesc(0));
+            setDescriptionShields(b_e, ev.getDesc(1));
+            setDescriptionShields(b_n, ev.getDesc(2));
+
+            b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
+            b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
+            b_n.setBounds(width*100/234, height*10/135, widthshield, heightshield);
+
+            //Key binding KeyEvent.VK_SPACE
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+            b_w.getActionMap().put("North", new SelectNorth());
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+            b_w.getActionMap().put("South", new SelectSouth());
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
+            b_w.getActionMap().put("West", new SelectWest());
+
+        }
+        else if (ev.getOptionNumber() == 2){
+
+            JButton[] d1 = {b_w, b_e};
+
+            float size = 20;
+            for (JButton b : d1){
+                this.add(b, 3, 0);
+                b.setContentAreaFilled(false);
+                b.setBorderPainted(false);
+                b.setFont(heroname.getFont().deriveFont(size));
+            }
+
+            setDescriptionShields(b_w, ev.getDesc(0));
+            setDescriptionShields(b_e, ev.getDesc(1));
+
+            b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
+            b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
+
+
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+            b_w.getActionMap().put("North", new SelectNorth());
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+            b_w.getActionMap().put("South", new SelectSouth());
+        }
+    }
+
+    public void removeShields(){
+        if (ev.getOptionNumber() == 4){
+            this.remove(b_w);
+            this.remove(b_e);
+            this.remove(b_n);
+            this.remove(b_s);
+
+        }
+
+        else if (ev.getOptionNumber() ==3){
+            this.remove(b_w);
+            this.remove(b_e);
+            this.remove(b_n);
+        }
+
+        else if (ev.getOptionNumber() ==2){
+            this.remove(b_w);
+            this.remove(b_e);
+        }
+        repaint();  //to remove components it is better to call it
 
     }
 
@@ -475,7 +701,7 @@ public class MyFrame extends JFrame implements ActionListener {
      * @param
      * @param textbutton
      */
-    public void setDescriptionButton(JButton b, String textbutton){
+    public void setDescriptionShields(JButton b, String textbutton){
 
         float size1 = width/100;
         b.setFont(b.getFont().deriveFont(size1));
@@ -566,13 +792,41 @@ public class MyFrame extends JFrame implements ActionListener {
         eventtext.setBounds(width*100/266,height*10/13, width/4, height*10/72);
     }
 
-    public void KeyConsequence(int n){
+    public void OptionConsequence(int n){
 
         setDescription(ev.getResult(n));
 
-        removeButtons();
+        removeShields();
 
         ev.pickOption(n);
+
+        JLabel[] artifactslabel = {art0, art1, art2, art3};
+
+        for(int i = 0; i < Hero.ART_NUM; i++){
+           if (Hero.artefacts[i]){
+               artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/" + i + ".png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
+           }
+           else{
+               artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
+           }
+
+       }
+
+        if(Hero.hasWand()){
+                   con1.gridx = 4;
+                   con1.gridy = 0;
+                   statisticspanel.add(manaimage, con1);
+                   int widthstat = width*100/250;
+                   statisticspanel.setBounds((width - widthstat)/2, height/91, widthstat, height/10);
+               }
+
+        else {
+            statisticspanel.remove(manaimage);
+            int widthstat = width*100/355;
+            statisticspanel.setBounds((width - widthstat)/2, height/91, widthstat, height/10);
+
+        }
+
 
         healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int)Hero.getHealth()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int)Hero.getFame()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
@@ -580,134 +834,9 @@ public class MyFrame extends JFrame implements ActionListener {
         loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int)Hero.getMana()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
 
-
     }
 
-    public void setButtons (){
-         if (ev.getOptionNumber() == 4){
-                JButton[] d1 = {b_w, b_e, b_n, b_s};
 
-                float size = 20;
-                for (JButton b : d1){
-                    this.add(b, 3, 0);
-                    b.setContentAreaFilled(false);
-                    b.setBorderPainted(false);
-                    b.setFont(heroname.getFont().deriveFont(size));
-                }
-
-                    setDescriptionButton(b_w, ev.getDesc(0));
-                    setDescriptionButton(b_e, ev.getDesc(1));
-                    setDescriptionButton(b_n, ev.getDesc(2));
-                    setDescriptionButton(b_s, ev.getDesc(3));
-
-
-                    b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
-                    b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
-                    b_n.setBounds(width*100/234, height*10/135, widthshield, heightshield);
-                    b_s.setBounds(width*100/234, height*100/186, widthshield, heightshield);
-                   /* b_w.setBounds(565, 350, 280, 330);
-                    b_e.setBounds(, 350, 280, 330);
-                    b_n.setBounds(820, 80, 280, 330);
-                    b_s.setBounds(820, 580, 280, 330);
-*/
-
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
-                    b_w.getActionMap().put("North", new SelectNorth());
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
-                    b_w.getActionMap().put("South", new SelectSouth());
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
-                    b_w.getActionMap().put("West", new SelectWest());
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "East");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("D"), "East");
-                    b_w.getActionMap().put("East", new SelectEast());
-
-
-                }
-                else if (ev.getOptionNumber() == 3){
-
-                    JButton[] d1 = {b_w, b_e, b_n};
-
-                    float size = 20;
-                    for (JButton b : d1){
-                        this.add(b, 3, 0);
-                        b.setContentAreaFilled(false);
-                        b.setBorderPainted(false);
-                        b.setFont(heroname.getFont().deriveFont(size));
-                    }
-
-                    setDescriptionButton(b_w, ev.getDesc(0));
-                    setDescriptionButton(b_e, ev.getDesc(1));
-                    setDescriptionButton(b_n, ev.getDesc(2));
-
-                    b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
-                    b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
-                    b_n.setBounds(width*100/234, height*10/135, widthshield, heightshield);
-
-                    //Key binding KeyEvent.VK_SPACE
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
-                    b_w.getActionMap().put("North", new SelectNorth());
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
-                    b_w.getActionMap().put("South", new SelectSouth());
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
-                    b_w.getActionMap().put("West", new SelectWest());
-
-            }
-                else if (ev.getOptionNumber() == 2){
-
-                    JButton[] d1 = {b_w, b_e};
-
-                    float size = 20;
-                    for (JButton b : d1){
-                        this.add(b, 3, 0);
-                        b.setContentAreaFilled(false);
-                        b.setBorderPainted(false);
-                        b.setFont(heroname.getFont().deriveFont(size));
-                    }
-
-                    setDescriptionButton(b_w, ev.getDesc(0));
-                    setDescriptionButton(b_e, ev.getDesc(1));
-
-                    b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
-                    b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
-
-
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
-                    b_w.getActionMap().put("North", new SelectNorth());
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
-                    b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
-                    b_w.getActionMap().put("South", new SelectSouth());
-                }
-    }
-
-    public void removeButtons(){
-        if (ev.getOptionNumber() == 4){
-            this.remove(b_w);
-            this.remove(b_e);
-            this.remove(b_n);
-            this.remove(b_s);
-
-        }
-
-        else if (ev.getOptionNumber() ==3){
-            this.remove(b_w);
-            this.remove(b_e);
-            this.remove(b_n);
-        }
-
-        else if (ev.getOptionNumber() ==2){
-            this.remove(b_w);
-            this.remove(b_e);
-        }
-        repaint();  //to remove components it is better to call it
-
-    }
 
     private void changeFocus(JButton button){
         button.requestFocus();
@@ -748,7 +877,7 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
            if(a == 1){
-           KeyConsequence(0);
+           OptionConsequence(0);
            a = 2;
            }
 
@@ -759,7 +888,7 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(a == 1){
-            KeyConsequence(1);
+            OptionConsequence(1);
             a = 2;
             }
         }
@@ -771,7 +900,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
             if(a == 1){
             if (ev.getOptionNumber() == 3 || ev.getOptionNumber() == 4){
-                KeyConsequence(2);
+                OptionConsequence(2);
                 a = 2;
             } }
 
@@ -783,7 +912,7 @@ public class MyFrame extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if(a == 1){
             if( ev.getOptionNumber() == 4){
-                KeyConsequence(3);
+                OptionConsequence(3);
                 a = 2;
             }}
         }
@@ -799,7 +928,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     add(eventimage, 2, 0);
                     add(eventtext, 2,0);
 
-                    setButtons();
+                    setShields();
                     repaint();
 
                     setDescription(ev.getEventDescription());
@@ -807,7 +936,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     break;
 
                 case 1:
-                    removeButtons();
+                    removeShields();
                     repaint();
                     a = 0;
                 break;
@@ -817,7 +946,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     add(eventimage, 2, 0);
                     add(eventtext, 2,0);
 
-                    setButtons();
+                    setShields();
                     repaint();
 
                     setDescription(ev.getEventDescription());
