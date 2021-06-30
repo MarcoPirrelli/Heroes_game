@@ -19,7 +19,9 @@ public class WorldEvent {
      * @return positive int
      */
     public int fullWeight() {
-        int fw = baseWeight + (int) (Hero.health * healthWeight + Hero.fame * fameWeight + Hero.money * moneyWeight + Hero.loyalty * loyaltyWeight + Hero.luck);
+        int fw = baseWeight + (int) (Hero.getHealth() * healthWeight + Hero.getFame() * fameWeight + Hero.getMoney() * moneyWeight + Hero.getLoyalty() * loyaltyWeight);
+        if(!Hero.hasCurse())
+            fw += Hero.luck;
         return Math.max(fw, 0);
     }
 

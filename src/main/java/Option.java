@@ -5,7 +5,7 @@ public class Option {
     boolean magic = false;
     int nextId = 0;
     int deltaHealth, deltaFame, deltaMoney, deltaLoyalty, deltaMana, deltaLuck;
-    int[] deltaArtefacts = new int[Hero.ART_NUM];
+    int[] deltaArtefacts = new int[Hero.artefacts.length];
 
 
     public Option(String description, String result, int deltaHealth, int deltaFame, int deltaMoney, int deltaLoyalty, int deltaMana, int deltaLuck) {
@@ -18,7 +18,7 @@ public class Option {
         this.deltaMana = deltaMana;
         this.deltaLuck = deltaLuck;
 
-        for (int i = 0; i < Hero.ART_NUM; i++) {
+        for (int i = 0; i < Hero.artefacts.length; i++) {
             deltaArtefacts[i] = 0;
         }
     }
@@ -28,7 +28,7 @@ public class Option {
     }
 
     public void setItem(int item, int action) {
-        if (item >= Hero.ART_NUM || action > 1 || action < -1) {
+        if (item >= Hero.artefacts.length || action > 1 || action < -1) {
             return;
         }
         deltaArtefacts[item] = action;
@@ -41,40 +41,55 @@ public class Option {
     /**
      * Updates the hero's statistics as a consequence of picking this option.
      * Mana is only updated if the hero has the wand.
-     * Luck will not increase above 0 with the curse.
      */
     public void pick() {
-        Hero.health += deltaHealth;
-        if (Hero.health < 0) Hero.health = 0;
-        else if (Hero.health > 100) Hero.health = 100;
+        Hero.addHealth(deltaHealth);
+        Hero.addFame(deltaFame);
+        Hero.addMoney(deltaMoney);
+        Hero.addLoyalty(deltaLoyalty);
+        if (Hero.hasWand())
+            Hero.addMana(deltaMana);
+        Hero.addLuck(deltaLuck);
 
-        Hero.fame += deltaFame;
-        if (Hero.fame < 0) Hero.fame = 0;
-        else if (Hero.fame > 100) Hero.fame = 100;
-
-        Hero.money += deltaMoney;
-        if (Hero.money < 0) Hero.money = 0;
-        else if (Hero.money > 100) Hero.money = 100;
-
-        Hero.loyalty += deltaLoyalty;
-        if (Hero.loyalty < 0) Hero.loyalty = 0;
-        else if (Hero.loyalty > 100) Hero.loyalty = 100;
-
-        if (Hero.hasWand()) {
-            Hero.mana += deltaMana;
-            if (Hero.mana < 0) Hero.mana = 0;
-            else if (Hero.mana > 100) Hero.mana = 100;
+        if (Hero.hasScale()) {
+            int min = 101;
+            int max = -1;
+            int minIndex = 0;
+            int maxIndex = 0;
+            for (int i = 0; i < Hero.stats.length; i++) {
+                if(i==4 && !Hero.hasWand()) continue;
+                if (Hero.stats[i] < min) {
+                    minIndex = i;
+                    min = Hero.stats[i];
+                }
+                if (Hero.stats[i] > max) {
+                    maxIndex = i;
+                    max = Hero.stats[i];
+                }
+            }
+            Hero.stats[minIndex]++;
+            Hero.stats[maxIndex]--;
         }
 
-        if (Hero.hasCurse())
-            Hero.luck = 0;
-        else {
-            Hero.luck += deltaLuck;
-            if (Hero.luck < 0) Hero.luck = 0;
-            else if (Hero.luck > 20) Hero.luck = 20;
-        }
+        if (Hero.getHealth() < 0) Hero.setHealth(0);
+        else if (Hero.getHealth() > 100) Hero.setHealth(100);
 
-        for (int i = 0; i < Hero.ART_NUM; i++) {
+        if (Hero.getFame() < 0) Hero.setFame(0);
+        else if (Hero.getFame() > 100) Hero.setFame(100);
+
+        if (Hero.getMoney() < 0) Hero.setMoney(0);
+        else if (Hero.getMoney() > 100) Hero.setMoney(100);
+
+        if (Hero.getLoyalty() < 0) Hero.setLoyalty(0);
+        else if (Hero.getLoyalty() > 100) Hero.setLoyalty(100);
+
+        if (Hero.getMana() < 0) Hero.setMana(0);
+        else if (Hero.getMana() > 100) Hero.setMana(100);
+
+        if (Hero.getLuck() < 0) Hero.setLuck(0);
+        else if (Hero.getLuck() > 20) Hero.setLuck(20);
+
+        for (int i = 0; i < Hero.artefacts.length; i++) {
             if (deltaArtefacts[i] == 1)
                 Hero.artefacts[i] = true;
             else if (deltaArtefacts[i] == -1)

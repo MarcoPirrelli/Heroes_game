@@ -802,7 +802,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         JLabel[] artifactslabel = {art0, art1, art2, art3};
 
-        for(int i = 0; i < Hero.ART_NUM; i++){
+        for(int i = 0; i < Hero.artefacts.length; i++){
            if (Hero.artefacts[i]){
                artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/" + i + ".png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
            }

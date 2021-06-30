@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.TimerTask;
 
@@ -6,14 +8,13 @@ public class Hero {
     static int age;
     static int yearsOfService;
 
-    static int health, fame, money, loyalty;
-    static int mana;
+    static int[] stats = new int[5];
     static int luck;
 
-    final static int ART_NUM = 2;
+    static boolean[] artefacts = new boolean[3];
     final static int WAND = 0;
     final static int CURSE = 1;
-    static boolean[] artefacts = new boolean[ART_NUM];
+    final static int SCALE = 2;
 
 
     /**
@@ -31,14 +32,13 @@ public class Hero {
         age = rand.nextInt(max - min + 1) + min;
         yearsOfService = 0;
 
-        health = 80;
-        fame = 50;
-        money = 50;
-        loyalty = 50;
-        mana = 50;
+        stats[0] = 80; //health
+        stats[1] = 50; //fame
+        stats[2] = 50; //loyalty
+        stats[3] = 50; //money
+        stats[4] = 50; //mana
         luck = 10;
-        for (int i = 0; i < 2; i++)
-            artefacts[i] = false;
+        Arrays.fill(artefacts, false);
     }
 
     /**
@@ -59,23 +59,27 @@ public class Hero {
     }
 
     public static int getHealth() {
-        return health;
+        return stats[0];
     }
 
     public static int getFame() {
-        return fame;
-    }
-
-    public static int getMoney() {
-        return money;
+        return stats[1];
     }
 
     public static int getLoyalty() {
-        return loyalty;
+        return stats[2];
+    }
+
+    public static int getMoney() {
+        return stats[3];
     }
 
     public static int getMana() {
-        return mana;
+        return stats[4];
+    }
+
+    public static int getLuck() {
+        return luck;
     }
 
     public static boolean hasWand() { return artefacts[WAND]; }
@@ -84,5 +88,57 @@ public class Hero {
         return artefacts[CURSE];
     }
 
+
+    public static boolean hasScale() {
+        return artefacts[SCALE];
+    }
+
+    public static void setHealth(int health) {
+        stats[0] = health;
+    }
+
+    public static void setFame(int fame) {
+        stats[1] = fame;
+    }
+
+    public static void setLoyalty(int loyalty) {
+        stats[2] = loyalty;
+    }
+
+    public static void setMoney(int money) {
+        stats[3] = money;
+    }
+
+    public static void setMana(int mana) {
+        stats[4] = mana;
+    }
+
+    public static void setLuck(int luck) {
+        Hero.luck = luck;
+    }
+
+    public static void addHealth(int health) {
+        stats[0] += health;
+    }
+
+    public static void addFame(int fame) {
+        stats[1] += fame;
+    }
+
+    public static void addLoyalty(int loyalty) {
+        stats[2] += loyalty;
+    }
+
+    public static void addMoney(int money) {
+        stats[3] += money;
+    }
+
+    public static void addMana(int mana) {
+        stats[4] += mana;
+    }
+
+    public static void addLuck(int luck) {
+        Hero.luck += luck;
+    }
 
 }

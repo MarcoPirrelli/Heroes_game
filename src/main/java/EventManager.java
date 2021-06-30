@@ -31,7 +31,7 @@ public class EventManager {
             System.exit(0);
         }
         try {
-            statement.executeQuery("select SaveId, HeroName, HeroAge, Service, Health, Fame, Money, Loyalty, Mana, Luck, Completed, EventId, Wand, Curse from saves");
+            statement.executeQuery("select SaveId, HeroName, HeroAge, Service, Health, Fame, Money, Loyalty, Mana, Luck, Completed, EventId, Wand, Curse, Scale from saves");
         } catch (SQLException e) {
             try {
                 statement.executeUpdate("drop table if exists saves");
@@ -50,14 +50,16 @@ public class EventManager {
                         Completed int check(Completed >= 0),
                         EventId int check(EventId >= 0),
                         Wand int check(Wand in (0, 1)),
-                        Curse int check(Curse in (0, 1)))""");
+                        Curse int check(Curse in (0, 1)),
+                        Scale int check(Scale in (0, 1))
+                        )""");
             } catch (Exception e2) {
                 e2.printStackTrace();
                 System.exit(0);
             }
         }
         try {
-            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -136,38 +138,62 @@ public class EventManager {
         massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
         massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased.", 0, 0, 0, -10, 0, 0));
 
-        WorldEvent slimes = new WorldEvent(40,0,0,0,0);
+        WorldEvent slimes = new WorldEvent(40, 0, 0, 0, 0);
         events.put(22, slimes);
         slimes.setDescription("You've run into some slimes in the swamp.");
-        slimes.setOption(0, new Option("Fight the slimes", "Killing slimes with a sword can be tough, but you managed to pull through.", -10, 10, 0, 0, 0,0));
-        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -20, 0, 0, 0, 0,0));
-        slimes.setOption(2,new Option("Cast an explosion spell", "That worked better than you expected.", 0,10,0,0,-10,0));
+        slimes.setOption(0, new Option("Fight the slimes", "Killing slimes with a sword can be tough, but you managed to pull through.", -10, 10, 0, 0, 0, 0));
+        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -20, 0, 0, 0, 0, 0));
+        slimes.setOption(2, new Option("Cast an explosion spell", "That worked better than you expected.", 0, 10, 0, 0, -10, 0));
         slimes.options[2].setMagic(true);
 
-        WorldEvent crystals = new WorldEvent(10, 0, 0,0.1,0);
+        WorldEvent crystals = new WorldEvent(10, 0, 0, 0.1, 0);
         events.put(23, crystals);
         crystals.setDescription("The merchants guild has asked you to recover a lost shipment of magic crystals.");
-        crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0,0,10,0,30,0));
-        crystals.setOption(1, new Option("Refuse", "The merchants are disappointed.",0,-5,0,0,0, 0));
+        crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0, 0, 10, 0, 30, 0));
+        crystals.setOption(1, new Option("Refuse", "The merchants are disappointed.", 0, -5, 0, 0, 0, 0));
 
         WorldEvent dice1 = new WorldEvent(20, 0, 0, 0, 0);
         events.put(30, dice1);
         dice1.setDescription("A man has challenged you to a game of dice for money.");
         dice1.setOption(0, new Option("Throw the dice", "You lost. Better luck next time!", 0, 0, -15, 0, 0, 0));
-        dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0,-1,0,0,0,0));
+        dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -1, 0, 0, 0, 0));
 
         WorldEvent dice2 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(31, dice2);
         dice2.setDescription("A man has challenged you to a game of dice for money.");
         dice2.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 1));
-        dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0,-1,0,0,0,0));
+        dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -1, 0, 0, 0, 0));
 
         WorldEvent dice3 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(32, dice3);
         dice3.setDescription("A man has challenged you to a game of dice for money.");
         dice3.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 0));
-        dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0,-1,0,0,0,0));
+        dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -1, 0, 0, 0, 0));
 
+        WorldEvent dragon1 = new WorldEvent(5, 0, 0, 0, 0);
+        events.put(40, dragon1);
+        dragon1.setDescription("A dragon has been terrorizing the area and you've been asked to kill it.");
+        dragon1.setOption(0, new Option("Search for its lair and kill it", "After a hard fought battle you manage to defeat the dragon. You also obtain an enchanted scale!", -35, 25, 25, 25, 0, 0));
+        dragon1.options[0].setItem(Hero.SCALE, 1);
+        dragon1.setOption(1, new Option("Try to communicate with the dragon", "When you arrive at the dragon lair you realize the dragon can talk.", 0, 0, 0, 0, 0, 0));
+        dragon1.setOption(2, new Option("Refuse", "Still alive, the dragon burns down and entire village.", 0, -20, 0, -20, 0, 0));
+
+        WorldEvent dragon2 = new WorldEvent(0, 0, 0, 0, 0);
+        events.put(41, dragon2);
+        dragon1.options[1].setNextEvent(41);
+        dragon2.setDescription("The dragon tells you it's laid an egg and needs someone to take care of it");
+        dragon2.setOption(0, new Option("Refuse and destroy the egg", "Enraged, the dragon sends you flying with a flap of its wing.", -50, 0, 0, 0, 0, -2));
+        dragon2.setOption(1, new Option("Refuse, but help the dragon hide its lair.", "The royal guards discover the lair and kill the dragon.",0,0,0,-20,0,0));
+        dragon2.setOption(2, new Option("Accept and take the egg with you", "The dragon thanks you for the help and brings you its egg.", 0,0,0,0,10,0));
+
+        WorldEvent dragonEgg = new WorldEvent(0,0,0,0,0);
+        events.put(42, dragonEgg);
+        dragon2.options[2].setNextEvent(42);
+        dragonEgg.setDescription("What will you do with the egg?");
+        dragonEgg.setOption(0, new Option("Keep it hidden", "You decide to keep it hidden. What happens when it hatches is a problem for another day...", 0,0,0,0,0,2));
+        dragonEgg.setOption(1, new Option("Sell it", "You sell the egg for a considerable amount of money.", 0,0,35,0,0,0));
+        dragonEgg.setOption(2, new Option("Cook it", "You cook a nice dragon egg omelet.", 40,0,0,0,0,0));
+        dragonEgg.setOption(3, new Option("Give it to the king", "You gift the egg to the king.", 0,0,0,35,0,0));
 
         //Dovranno essere spostati
         Hero.reset();
@@ -179,7 +205,6 @@ public class EventManager {
             possibleEvents.add(1);
             possibleEvents.add(2);
         } else {
-            possibleEvents.add(10);
             possibleEvents.add(20);
             possibleEvents.add(21);
             possibleEvents.add(22);
@@ -187,8 +212,12 @@ public class EventManager {
             possibleEvents.add(30);
             possibleEvents.add(31);
             possibleEvents.add(32);
+            if (completedEvents > 5)
+                possibleEvents.add(10);
             if (Hero.hasCurse())
                 possibleEvents.add(13);
+            if (completedEvents > 10)
+                possibleEvents.add(40);
         }
         int weightSum = 0;
         for (int i : possibleEvents) {
@@ -344,16 +373,17 @@ public class EventManager {
             Hero.name = r.getString("HeroName");
             Hero.age = r.getInt("HeroAge");
             Hero.yearsOfService = r.getInt("Service");
-            Hero.health = r.getInt("Health");
-            Hero.fame = r.getInt("Fame");
-            Hero.money = r.getInt("Money");
-            Hero.loyalty = r.getInt("Loyalty");
-            Hero.mana = r.getInt("Mana");
-            Hero.luck = r.getInt("Luck");
+            Hero.setHealth(r.getInt("Health"));
+            Hero.setFame(r.getInt("Fame"));
+            Hero.setMoney(r.getInt("Money"));
+            Hero.setLoyalty(r.getInt("Loyalty"));
+            Hero.setMana(r.getInt("Mana"));
+            Hero.setLuck(r.getInt("Luck"));
             completedEvents = r.getInt("Completed");
             currentId = r.getInt("EventId");
             Hero.artefacts[Hero.WAND] = r.getBoolean("Wand");
             Hero.artefacts[Hero.CURSE] = r.getBoolean("Curse");
+            Hero.artefacts[Hero.SCALE] = r.getBoolean("Scale");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -381,16 +411,17 @@ public class EventManager {
             saveStatement.setString(2, Hero.name);
             saveStatement.setInt(3, Hero.age);
             saveStatement.setInt(4, Hero.yearsOfService);
-            saveStatement.setInt(5, Hero.health);
-            saveStatement.setInt(6, Hero.fame);
-            saveStatement.setInt(7, Hero.money);
-            saveStatement.setInt(8, Hero.loyalty);
-            saveStatement.setInt(9, Hero.mana);
-            saveStatement.setInt(10, Hero.luck);
+            saveStatement.setInt(5, Hero.getHealth());
+            saveStatement.setInt(6, Hero.getFame());
+            saveStatement.setInt(7, Hero.getMoney());
+            saveStatement.setInt(8, Hero.getLoyalty());
+            saveStatement.setInt(9, Hero.getMana());
+            saveStatement.setInt(10, Hero.getLuck());
             saveStatement.setInt(11, completedEvents);
             saveStatement.setInt(12, currentId);
             saveStatement.setInt(13, (Hero.artefacts[Hero.WAND] ? 1 : 0));
             saveStatement.setInt(14, (Hero.artefacts[Hero.CURSE] ? 1 : 0));
+            saveStatement.setInt(15, (Hero.artefacts[Hero.SCALE] ? 1 : 0));
 
             saveStatement.executeUpdate();
         } catch (Exception e) {
