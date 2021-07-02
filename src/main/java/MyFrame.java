@@ -410,7 +410,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         if(e.getSource() == b_newgame){
             ev.newGame();
-            newGame(1);
+            searchSlot();
         }
 
         if(e.getSource() == b_load){
@@ -498,9 +498,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
 
         if(e.getSource() == b_slot1){
-
-            this.remove(b_back);
-
+            remove(b_back);
+            remove(slotpanel);
             revalidate();
             repaint();
             ev.load(1);
@@ -509,9 +508,8 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == b_slot2){
-
-
-
+            remove(b_back);
+            remove(slotpanel);
             revalidate();
             repaint();
             ev.load(2);
@@ -520,9 +518,8 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == b_slot3){
-
-            this.remove(b_back);
-
+            remove(b_back);
+            remove(slotpanel);
             revalidate();
             repaint();
             ev.load(3);
@@ -536,6 +533,9 @@ public class MyFrame extends JFrame implements ActionListener {
     /**
      * new game :)
      */
+    public void searchSlot(){
+        newGame(ev.firstEmptySlot());
+    }
 
     public void newGame(int slot){
 
@@ -548,7 +548,8 @@ public class MyFrame extends JFrame implements ActionListener {
         //Add and setting things
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
-
+        this.add(b_exitgame,4, 0);
+        b_exitgame.setBounds(width*100/113, height/30,  width/10, height/15);
         //click
         this.add(click, 3,0);
         click.setOpaque(false);
@@ -1192,10 +1193,28 @@ public class MyFrame extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             switch (s){
                 case 1:
+                    remove(b_back);
+                    remove(slotpanel);
+                    revalidate();
+                    repaint();
+                    ev.load(1);
+                    newGame(1);
                     break;
                 case 2:
+                    remove(b_back);
+                    remove(slotpanel);
+                    revalidate();
+                    repaint();
+                    ev.load(2);
+                    newGame(2);
                     break;
                 case 3:
+                    remove(b_back);
+                    remove(slotpanel);
+                    revalidate();
+                    repaint();
+                    ev.load(3);
+                    newGame(3);
                     break;
             }
     }
