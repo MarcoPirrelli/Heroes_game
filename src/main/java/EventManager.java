@@ -13,7 +13,7 @@ public class EventManager {
     Statement statement;
     PreparedStatement saveStatement;
     int saveSlot;
-    final int MAX_SAVES = 4;
+    final int MAX_SAVES = 3;
 
     /**
      * Constructor for EventManager.

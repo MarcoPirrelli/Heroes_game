@@ -83,6 +83,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
     final JOptionPane optionPane;
 
+    Boolean isloading = true;
+
 
     MyFrame () {
 
@@ -495,33 +497,54 @@ public class MyFrame extends JFrame implements ActionListener {
 
 
         if(e.getSource() == b_slot1){
+
             remove(b_back);
             remove(slotpanel);
             revalidate();
             repaint();
-            ev.load(1);
-            newGame(1);
 
+            if(isloading){
+                ev.load(1);
+            }
+            else{
+                ev.newGame();
+            }
+
+            newGame(1);
         }
 
         if(e.getSource() == b_slot2){
+
             remove(b_back);
             remove(slotpanel);
             revalidate();
             repaint();
-            ev.load(2);
-            newGame(2);
 
+            if(isloading){
+                ev.load(2);
+            }
+            else{
+                ev.newGame();
+            }
+
+            newGame(2);
         }
 
         if(e.getSource() == b_slot3){
+
             remove(b_back);
             remove(slotpanel);
             revalidate();
             repaint();
-            ev.load(3);
-            newGame(3);
 
+            if(isloading){
+                ev.load(3);
+            }
+            else{
+                ev.newGame();
+            }
+
+            newGame(3);
         }
 
 
@@ -531,7 +554,28 @@ public class MyFrame extends JFrame implements ActionListener {
      * new game :)
      */
     public void searchSlot(){
+        if(ev.firstEmptySlot() == 0){
+            //chiedi agli utenti di scegliere che slot sovraccaricare
+            this.remove(buttonspanel);
+            backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+
+            ev.load(1);
+            b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+            ev.load(2);
+            b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+            ev.load(3);
+            b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+
+
+            this.add(slotpanel, 3, 0);
+            slotpanel.setBounds(0,0, width, height*4/5);
+            isloading = false;
+            revalidate();
+            repaint();
+        }
+        else{
         newGame(ev.firstEmptySlot());
+        }
     }
 
     public void newGame(int slot){
@@ -630,6 +674,7 @@ public class MyFrame extends JFrame implements ActionListener {
         this.add(slotpanel, 3, 0);
         slotpanel.setBounds(0,0, width, height*4/5);
 
+        isloading = true;
         revalidate();
         repaint();
 
@@ -1194,7 +1239,14 @@ public class MyFrame extends JFrame implements ActionListener {
                     remove(slotpanel);
                     revalidate();
                     repaint();
-                    ev.load(1);
+
+                    if(isloading){
+                        ev.load(1);
+                    }
+                    else{
+                        ev.newGame();
+                    }
+
                     newGame(1);
                     break;
                 case 2:
@@ -1202,15 +1254,30 @@ public class MyFrame extends JFrame implements ActionListener {
                     remove(slotpanel);
                     revalidate();
                     repaint();
-                    ev.load(2);
+
+                    if(isloading){
+                        ev.load(2);
+                    }
+                    else{
+                        ev.newGame();
+                    }
+
                     newGame(2);
                     break;
                 case 3:
+
                     remove(b_back);
                     remove(slotpanel);
                     revalidate();
                     repaint();
-                    ev.load(3);
+
+                    if(isloading){
+                        ev.load(3);
+                    }
+                    else{
+                        ev.newGame();
+                    }
+
                     newGame(3);
                     break;
             }
