@@ -409,6 +409,7 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == b_newgame){
+            ev.newGame();
             newGame(1);
         }
 
@@ -538,7 +539,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
     public void newGame(int slot){
 
-        ev.newGame();
         ev.setSaveSlot(slot);
         ev.getEvent();
 
