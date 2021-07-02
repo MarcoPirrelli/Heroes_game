@@ -67,20 +67,21 @@ public class MyFrame extends JFrame implements ActionListener {
 
     //JButtons
     private final JButton b_newgame, b_load, b_settings, b_exit;
-    private final JButton b_back;
+    private final JButton b_back, b_exitgame;
     private final JButton click;
     private final JButton b_w, b_e, b_n, b_s;
-    JButton[] menubutton;
+    JButton[] menubutton, slotbutton;
     JPanel buttonspanel;
-    private final JButton b_slot0, b_slot1, b_slot2;
-    JButton[] slotbutton;
+    private final JButton b_slot1, b_slot2, b_slot3;
     JPanel slotpanel;
 
     //Variables
     int a = 100;
     int b = 0;
-    String text = "";
+    int s = 1;
     String name;
+
+    final JOptionPane optionPane;
 
 
     MyFrame () {
@@ -151,11 +152,7 @@ public class MyFrame extends JFrame implements ActionListener {
         buttonspanel.setOpaque(false);
 
         //Settings Button
-        b_back = new JButton("Menu");
-        b_back.addActionListener(this);
-        b_back.setIcon(new ImageIcon(path_resources + "buttonstart.png"));
-        b_back.setHorizontalTextPosition(JButton.CENTER);
-        b_back.setVerticalTextPosition(JButton.CENTER);
+
 
         //Event Image and Description
         eventimage = new JLabel(new ImageIcon());
@@ -179,13 +176,16 @@ public class MyFrame extends JFrame implements ActionListener {
 
         for (JButton b : d1){
             b.addActionListener(this);
-            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo1.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
         }
 
+        b_w.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo0.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
+        b_e.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo1.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
+        b_n.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo2.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
+        b_s.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo3.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
 
         //Statistics
         healthimage = new JLabel(new ImageIcon());
@@ -229,7 +229,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         heropanel = new JPanel(new GridBagLayout());
         GridBagConstraints con2 = new GridBagConstraints();
-        Insets i2 = new Insets(0,0,10,0);
+        //Insets i2 = new Insets(0,0,10,0);
 
         con2.gridx = 0;
         con2.gridy = 0;
@@ -241,8 +241,8 @@ public class MyFrame extends JFrame implements ActionListener {
         con2.gridheight = 1;
         heropanel.add(textheroage, con2);
 
-        con1.gridx = 0;
-        con1.gridy = 3;
+        con2.gridx = 0;
+        con2.gridy = 2;
         con2.gridheight = 2;
         heropanel.add(heroimage, con2);
 
@@ -265,7 +265,7 @@ public class MyFrame extends JFrame implements ActionListener {
         artifactspanel = new JPanel(new GridBagLayout());
         con3 = new GridBagConstraints();
 
-        Insets i3 = new Insets(0,7,0,8);
+        Insets i3 = new Insets(0,width/256,0,width/256);
         con3.gridx = 0;
         con3.gridy = 1;
         con3.insets = i3;
@@ -273,7 +273,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
         con3.gridx = 1;
         con3.gridy = 1;
-
         artifactspanel.add(art1, con3);
 
         con3.gridx = 2;
@@ -284,48 +283,46 @@ public class MyFrame extends JFrame implements ActionListener {
         con3.gridy = 1;
         artifactspanel.add(art3, con3);
 
-      /*  con3.gridx = 0;
-        con3.gridx = 0;
-
-        con3.gridwidth = 5;
-        con3.anchor = GridBagConstraints.FIRST_LINE_START;
-        artifactspanel.add(art, con3);*/
-
-
         artifactspanel.setOpaque(false);
 
         //LOAD
-        b_slot0 = new JButton();
+
         b_slot1 = new JButton();
         b_slot2 = new JButton();
+        b_slot3 = new JButton();
 
-        JButton [] slotbutton = {b_slot0, b_slot1, b_slot2};
+
+        JButton[] slotbutton = {b_slot1, b_slot2, b_slot3};
         for (JButton b : slotbutton){
             b.addActionListener(this);
-            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT)));
+            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
+            float size2 = width/90;
+            b.setFont(b.getFont().deriveFont(size2));
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
         }
 
-        slotpanel = new JPanel(new GridBagLayout());
-        GridBagConstraints con4 = new GridBagConstraints();
+        slotpanel = new JPanel(new GridBagLayout());//Mah
 
-        Insets i4 = new Insets(0,0,height/45,0);
-        con4.gridx = 0;
-        con4.gridy = 0;
-        con.weightx = 2;
-        con4.insets = i;
-        slotpanel.add(b_slot0, con4);
+        GridBagConstraints con5 = new GridBagConstraints();
+        Insets i4 = new Insets(height/12,0,0,0);
 
-        con4.gridx = 0;
-        con4.gridy = 1;
-        slotpanel.add(b_slot1, con4);
+        con5.gridx = 1;
+        con5.gridy = 1;
+        con5.insets = i4;
+        slotpanel.add(b_slot1, con5);
 
-        con4.gridx = 0;
-        con4.gridy = 2;
-        slotpanel.add(b_slot2, con4);
+        Insets i5 = new Insets(height/21,0,0,0);
+        con5.gridx = 1;
+        con5.gridy = 2;
+        con5.insets = i5;
+        slotpanel.add(b_slot2, con5);
+
+        con5.gridx = 1;
+        con5.gridy = 3;
+        slotpanel.add(b_slot3, con5);
 
         slotpanel.setOpaque(false);
 
@@ -334,6 +331,21 @@ public class MyFrame extends JFrame implements ActionListener {
         frame.add(buttonspanel, 3,0);
         back.setBounds(0,0,width,height);
         buttonspanel.setBounds(0,0 , width, 4*height/5);
+
+
+        b_back = new JButton();
+        b_back.addActionListener(this);
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
+        b_back.setContentAreaFilled(false);
+        b_back.setBorderPainted(false);
+        b_back.setOpaque(false);
+
+        b_exitgame = new JButton();
+        b_exitgame.addActionListener(this);
+        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
+        b_exitgame.setContentAreaFilled(false);
+        b_exitgame.setBorderPainted(false);
+        b_exitgame.setOpaque(false);
 
 
         /*GridBagConstraints con3 = new GridBagConstraints();
@@ -359,22 +371,27 @@ public class MyFrame extends JFrame implements ActionListener {
         layout.add(eventtext, con3);
 
         layout.setOpaque(false);*/
-
+        //Are you sure?
+         optionPane = new JOptionPane(
+                "Are you sure?",
+                JOptionPane.QUESTION_MESSAGE,
+                JOptionPane.YES_NO_OPTION);
+         //optionPane.addActionListener(this);
 
         //KEY
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         frame.getActionMap().put("Escape", new Escape());
 
-        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
-        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "Down");
-        frame.getActionMap().put("Down", new GoDown());
+        buttonspanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
+        buttonspanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "Down");
+        buttonspanel.getActionMap().put("Down", new GoDown());
 
-        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "Up");
-        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "Up");
-        frame.getActionMap().put("Up", new GoUp());
+        buttonspanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "Up");
+        buttonspanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "Up");
+        buttonspanel.getActionMap().put("Up", new GoUp());
 
-        frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
-        frame.getActionMap().put("Continue", new Continue());
+        buttonspanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
+        buttonspanel.getActionMap().put("Continue", new Continue());
 
 
         setContentPane(frame);
@@ -392,7 +409,7 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == b_newgame){
-            newGame();
+            newGame(1);
         }
 
         if(e.getSource() == b_load){
@@ -404,15 +421,11 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == b_exit) {
+           // add(optionPane, 4, 0);
+            //optionPane.setBounds(100, 100, 400, 500);
             System.exit(0);
         }
 
-        if(e.getSource() == b_back){
-
-            this.remove(b_back);
-            this.add(buttonspanel, 3, 0);
-
-        }
 
         if(e.getSource() == click) {
 
@@ -471,15 +484,61 @@ public class MyFrame extends JFrame implements ActionListener {
             a = 2;
         }
 
+        if(e.getSource() == b_exitgame){
+            System.exit(0);
+        }
+
+        if(e.getSource() == b_back){
+            this.remove(slotpanel);
+            this.remove(b_back);
+            this.add(buttonspanel, 3, 0);
+            backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        }
+
+
+        if(e.getSource() == b_slot1){
+
+            this.remove(b_back);
+
+            revalidate();
+            repaint();
+            ev.load(1);
+            newGame(1);
+
+        }
+
+        if(e.getSource() == b_slot2){
+
+
+
+            revalidate();
+            repaint();
+            ev.load(2);
+            newGame(2);
+
+        }
+
+        if(e.getSource() == b_slot3){
+
+            this.remove(b_back);
+
+            revalidate();
+            repaint();
+            ev.load(3);
+            newGame(3);
+
+        }
+
+
     }
 
     /**
      * new game :)
      */
 
-    public void newGame(){
+    public void newGame(int slot){
 
-        ev.setSaveSlot(1);
+        ev.setSaveSlot(slot);
         ev.getEvent();
 
         //remove menubuttons
@@ -487,44 +546,49 @@ public class MyFrame extends JFrame implements ActionListener {
 
         //Add and setting things
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
 
+        //click
         this.add(click, 3,0);
         click.setOpaque(false);
         click.setContentAreaFilled(false);
         click.setBorderPainted(false);
         click.setBounds(0, 0, width, height);
 
+        //hero
         float size0 = width/85;
         heroname.setForeground(Color.WHITE);
         heroname.setFont(heroname.getFont().deriveFont(size0));
         heroname.setText(Hero.getHeroName());
-
         heroimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() +".jpg").getImage().getScaledInstance(width/12 , height/7, Image.SCALE_DEFAULT)));
-
         float size1 = width/100;
         textheroage.setForeground(Color.WHITE);
         textheroage.setFont(textheroage.getFont().deriveFont(size1));
         textheroage.setText("Age: " + Hero.getAge());
 
-       /*this.add(layout,2 ,0);
-        layout.setBounds(0,0,width,height);*/
-
         this.add(heropanel, 2, 0);
         heropanel.setBounds(0,0, width/6, height/4);
 
-        float size2 = width/90;
+
+       /*this.add(layout,2 ,0);
+        layout.setBounds(0,0,width,height);*/
+
+        //event
+
         this.add(eventimage, 2, 0);
         this.add(eventtext, 2,0);
         eventtext.setFont(eventtext.getFont().deriveFont(size1));
         timerevent.schedule(taskevent, 700); //delay for the animation
 
+        //year
         this.add(textyear,2,0);
         textyear.setBounds(width/38, (height - height/6), width/9, height/5);
+        float size2 = width/90;
         textyear.setFont(textyear.getFont().deriveFont(size2));
         textyear.setForeground(Color.WHITE);
         timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
 
-
+        //statistics
         healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int)Hero.getHealth()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int)Hero.getFame()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int)Hero.getMoney()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
@@ -548,27 +612,57 @@ public class MyFrame extends JFrame implements ActionListener {
      * LOAD
      */
     public void load(){
-        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-        this.add(slotpanel, 2, 0);
-        slotpanel.setBounds(width/4,height/4, width, height);
+
         this.remove(buttonspanel);
 
-    }
+        this.add(b_back,3,0);
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbackload.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
+        b_back.setBounds(width*100/113, height/30,  width/10, height/15);
 
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+
+        ev.load(1);
+        b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+        ev.load(2);
+        b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+        ev.load(3);
+        b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+
+        this.add(slotpanel, 3, 0);
+        slotpanel.setBounds(0,0, width, height*4/5);
+
+        revalidate();
+        repaint();
+
+        //KEY
+        slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "DownLoad");
+        slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "DownLoad");
+        slotpanel.getActionMap().put("DownLoad", new GoDownLoad());
+
+        slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "UpLoad");
+        slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "UpLoad");
+        slotpanel.getActionMap().put("UpLoad", new GoUpLoad());
+
+        slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
+        slotpanel.getActionMap().put("LoadNewGame", new LoadNewGame());
+    }
     /**
      * SETTINGS
      */
-
     public void settings(){
 
         this.remove(buttonspanel);
 
+        this.add(b_back,3,0);
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
+        b_back.setBounds(width*100/113, height/30,  width/10, height/15);
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b3.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-        this.add(b_back, 3, 0);
-        b_back.setBounds(1200,100, 590, 100);
 
     }
 
+    /**
+     * Put the shields (options) on screen based on how many options there are
+     */
     public void setShields(){
         if (ev.getOptionNumber() == 4){
             JButton[] d1 = {b_w, b_e, b_n, b_s};
@@ -672,6 +766,9 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * remove buttons on click
+     */
     public void removeShields(){
         if (ev.getOptionNumber() == 4){
             this.remove(b_w);
@@ -953,8 +1050,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
                     a = 1;
                     break;
-
-
             }
         }
     }
@@ -963,7 +1058,7 @@ public class MyFrame extends JFrame implements ActionListener {
     private class Escape extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+           System.exit(0);
         }
     }
 
@@ -1027,4 +1122,81 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
     }
+
+    private class GoDownLoad extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(s<3){
+                s++;}
+            else{
+                s = 1;}
+
+            switch (s){
+                case 1:
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    break;
+                case 2:
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    break;
+                case 3:
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    break;
+
+
+            }
+
+        }
+    }
+
+    private class GoUpLoad extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(s<1){
+                s--;}
+            else{
+                s = 3;}
+
+            switch (s){
+                case 1:
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    break;
+                case 2:
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    break;
+                case 3:
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    break;
+
+
+            }
+
+        }
+    }
+
+
+    private class LoadNewGame extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            switch (s){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+    }
+   }
 }
