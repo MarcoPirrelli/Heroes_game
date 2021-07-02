@@ -538,6 +538,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     public void newGame(int slot){
 
+        ev.newGame(); // <--- Qui
         ev.setSaveSlot(slot);
         ev.getEvent();
 
