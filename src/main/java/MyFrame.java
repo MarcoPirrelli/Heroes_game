@@ -176,16 +176,13 @@ public class MyFrame extends JFrame implements ActionListener {
 
         for (JButton b : d1){
             b.addActionListener(this);
+            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo1.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
         }
 
-        b_w.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo0.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
-        b_e.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo1.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
-        b_n.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo2.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
-        b_s.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo3.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
 
         //Statistics
         healthimage = new JLabel(new ImageIcon());
