@@ -183,19 +183,23 @@ public class EventManager {
         dragon1.options[1].setNextEvent(41);
         dragon2.setDescription("The dragon tells you it's laid an egg and needs someone to take care of it");
         dragon2.setOption(0, new Option("Refuse and destroy the egg", "Enraged, the dragon sends you flying with a flap of its wing.", -50, 0, 0, 0, 0, -2));
-        dragon2.setOption(1, new Option("Refuse, but help the dragon hide its lair.", "The royal guards discover the lair and kill the dragon.",0,0,0,-20,0,0));
-        dragon2.setOption(2, new Option("Accept and take the egg with you", "The dragon thanks you for the help and brings you its egg.", 0,0,0,0,10,0));
+        dragon2.setOption(1, new Option("Refuse, but help the dragon hide its lair.", "The royal guards discover the lair and kill the dragon.", 0, 0, 0, -20, 0, 0));
+        dragon2.setOption(2, new Option("Accept and take the egg with you", "The dragon thanks you for the help and brings you its egg.", 0, 0, 0, 0, 10, 0));
 
-        WorldEvent dragonEgg = new WorldEvent(0,0,0,0,0);
+        WorldEvent dragonEgg = new WorldEvent(0, 0, 0, 0, 0);
         events.put(42, dragonEgg);
         dragon2.options[2].setNextEvent(42);
         dragonEgg.setDescription("What will you do with the egg?");
-        dragonEgg.setOption(0, new Option("Keep it hidden", "You decide to keep it hidden. What happens when it hatches is a problem for another day...", 0,0,0,0,0,2));
-        dragonEgg.setOption(1, new Option("Sell it", "You sell the egg for a considerable amount of money.", 0,0,35,0,0,0));
-        dragonEgg.setOption(2, new Option("Cook it", "You cook a nice dragon egg omelet.", 40,0,0,0,0,0));
-        dragonEgg.setOption(3, new Option("Give it to the king", "You gift the egg to the king.", 0,0,0,35,0,0));
+        dragonEgg.setOption(0, new Option("Keep it hidden", "You decide to keep it hidden. What happens when it hatches is a problem for another day...", 0, 0, 0, 0, 0, 2));
+        dragonEgg.setOption(1, new Option("Sell it", "You sell the egg for a considerable amount of money.", 0, 0, 35, 0, 0, 0));
+        dragonEgg.setOption(2, new Option("Cook it", "You cook a nice dragon egg omelet.", 40, 0, 0, 0, 0, 0));
+        dragonEgg.setOption(3, new Option("Give it to the king", "You gift the egg to the king.", 0, 0, 0, 35, 0, 0));
+    }
 
-        //Dovranno essere spostati
+    public void newGame() {
+        currentId = 0;
+        nextId = 0;
+        completedEvents = 0;
         Hero.reset();
     }
 
