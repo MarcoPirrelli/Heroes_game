@@ -152,23 +152,36 @@ public class EventManager {
         crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0, 0, 10, 0, 30, 0));
         crystals.setOption(1, new Option("Refuse", "The merchants are disappointed.", 0, -5, 0, 0, 0, 0));
 
+        WorldEvent flower = new WorldEvent(35,0,0,0,0);
+        events.put(24, flower);
+        flower.setDescription("A nurse has asked you to pick find a rare flower that grows in the north, to heal a comatose patient.");
+        flower.setOption(0, new Option("Head north to find the flower", "After a long journey, you manage to find the flower, but it wilts on the way back.", -5,-5,0,0,0,0));
+        flower.setOption(1, new Option("Look for merchants selling the flower", "You find a back alley merchant selling the flower and, although expensive, you purchase it.", 0,10,-20,0,0,0));
+        flower.setOption(2, new Option("Refuse", "The nurse walks away on the verge of tears.", 0,-10,0,0,0,0));
+
+        WorldEvent thief = new WorldEvent(40, 0,0,0,0);
+        events.put(25, thief);
+        thief.setDescription("While walking at night you notice a thief trying to sneak into a house.");
+        thief.setOption(0, new Option("Alert the guards", "The guards manage to detain the thief", 0,0,0,10,0,0));
+        thief.setOption(1, new Option("Intervene yourself", "You manage to detain thief without a fight", 0,10,0,0,0,0));
+
         WorldEvent dice1 = new WorldEvent(20, 0, 0, 0, 0);
         events.put(30, dice1);
         dice1.setDescription("A man has challenged you to a game of dice for money.");
         dice1.setOption(0, new Option("Throw the dice", "You lost. Better luck next time!", 0, 0, -15, 0, 0, 0));
-        dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -1, 0, 0, 0, 0));
+        dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
         WorldEvent dice2 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(31, dice2);
         dice2.setDescription("A man has challenged you to a game of dice for money.");
         dice2.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 1));
-        dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -1, 0, 0, 0, 0));
+        dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
         WorldEvent dice3 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(32, dice3);
         dice3.setDescription("A man has challenged you to a game of dice for money.");
         dice3.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 0));
-        dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -1, 0, 0, 0, 0));
+        dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
         WorldEvent dragon1 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(40, dragon1);
@@ -213,6 +226,8 @@ public class EventManager {
             possibleEvents.add(21);
             possibleEvents.add(22);
             possibleEvents.add(23);
+            possibleEvents.add(24);
+            possibleEvents.add(25);
             possibleEvents.add(30);
             possibleEvents.add(31);
             possibleEvents.add(32);
