@@ -3,11 +3,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * Class that creates and manages game events and options.
+ * Also contains methods to interact with the database.
+ * Only one object of such class should exist per project.
+ */
 public class EventManager {
     int currentId;
     int nextId = 0;
     HashMap<Integer, WorldEvent> events = new HashMap<>();
     int completedEvents = 0;
+    boolean crowed = false;
 
     Connection connection;
     Statement statement;
@@ -19,7 +25,8 @@ public class EventManager {
      * Constructor for EventManager.
      * Initializes all events with the corresponding weight.
      * Higher weight = event is more likely to happen.
-     * For weight to work noticeably, weight and luck should be comparable.
+     * For weight to work noticeably, weight and luck should be somewhat comparable.
+     * Also establishes the connection to the database and tests the database's integrity.
      */
     public EventManager() {
         try {
@@ -31,7 +38,7 @@ public class EventManager {
             System.exit(0);
         }
         try {
-            statement.executeQuery("select SaveId, HeroName, HeroAge, Service, Health, Fame, Money, Loyalty, Mana, Luck, Completed, EventId, Wand, Curse, Scale from saves");
+            statement.executeQuery("select SaveId, HeroName, HeroAge, Service, Health, Fame, Money, Loyalty, Mana, Luck, Completed, EventId, Wand, Curse, Scale, Crow from saves");
         } catch (SQLException e) {
             try {
                 statement.executeUpdate("drop table if exists saves");
@@ -51,7 +58,8 @@ public class EventManager {
                         EventId int check(EventId >= 0),
                         Wand int check(Wand in (0, 1)),
                         Curse int check(Curse in (0, 1)),
-                        Scale int check(Scale in (0, 1))
+                        Scale int check(Scale in (0, 1)),
+                        Crow int check(Crow in (0, 1))
                         )""");
             } catch (Exception e2) {
                 e2.printStackTrace();
@@ -59,7 +67,7 @@ public class EventManager {
             }
         }
         try {
-            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -152,18 +160,25 @@ public class EventManager {
         crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0, 0, 10, 0, 30, 0));
         crystals.setOption(1, new Option("Refuse", "The merchants are disappointed.", 0, -5, 0, 0, 0, 0));
 
-        WorldEvent flower = new WorldEvent(35,0,0,0,0);
+        WorldEvent flower = new WorldEvent(35, 0, 0, 0, 0);
         events.put(24, flower);
         flower.setDescription("A nurse has asked you to pick find a rare flower that grows in the north, to heal a comatose patient.");
-        flower.setOption(0, new Option("Head north to find the flower", "After a long journey, you manage to find the flower, but it wilts on the way back.", -5,-5,0,0,0,0));
-        flower.setOption(1, new Option("Look for merchants selling the flower", "You find a back alley merchant selling the flower and, although expensive, you purchase it.", 0,10,-20,0,0,0));
-        flower.setOption(2, new Option("Refuse", "The nurse walks away on the verge of tears.", 0,-10,0,0,0,0));
+        flower.setOption(0, new Option("Head north to find the flower", "After a long journey, you manage to find the flower, but it wilts on the way back.", -5, -5, 0, 0, 0, 0));
+        flower.setOption(1, new Option("Look for merchants selling the flower", "You find a back alley merchant selling the flower and, although expensive, you purchase it.", 0, 10, -20, 0, 0, 0));
+        flower.setOption(2, new Option("Refuse", "The nurse walks away on the verge of tears.", 0, -10, 0, 0, 0, 0));
 
-        WorldEvent thief = new WorldEvent(40, 0,0,0,0);
+        WorldEvent thief = new WorldEvent(40, 0, 0, 0, 0);
         events.put(25, thief);
         thief.setDescription("While walking at night you notice a thief trying to sneak into a house.");
-        thief.setOption(0, new Option("Alert the guards", "The guards manage to detain the thief", 0,0,0,10,0,0));
-        thief.setOption(1, new Option("Intervene yourself", "You manage to detain thief without a fight", 0,10,0,0,0,0));
+        thief.setOption(0, new Option("Alert the guards", "The guards manage to detain the thief", 0, 0, 0, 10, 0, 0));
+        thief.setOption(1, new Option("Intervene yourself", "You manage to detain thief without a fight", 0, 10, 0, 0, 0, 0));
+
+        WorldEvent crow = new WorldEvent(15, 0, 0, 0, 0);
+        events.put(26, crow);
+        crow.setDescription("A crow lands near you and demands shiny objects.");
+        crow.setOption(0, new Option("Give the crow some money", "The crow takes your money and flies away", 0, 0, -10, 0, 0, 0));
+        crow.setOption(1, new Option("Kill the crow", "You kill the crow. You can hear a flow of crow cawing in the distance.", 0, 0, 0, 0, 0, 0));
+        crow.options[1].setItem(Hero.CROW, 1);
 
         WorldEvent dice1 = new WorldEvent(20, 0, 0, 0, 0);
         events.put(30, dice1);
@@ -209,13 +224,23 @@ public class EventManager {
         dragonEgg.setOption(3, new Option("Give it to the king", "You gift the egg to the king.", 0, 0, 0, 35, 0, 0));
     }
 
+    /**
+     * Resets all necessary data for a fresh game.
+     * Does NOT need to be called when loading a save.
+     */
     public void newGame() {
         currentId = 0;
         nextId = 0;
         completedEvents = 0;
+        crowed = false;
         Hero.reset();
     }
 
+    /**
+     * Returns a random event based on weight.
+     *
+     * @return Int (Key of the event in "events"). Positive
+     */
     private int getRandomEvent() {
         ArrayList<Integer> possibleEvents = new ArrayList<>();
         if (completedEvents == 0) {
@@ -228,6 +253,7 @@ public class EventManager {
             possibleEvents.add(23);
             possibleEvents.add(24);
             possibleEvents.add(25);
+            possibleEvents.add(26);
             possibleEvents.add(30);
             possibleEvents.add(31);
             possibleEvents.add(32);
@@ -262,11 +288,21 @@ public class EventManager {
             nextId = 0;
         } else
             currentId = getRandomEvent();
-        save();
+
+        crowed = false;
+        if (Hero.hasCrow()) {
+            Random rand = new Random();
+            int r = rand.nextInt(100) + Hero.getLuck();
+            if (r < 40)
+                crowed = true;
+        }
+
+        if (completedEvents != 0)
+            save();
     }
 
     /**
-     * Updates the hero's statistics when an option is chosen.
+     * Updates the hero's statistics when an option is chosen and incresed the completed events counter.
      *
      * @param n The option number (0 to 3)
      */
@@ -279,7 +315,7 @@ public class EventManager {
 
     /**
      * Returns the internal number of the current event.
-     * The number is defined in the EventManager constructor and is often subject to change.
+     * The number is defined in the EventManager constructor and may be subject to change!
      *
      * @return int (1 is the first event)
      */
@@ -289,10 +325,14 @@ public class EventManager {
 
     /**
      * Returns the current event's initial description.
+     * If the hero has been crowed, a different description may be returned.
      *
-     * @return String (Could be several lines long)
+     * @return String (Could be long)
      */
     public String getEventDescription() {
+        if (crowed) {
+            return "The cawing of a thousand crows fills your mind.";
+        }
         return events.get(currentId).description;
     }
 
@@ -403,6 +443,7 @@ public class EventManager {
             Hero.artefacts[Hero.WAND] = r.getBoolean("Wand");
             Hero.artefacts[Hero.CURSE] = r.getBoolean("Curse");
             Hero.artefacts[Hero.SCALE] = r.getBoolean("Scale");
+            Hero.artefacts[Hero.CROW] = r.getBoolean("Crow");
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -441,6 +482,7 @@ public class EventManager {
             saveStatement.setInt(13, (Hero.artefacts[Hero.WAND] ? 1 : 0));
             saveStatement.setInt(14, (Hero.artefacts[Hero.CURSE] ? 1 : 0));
             saveStatement.setInt(15, (Hero.artefacts[Hero.SCALE] ? 1 : 0));
+            saveStatement.setInt(16, (Hero.artefacts[Hero.CROW] ? 1 : 0));
 
             saveStatement.executeUpdate();
         } catch (Exception e) {

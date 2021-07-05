@@ -1,3 +1,6 @@
+/**
+ * Small class to represent options that can be picked as a response to a game event.
+ */
 public class Option {
     String description;
     String result;
@@ -8,6 +11,18 @@ public class Option {
     int[] deltaArtefacts = new int[Hero.artefacts.length];
 
 
+    /**
+     * Event option constructor.
+     *
+     * @param description  Short string
+     * @param result       String
+     * @param deltaHealth  Amount added if this option is picked
+     * @param deltaFame    Amount added if this option is picked
+     * @param deltaMoney   Amount added if this option is picked
+     * @param deltaLoyalty Amount added if this option is picked
+     * @param deltaMana    Amount added if this option is picked
+     * @param deltaLuck    Amount added if this option is picked
+     */
     public Option(String description, String result, int deltaHealth, int deltaFame, int deltaMoney, int deltaLoyalty, int deltaMana, int deltaLuck) {
         this.description = description;
         this.result = result;
@@ -23,10 +38,24 @@ public class Option {
         }
     }
 
+    /**
+     * Sets whether an option is for mages only.
+     *
+     * @param magic true if the option requires a wand
+     */
     public void setMagic(boolean magic) {
         this.magic = magic;
     }
 
+    /**
+     * Sets the specified action for the item
+     * 1 = set to true
+     * 0 = no change
+     * -1 = set to false
+     *
+     * @param item   Item (artefact) to be modified.
+     * @param action int (-1, 0 , 1)
+     */
     public void setItem(int item, int action) {
         if (item >= Hero.artefacts.length || action > 1 || action < -1) {
             return;
@@ -34,6 +63,11 @@ public class Option {
         deltaArtefacts[item] = action;
     }
 
+    /**
+     * When this option is picked the next game event will be the specified one.
+     *
+     * @param nextId The next event that will happen
+     */
     public void setNextEvent(int nextId) {
         this.nextId = nextId;
     }
@@ -41,6 +75,8 @@ public class Option {
     /**
      * Updates the hero's statistics as a consequence of picking this option.
      * Mana is only updated if the hero has the wand.
+     * Applies health loss due to aging.
+     * Applies the effects of the enchanted scale.
      */
     public void pick() {
         Hero.addHealth(deltaHealth);
