@@ -51,13 +51,15 @@ public class Option {
             Hero.addMana(deltaMana);
         Hero.addLuck(deltaLuck);
 
+        Hero.addHealth(-(Hero.age / 50 + 1));
+
         if (Hero.hasScale()) {
             int min = 101;
             int max = -1;
             int minIndex = 0;
             int maxIndex = 0;
             for (int i = 0; i < Hero.stats.length; i++) {
-                if(i==4 && !Hero.hasWand()) continue;
+                if (i == 4 && !Hero.hasWand()) continue;
                 if (Hero.stats[i] < min) {
                     minIndex = i;
                     min = Hero.stats[i];
