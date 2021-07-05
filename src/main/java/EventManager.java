@@ -13,7 +13,6 @@ public class EventManager {
     int nextId = 0;
     HashMap<Integer, WorldEvent> events = new HashMap<>();
     int completedEvents = 0;
-    boolean crowed = false;
 
     Connection connection;
     Statement statement;
@@ -232,8 +231,11 @@ public class EventManager {
         currentId = 0;
         nextId = 0;
         completedEvents = 0;
-        crowed = false;
         Hero.reset();
+    }
+
+    public boolean isCrowed(){
+        return Hero.hasCrow() && completedEvents % 3 == 0;
     }
 
     /**
@@ -289,14 +291,6 @@ public class EventManager {
         } else
             currentId = getRandomEvent();
 
-        crowed = false;
-        if (Hero.hasCrow()) {
-            Random rand = new Random();
-            int r = rand.nextInt(100) + Hero.getLuck();
-            if (r < 40)
-                crowed = true;
-        }
-
         if (completedEvents != 0)
             save();
     }
@@ -330,7 +324,7 @@ public class EventManager {
      * @return String (Could be long)
      */
     public String getEventDescription() {
-        if (crowed) {
+        if (isCrowed()) {
             return "The cawing of a thousand crows fills your mind.";
         }
         return events.get(currentId).description;
