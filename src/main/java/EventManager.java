@@ -234,6 +234,11 @@ public class EventManager {
         Hero.reset();
     }
 
+    /**
+     * Return true if the hero has the crow and if the description will be altered this time.
+     *
+     * @return Boolean
+     */
     public boolean isCrowed(){
         return Hero.hasCrow() && completedEvents % 3 == 0;
     }
