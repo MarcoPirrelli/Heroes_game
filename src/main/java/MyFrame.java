@@ -18,14 +18,14 @@ public class MyFrame extends JFrame implements ActionListener {
     int width = screenSize.width;
     int height = screenSize.height;
 
-      //int width = 960;
-     // int height = 540;
+    //int width = 960;
+    // int height = 540;
 
-    int widthbs = width/3;
-    int heightbs = height/10;
+    int widthbs = width / 3;
+    int heightbs = height / 10;
 
-    int widthshield = width*100/685;
-    int heightshield = height*100/327;
+    int widthshield = width * 100 / 685;
+    int heightshield = height * 100 / 327;
 
     EventManager ev = new EventManager();
 
@@ -37,7 +37,6 @@ public class MyFrame extends JFrame implements ActionListener {
     JLabel heroname;
     JLabel heroimage;
     JPanel heropanel;
-
 
 
     //Bg and Event
@@ -92,7 +91,7 @@ public class MyFrame extends JFrame implements ActionListener {
     Boolean isloading = true;
 
 
-    MyFrame () {
+    MyFrame() {
 
         layout = new JPanel(new GridBagLayout());
 
@@ -107,7 +106,6 @@ public class MyFrame extends JFrame implements ActionListener {
         back.add(backgroundimage);
 
 
-
         //Menu Buttons
         b_newgame = new JButton("New Game");
         b_load = new JButton("Load");
@@ -116,7 +114,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         menubutton = new JButton[]{b_newgame, b_load, b_settings, b_exit};
 
-        for (JButton b : menubutton){
+        for (JButton b : menubutton) {
             b.addActionListener(this);
             b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT)));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
@@ -130,7 +128,7 @@ public class MyFrame extends JFrame implements ActionListener {
         buttonspanel = new JPanel(new GridBagLayout());
         GridBagConstraints con = new GridBagConstraints();
 
-        Insets i = new Insets(0,0,height/45,0);
+        Insets i = new Insets(0, 0, height / 45, 0);
         con.gridx = 2;
         con.gridy = 0;
         con.weightx = 2;
@@ -181,10 +179,9 @@ public class MyFrame extends JFrame implements ActionListener {
         b_s = new JButton("SOUTH");
 
 
-
         JButton[] d1 = {b_w, b_e, b_n, b_s};
 
-        for (JButton b : d1){
+        for (JButton b : d1) {
             b.addActionListener(this);
             b.setIcon((new ImageIcon(new ImageIcon(path_resources + "scudo1.png").getImage().getScaledInstance(widthshield, heightshield, Image.SCALE_DEFAULT))));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
@@ -204,7 +201,7 @@ public class MyFrame extends JFrame implements ActionListener {
         statisticspanel = new JPanel(new GridBagLayout());
         con1 = new GridBagConstraints();
 
-        Insets i1 = new Insets(0,height/108,0,height/108);
+        Insets i1 = new Insets(0, height / 108, 0, height / 108);
 
         con1.gridx = 0;
         con1.gridy = 0;
@@ -263,16 +260,16 @@ public class MyFrame extends JFrame implements ActionListener {
         art3 = new JLabel();
         art = new JLabel();
 
-        art0.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
-        art1.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
-        art2.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
-        art3.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
-        art.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts.png").getImage().getScaledInstance(width/5, height*10/63, Image.SCALE_DEFAULT)));
+        art0.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+        art1.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+        art2.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+        art3.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+        art.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts.png").getImage().getScaledInstance(width / 5, height * 10 / 63, Image.SCALE_DEFAULT)));
 
         artifactspanel = new JPanel(new GridBagLayout());
         con3 = new GridBagConstraints();
 
-        Insets i3 = new Insets(0,width/256,0,width/256);
+        Insets i3 = new Insets(0, width / 256, 0, width / 256);
         con3.gridx = 0;
         con3.gridy = 1;
         con3.insets = i3;
@@ -301,12 +298,12 @@ public class MyFrame extends JFrame implements ActionListener {
 
 
         JButton[] slotbutton = {b_slot1, b_slot2, b_slot3};
-        for (JButton b : slotbutton){
+        for (JButton b : slotbutton) {
             b.addActionListener(this);
-            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
-            float size2 = width/90;
+            float size2 = width / 90;
             b.setFont(b.getFont().deriveFont(size2));
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
@@ -315,14 +312,14 @@ public class MyFrame extends JFrame implements ActionListener {
         slotpanel = new JPanel(new GridBagLayout());//Mah
 
         GridBagConstraints con5 = new GridBagConstraints();
-        Insets i4 = new Insets(height/12,0,0,0);
+        Insets i4 = new Insets(height / 12, 0, 0, 0);
 
         con5.gridx = 1;
         con5.gridy = 1;
         con5.insets = i4;
         slotpanel.add(b_slot1, con5);
 
-        Insets i5 = new Insets(height/21,0,0,0);
+        Insets i5 = new Insets(height / 21, 0, 0, 0);
         con5.gridx = 1;
         con5.gridy = 2;
         con5.insets = i5;
@@ -335,22 +332,22 @@ public class MyFrame extends JFrame implements ActionListener {
         slotpanel.setOpaque(false);
 
 
-        frame.add(back, 0,0);
-        frame.add(buttonspanel, 3,0);
-        back.setBounds(0,0,width,height);
-        buttonspanel.setBounds(0,0 , width, 4*height/5);
+        frame.add(back, 0, 0);
+        frame.add(buttonspanel, 3, 0);
+        back.setBounds(0, 0, width, height);
+        buttonspanel.setBounds(0, 0, width, 4 * height / 5);
 
         //Button exit TOP RIGHT
         b_back = new JButton();
         b_back.addActionListener(this);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
         b_back.setContentAreaFilled(false);
         b_back.setBorderPainted(false);
         b_back.setOpaque(false);
 
         b_exitgame = new JButton();
         b_exitgame.addActionListener(this);
-        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
+        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
         b_exitgame.setContentAreaFilled(false);
         b_exitgame.setBorderPainted(false);
         b_exitgame.setOpaque(false);
@@ -359,10 +356,10 @@ public class MyFrame extends JFrame implements ActionListener {
         b_d_newgame = new JButton();
         b_d_exit = new JButton();
 
-        float size2 = width/90;
+        float size2 = width / 90;
 
         b_d_newgame.addActionListener(this);
-        b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+        b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
         b_d_newgame.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
         b_d_newgame.setVerticalTextPosition(JButton.CENTER);
         b_d_newgame.setContentAreaFilled(false);
@@ -371,7 +368,7 @@ public class MyFrame extends JFrame implements ActionListener {
         b_d_newgame.setText("New Game");
 
         b_d_exit.addActionListener(this);
-        b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+        b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
         b_d_exit.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
         b_d_exit.setVerticalTextPosition(JButton.CENTER);
         b_d_exit.setContentAreaFilled(false);
@@ -380,7 +377,7 @@ public class MyFrame extends JFrame implements ActionListener {
         b_d_exit.setText("Exit");
 
         death = new JLabel("You Died.");
-        float size0 = width/75;
+        float size0 = width / 75;
         death.setForeground(Color.WHITE);
         death.setFont(death.getFont().deriveFont(size0));
 
@@ -388,7 +385,7 @@ public class MyFrame extends JFrame implements ActionListener {
         deathpanel = new JPanel(new GridBagLayout());
 
         GridBagConstraints con6 = new GridBagConstraints();
-        Insets i6= new Insets(height/12,0,0,0);
+        Insets i6 = new Insets(height / 12, 0, 0, 0);
 
         con6.gridx = 1;
         con6.gridy = 1;
@@ -430,11 +427,11 @@ public class MyFrame extends JFrame implements ActionListener {
 
         layout.setOpaque(false);*/
         //Are you sure?
-         optionPane = new JOptionPane(
+        optionPane = new JOptionPane(
                 "Are you sure?",
                 JOptionPane.QUESTION_MESSAGE,
                 JOptionPane.YES_NO_OPTION);
-         //optionPane.addActionListener(this);
+        //optionPane.addActionListener(this);
 
         //KEY
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
@@ -466,102 +463,104 @@ public class MyFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == b_newgame){
+        if (e.getSource() == b_newgame) {
             ev.newGame();
             searchSlot();
         }
 
-        if(e.getSource() == b_load){
+        if (e.getSource() == b_load) {
             load();
         }
 
-        if(e.getSource() == b_settings){
+        if (e.getSource() == b_settings) {
             settings();
         }
 
-        if(e.getSource() == b_exit) {
-           // add(optionPane, 4, 0);
+        if (e.getSource() == b_exit) {
+            // add(optionPane, 4, 0);
             //optionPane.setBounds(100, 100, 400, 500);
             System.exit(0);
         }
 
 
-        if(e.getSource() == click) {
+        if (e.getSource() == click) {
 
             //clicking makes the shields to appear and disappear
-        switch (a) {
-            case 0:
-                setShields();
-                a = 1;
+            switch (a) {
+                case 0:
+                    setShields();
+                    a = 1;
 
-            break;
+                    break;
 
-            case 1:
+                case 1:
 
-                removeShields();
-                a = 0;
+                    removeShields();
+                    a = 0;
 
-            break;
+                    break;
 
-            case 2:
+                case 2:
 
-                for(int i = 0; i < 5; i++){  //i<4 o i <5?
-                    if (Hero.stats[i] == 100 || Hero.stats[i] == 0){
-                         heroDied(i);
-                         a = 3;
-                         break;
+                    boolean died = false;
+                    for (int i = 0; i < 5; i++) {  //i<4 o i <5?
+                        if (Hero.stats[i] == 100 || Hero.stats[i] == 0) {
+                            heroDied(i);
+                            a = 3;
+                            died = true;
+                            break;
+                        }
                     }
-                    else{
+                    if (!died) {
                         ev.getEvent();
                         //this.add(eventimage, 2, 0);
                         //this.add(eventtext, 2,0);
                         setDescription(ev.getEventDescription());
                         a = 0;
                     }
-                }
-            break;
+                    break;
 
-            case 3:
-              afterDeath();
+                case 3:
+                    afterDeath();
 
-            break;
+                    break;
 
+
+            }
 
         }
 
-        }
-
-        if (e.getSource() == b_w){
+        if (e.getSource() == b_w) {
 
             removeShields();
             OptionConsequence(0);
             a = 2;
         }
 
-        if (e.getSource() == b_e){
+        if (e.getSource() == b_e) {
 
             OptionConsequence(1);
             a = 2;
         }
 
-        if (e.getSource() == b_n){
+        if (e.getSource() == b_n) {
 
             OptionConsequence(2);
             a = 2;
         }
 
-        if (e.getSource() == b_s){
+        if (e.getSource() == b_s) {
 
             removeShields();
             OptionConsequence(3);
             a = 2;
         }
 
-        if(e.getSource() == b_exitgame){
+        if (e.getSource() == b_exitgame) {
             System.exit(0);
         }
 
-        if(e.getSource() == b_back){
+        if (e.getSource() == b_back) {
             this.remove(slotpanel);
             this.remove(b_back);
             this.add(buttonspanel, 3, 0);
@@ -569,58 +568,55 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
 
-        if(e.getSource() == b_slot1){
+        if (e.getSource() == b_slot1) {
 
             remove(b_back);
             remove(slotpanel);
             revalidate();
             repaint();
 
-            if(isloading){
+            if (isloading) {
                 ev.load(1);
-            }
-            else{
+            } else {
                 ev.newGame();
             }
 
             newGame(1);
         }
 
-        if(e.getSource() == b_slot2){
+        if (e.getSource() == b_slot2) {
 
             remove(b_back);
             remove(slotpanel);
             revalidate();
             repaint();
 
-            if(isloading){
+            if (isloading) {
                 ev.load(2);
-            }
-            else{
+            } else {
                 ev.newGame();
             }
 
             newGame(2);
         }
 
-        if(e.getSource() == b_slot3){
+        if (e.getSource() == b_slot3) {
 
             remove(b_back);
             remove(slotpanel);
             revalidate();
             repaint();
 
-            if(isloading){
+            if (isloading) {
                 ev.load(3);
-            }
-            else{
+            } else {
                 ev.newGame();
             }
 
             newGame(3);
         }
 
-        if(e.getSource() == b_d_newgame){
+        if (e.getSource() == b_d_newgame) {
 
             //int currentSlot = ev.currentSlot)
             //ev.deleteSave( currentSlot);
@@ -629,7 +625,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
 
-        if(e.getSource() == b_d_exit){
+        if (e.getSource() == b_d_exit) {
             System.exit(0);
         }
 
@@ -639,12 +635,12 @@ public class MyFrame extends JFrame implements ActionListener {
     /**
      * search free slot :)
      */
-    public void searchSlot(){
-        if(ev.firstEmptySlot() == 0){
+    public void searchSlot() {
+        if (ev.firstEmptySlot() == 0) {
             //chiedi agli utenti di scegliere che slot sovraccaricare
             this.remove(buttonspanel);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-            b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+            b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
 
             ev.load(1);
             b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
@@ -653,14 +649,14 @@ public class MyFrame extends JFrame implements ActionListener {
             ev.load(3);
             b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
 
-            float size0 = width/75;
+            float size0 = width / 75;
             overwrite.setForeground(Color.WHITE);
             overwrite.setFont(overwrite.getFont().deriveFont(size0));
-            this.add(overwrite, 4,0);
-            overwrite.setBounds(width/3, height/20, 1000, 160);
+            this.add(overwrite, 4, 0);
+            overwrite.setBounds(width / 3, height / 20, 1000, 160);
 
             this.add(slotpanel, 3, 0);
-            slotpanel.setBounds(0,0, width, height*4/5);
+            slotpanel.setBounds(0, 0, width, height * 4 / 5);
             isloading = false;
             revalidate();
             repaint();
@@ -675,13 +671,12 @@ public class MyFrame extends JFrame implements ActionListener {
 
             slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
             slotpanel.getActionMap().put("LoadNewGame", new LoadNewGame());
-        }
-        else{
-        newGame(ev.firstEmptySlot());
+        } else {
+            newGame(ev.firstEmptySlot());
         }
     }
 
-    public void newGame(int slot){
+    public void newGame(int slot) {
 
         ev.setSaveSlot(slot);
         ev.getEvent();
@@ -693,29 +688,29 @@ public class MyFrame extends JFrame implements ActionListener {
         //Add and setting things
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(backgroundimage, 1, 0);
-        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
-        this.add(b_exitgame,4, 0);
-        b_exitgame.setBounds(width*100/113, height/30,  width/10, height/15);
+        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        this.add(b_exitgame, 4, 0);
+        b_exitgame.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
         //click
-        this.add(click, 3,0);
+        this.add(click, 3, 0);
         click.setOpaque(false);
         click.setContentAreaFilled(false);
         click.setBorderPainted(false);
         click.setBounds(0, 0, width, height);
 
         //hero
-        float size0 = width/85;
+        float size0 = width / 85;
         heroname.setForeground(Color.WHITE);
         heroname.setFont(heroname.getFont().deriveFont(size0));
         heroname.setText(Hero.getHeroName());
-        heroimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() +".jpg").getImage().getScaledInstance(width/12 , height/7, Image.SCALE_DEFAULT)));
-        float size1 = width/100;
+        heroimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".jpg").getImage().getScaledInstance(width / 12, height / 7, Image.SCALE_DEFAULT)));
+        float size1 = width / 100;
         textheroage.setForeground(Color.WHITE);
         textheroage.setFont(textheroage.getFont().deriveFont(size1));
         textheroage.setText("Age: " + Hero.getAge());
 
         this.add(heropanel, 2, 0);
-        heropanel.setBounds(0,0, width/6, height/4);
+        heropanel.setBounds(0, 0, width / 6, height / 4);
 
 
        /*this.add(layout,2 ,0);
@@ -724,33 +719,33 @@ public class MyFrame extends JFrame implements ActionListener {
         //event
 
         this.add(eventimage, 2, 0);
-        this.add(eventtext, 2,0);
+        this.add(eventtext, 2, 0);
         eventtext.setFont(eventtext.getFont().deriveFont(size1));
         timerevent.schedule(taskevent, 700); //delay for the animation
 
         //year
-        this.add(textyear,2,0);
-        textyear.setBounds(width/38, (height - height/6), width/9, height/5);
-        float size2 = width/90;
+        this.add(textyear, 2, 0);
+        textyear.setBounds(width / 38, (height - height / 6), width / 9, height / 5);
+        float size2 = width / 90;
         textyear.setFont(textyear.getFont().deriveFont(size2));
         textyear.setForeground(Color.WHITE);
         timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
 
         //statistics
-        healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int)Hero.getHealth()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int)Hero.getFame()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int)Hero.getMoney()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int)Hero.getMana()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
+        healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int) Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int) Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int) Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int) Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
 
         this.add(statisticspanel, 2, 0);
-        int widthstat = width*100/355;
-        statisticspanel.setBounds((width - widthstat)/2, height/91, widthstat, height/10);
+        int widthstat = width * 100 / 355;
+        statisticspanel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
 
         this.add(artifactspanel, 3, 0);
-        artifactspanel.setBounds(width*10/14, height*10/12, width/5, height*10/63);
+        artifactspanel.setBounds(width * 10 / 14, height * 10 / 12, width / 5, height * 10 / 63);
         this.add(art, 2, 0);
-        art.setBounds(width*10/14, height*1000/1244, width/5, height*10/63);
+        art.setBounds(width * 10 / 14, height * 1000 / 1244, width / 5, height * 10 / 63);
 
         a = 0;
 
@@ -762,13 +757,13 @@ public class MyFrame extends JFrame implements ActionListener {
     /**
      * LOAD
      */
-    public void load(){
+    public void load() {
 
         this.remove(buttonspanel);
 
-        this.add(b_back,3,0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbackload.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
-        b_back.setBounds(width*100/113, height/30,  width/10, height/15);
+        this.add(b_back, 3, 0);
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbackload.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
 
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
@@ -780,7 +775,7 @@ public class MyFrame extends JFrame implements ActionListener {
         b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
 
         this.add(slotpanel, 3, 0);
-        slotpanel.setBounds(0,0, width, height*4/5);
+        slotpanel.setBounds(0, 0, width, height * 4 / 5);
 
         isloading = true;
         revalidate();
@@ -798,113 +793,102 @@ public class MyFrame extends JFrame implements ActionListener {
         slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
         slotpanel.getActionMap().put("LoadNewGame", new LoadNewGame());
     }
+
     /**
      * SETTINGS
      */
-    public void settings(){
+    public void settings() {
 
         this.remove(buttonspanel);
 
-        this.add(b_back,3,0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
-        b_back.setBounds(width*100/113, height/30,  width/10, height/15);
+        this.add(b_back, 3, 0);
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b3.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
     }
 
 
-    public void heroDied(int stat){
+    public void heroDied(int stat) {
 
         String descDeath = "";
-        switch (stat){
+        switch (stat) {
             case 0:
-                if (Hero.stats[0] == 0){
+                if (Hero.stats[0] == 0) {
                     descDeath = "You have no energy to continue living, so you let yourself die under a tree";
-                }
-                else{
+                } else {
                     descDeath = "You feel so good and energetic and life is good. But Steve, a cripple, is envious of your good health and poison you.";
                 }
                 break;
             case 1:
-                if (Hero.stats[1] == 0){
+                if (Hero.stats[1] == 0) {
                     descDeath = "Nobody recognize you anymore. You fell too lonely to continue to live.";
-                }
-                else{
+                } else {
                     descDeath = "One of your fan tries to marry you, but at your rejection he kills you.";
                 }
                 break;
             case 2:
-                if (Hero.stats[2] == 0){
+                if (Hero.stats[2] == 0) {
                     descDeath = "The king doesn't like your unwillingness to obey. So he sentence you to an horrible death.";
-                }
-                else{
+                } else {
                     descDeath = "You are so loyal to the king that people start calling you 'the loyal dog'. Some rebels decide to kill you to damage the king.";
                 }
                 break;
             case 3:
-                if (Hero.stats[3] == 0){
+                if (Hero.stats[3] == 0) {
                     descDeath = "You are hungry, but there is no more money left. You die miserably.";
-                }
-                else{
+                } else {
                     descDeath = "You are now one of the richest man in town. Some thieves want to steal from your home and in the process they kill you.";
                 }
                 break;
             case 4:
-                if (Hero.stats[4] == 0){
+                if (Hero.stats[4] == 0) {
                     descDeath = "You try to light a fire, but the spell is too strong and take away your life.";
-                }
-                else{
+                } else {
                     descDeath = "The mana inside you is too much, you explode.";
                 }
                 break;
         }
 
-        setDeath(descDeath, stat , Hero.stats[stat]);
-
+        setDeath(descDeath, stat, Hero.stats[stat]);
 
 
     }
 
-    public void setDeath(String description, int stat, int valuestat){
+    public void setDeath(String description, int stat, int valuestat) {
 
-        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + valuestat +".png").getImage().getScaledInstance(width*10/48 , height*100/168, Image.SCALE_DEFAULT)));
-        eventimage.setBounds(width*100/252,height*100/677,width*10/48, height*100/168);
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + valuestat + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
-        if(description.length() <= 40){
+        if (description.length() <= 40) {
             eventtext.setText(description);
-        }
-
-        else {
+        } else {
             int c = 40;
-            while (description.charAt(c) != ' '){
+            while (description.charAt(c) != ' ') {
                 c--;
             }
 
             int d = description.length() - c;
 
-            if (d <= 40 ){
-                eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,description.length()) + "</div><html>");
-            }
-
-            else{
+            if (d <= 40) {
+                eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
+            } else {
                 int e = c + 40;
-                while (description.charAt(e) != ' '){
+                while (description.charAt(e) != ' ') {
                     e--;
                 }
 
                 int f = description.length() - c - e;
-                if (f <= 40){
-                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1)+ "</div><html>");
-                }
-
-                else {
+                if (f <= 40) {
+                    eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, e) + "<br>" + description.substring(e + 1) + "</div><html>");
+                } else {
                     int g = c + e + 40;
-                    while (description.charAt(g) != ' '){
+                    while (description.charAt(g) != ' ') {
                         g--;
                     }
 
-                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1, g)+ "<br>" +description.substring(g+1) + "</div><html>");
+                    eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, e) + "<br>" + description.substring(e + 1, g) + "<br>" + description.substring(g + 1) + "</div><html>");
                 }
 
 
@@ -912,17 +896,17 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
 
-        eventtext.setBounds(width*100/266,height*10/13, width/4, height*10/72);
+        eventtext.setBounds(width * 100 / 266, height * 10 / 13, width / 4, height * 10 / 72);
 
 
     }
 
-    public void afterDeath(){
+    public void afterDeath() {
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(backgroundimage, 4, 0);
         death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + ev.completedEvents + " events.");
         add(deathpanel, 5, 0);
-        deathpanel.setBounds(0,0, width,height);
+        deathpanel.setBounds(0, 0, width, height);
         revalidate();
         repaint();
 
@@ -937,15 +921,16 @@ public class MyFrame extends JFrame implements ActionListener {
         deathpanel.getActionMap().put("AfterDeath", new AfterDeath());
 
     }
+
     /**
      * Put the shields (options) on screen based on how many options there are
      */
-    public void setShields(){
-        if (ev.getOptionNumber() == 4){
+    public void setShields() {
+        if (ev.getOptionNumber() == 4) {
             JButton[] d1 = {b_w, b_e, b_n, b_s};
 
             float size = 20;
-            for (JButton b : d1){
+            for (JButton b : d1) {
                 this.add(b, 3, 0);
                 b.setContentAreaFilled(false);
                 b.setBorderPainted(false);
@@ -958,10 +943,10 @@ public class MyFrame extends JFrame implements ActionListener {
             setDescriptionShields(b_s, ev.getDesc(3));
 
 
-            b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
-            b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
-            b_n.setBounds(width*100/234, height*10/135, widthshield, heightshield);
-            b_s.setBounds(width*100/234, height*100/186, widthshield, heightshield);
+            b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
+            b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
+            b_n.setBounds(width * 100 / 234, height * 10 / 135, widthshield, heightshield);
+            b_s.setBounds(width * 100 / 234, height * 100 / 186, widthshield, heightshield);
                    /* b_w.setBounds(565, 350, 280, 330);
                     b_e.setBounds(, 350, 280, 330);
                     b_n.setBounds(820, 80, 280, 330);
@@ -982,13 +967,12 @@ public class MyFrame extends JFrame implements ActionListener {
             b_w.getActionMap().put("East", new SelectEast());
 
 
-        }
-        else if (ev.getOptionNumber() == 3){
+        } else if (ev.getOptionNumber() == 3) {
 
             JButton[] d1 = {b_w, b_e, b_n};
 
             float size = 20;
-            for (JButton b : d1){
+            for (JButton b : d1) {
                 this.add(b, 3, 0);
                 b.setContentAreaFilled(false);
                 b.setBorderPainted(false);
@@ -999,9 +983,9 @@ public class MyFrame extends JFrame implements ActionListener {
             setDescriptionShields(b_e, ev.getDesc(1));
             setDescriptionShields(b_n, ev.getDesc(2));
 
-            b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
-            b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
-            b_n.setBounds(width*100/234, height*10/135, widthshield, heightshield);
+            b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
+            b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
+            b_n.setBounds(width * 100 / 234, height * 10 / 135, widthshield, heightshield);
 
             //Key binding KeyEvent.VK_SPACE
             b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
@@ -1014,13 +998,12 @@ public class MyFrame extends JFrame implements ActionListener {
             b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
             b_w.getActionMap().put("West", new SelectWest());
 
-        }
-        else if (ev.getOptionNumber() == 2){
+        } else if (ev.getOptionNumber() == 2) {
 
             JButton[] d1 = {b_w, b_e};
 
             float size = 20;
-            for (JButton b : d1){
+            for (JButton b : d1) {
                 this.add(b, 3, 0);
                 b.setContentAreaFilled(false);
                 b.setBorderPainted(false);
@@ -1030,8 +1013,8 @@ public class MyFrame extends JFrame implements ActionListener {
             setDescriptionShields(b_w, ev.getDesc(0));
             setDescriptionShields(b_e, ev.getDesc(1));
 
-            b_w.setBounds(width*100/339, height/3, widthshield, heightshield);
-            b_e.setBounds(width*100/179, height/3, widthshield, heightshield);
+            b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
+            b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
 
 
             b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
@@ -1046,22 +1029,18 @@ public class MyFrame extends JFrame implements ActionListener {
     /**
      * remove buttons on click
      */
-    public void removeShields(){
-        if (ev.getOptionNumber() == 4){
+    public void removeShields() {
+        if (ev.getOptionNumber() == 4) {
             this.remove(b_w);
             this.remove(b_e);
             this.remove(b_n);
             this.remove(b_s);
 
-        }
-
-        else if (ev.getOptionNumber() ==3){
+        } else if (ev.getOptionNumber() == 3) {
             this.remove(b_w);
             this.remove(b_e);
             this.remove(b_n);
-        }
-
-        else if (ev.getOptionNumber() ==2){
+        } else if (ev.getOptionNumber() == 2) {
             this.remove(b_w);
             this.remove(b_e);
         }
@@ -1072,37 +1051,34 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * set description of the options
+     *
      * @param
      * @param textbutton
      */
-    public void setDescriptionShields(JButton b, String textbutton){
+    public void setDescriptionShields(JButton b, String textbutton) {
 
-        float size1 = width/100;
+        float size1 = width / 100;
         b.setFont(b.getFont().deriveFont(size1));
 
-        if(textbutton.length() <= 20){
+        if (textbutton.length() <= 20) {
             b.setText(textbutton);
-        }
-
-        else {
+        } else {
             int c = 20;
-            while (textbutton.charAt(c) != ' '){
+            while (textbutton.charAt(c) != ' ') {
                 c--;
             }
 
             int d = textbutton.length() - c;
 
-            if (d <= 20 ){
-                b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1,textbutton.length()) + "</div><html>");
-            }
-
-            else{
+            if (d <= 20) {
+                b.setText("<html><div style='text-align: center;'>" + textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1, textbutton.length()) + "</div><html>");
+            } else {
                 int e = c + 20;
-                while (textbutton.charAt(e) != ' '){
+                while (textbutton.charAt(e) != ' ') {
                     e--;
                 }
 
-                b.setText("<html><div style='text-align: center;'>"+ textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1,e)  + "<br>" + textbutton.substring(e+1)+ "</div><html>");
+                b.setText("<html><div style='text-align: center;'>" + textbutton.substring(0, c) + "<br>" + textbutton.substring(c + 1, e) + "<br>" + textbutton.substring(e + 1) + "</div><html>");
 
             }
 
@@ -1113,48 +1089,43 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * set description of the event/consequences
+     *
      * @param description
      */
-    public void setDescription(String description){
+    public void setDescription(String description) {
 
-        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/e" + ev.getEventNumber() +".png").getImage().getScaledInstance(width*10/48 , height*100/168, Image.SCALE_DEFAULT)));
-        eventimage.setBounds(width*100/252,height*100/677,width*10/48, height*100/168);
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/e" + ev.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
-        if(description.length() <= 40){
+        if (description.length() <= 40) {
             eventtext.setText(description);
-        }
-
-        else {
+        } else {
             int c = 40;
-            while (description.charAt(c) != ' '){
+            while (description.charAt(c) != ' ') {
                 c--;
             }
 
             int d = description.length() - c;
 
-            if (d <= 40 ){
-                eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,description.length()) + "</div><html>");
-            }
-
-            else{
+            if (d <= 40) {
+                eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
+            } else {
                 int e = c + 40;
-                while (description.charAt(e) != ' '){
+                while (description.charAt(e) != ' ') {
                     e--;
                 }
 
                 int f = description.length() - c - e;
-                if (f <= 40){
-                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1)+ "</div><html>");
-                }
-
-                else {
+                if (f <= 40) {
+                    eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, e) + "<br>" + description.substring(e + 1) + "</div><html>");
+                } else {
                     int g = c + e + 40;
-                    while (description.charAt(g) != ' '){
+                    while (description.charAt(g) != ' ') {
                         g--;
                     }
 
-                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1, g)+ "<br>" +description.substring(g+1) + "</div><html>");
+                    eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, e) + "<br>" + description.substring(e + 1, g) + "<br>" + description.substring(g + 1) + "</div><html>");
                 }
 
 
@@ -1162,10 +1133,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
 
-        eventtext.setBounds(width*100/266,height*10/13, width/4, height*10/72);
+        eventtext.setBounds(width * 100 / 266, height * 10 / 13, width / 4, height * 10 / 72);
     }
 
-    public void OptionConsequence(int n){
+    public void OptionConsequence(int n) {
 
         setDescription(ev.getResult(n));
 
@@ -1175,52 +1146,47 @@ public class MyFrame extends JFrame implements ActionListener {
 
         JLabel[] artifactslabel = {art0, art1, art2, art3};
 
-        for(int i = 0; i < Hero.artefacts.length; i++){
-           if (Hero.artefacts[i]){
-               artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/" + i + ".png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
-           }
-           else{
-               artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
-           }
+        for (int i = 0; i < Hero.artefacts.length; i++) {
+            if (Hero.artefacts[i]) {
+                artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/" + i + ".png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+            } else {
+                artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+            }
 
         }
 
-        if(Hero.hasWand()){
-                   con1.gridx = 4;
-                   con1.gridy = 0;
-                   statisticspanel.add(manaimage, con1);
-                   int widthstat = width*100/250;
-                   statisticspanel.setBounds((width - widthstat)/2, height/91, widthstat, height/10);
-               }
-
-        else {
+        if (Hero.hasWand()) {
+            con1.gridx = 4;
+            con1.gridy = 0;
+            statisticspanel.add(manaimage, con1);
+            int widthstat = width * 100 / 250;
+            statisticspanel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
+        } else {
             statisticspanel.remove(manaimage);
-            int widthstat = width*100/355;
-            statisticspanel.setBounds((width - widthstat)/2, height/91, widthstat, height/10);
+            int widthstat = width * 100 / 355;
+            statisticspanel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
 
         }
 
 
-        healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int)Hero.getHealth()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int)Hero.getFame()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int)Hero.getMoney()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
-        manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int)Hero.getMana()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
+        healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int) Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int) Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int) Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int) Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
 
 
     }
 
 
-
-    private void changeFocus(JButton button){
+    private void changeFocus(JButton button) {
         button.requestFocus();
 
-        for (JButton b : menubutton){
-            if (b == button){
+        for (JButton b : menubutton) {
+            if (b == button) {
                 b.setIcon((new ImageIcon(new ImageIcon(path_resources + "buttonstartsel.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT))));
-            }
-            else {
-            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT))));
+            } else {
+                b.setIcon((new ImageIcon(new ImageIcon(path_resources + "buttonstart.png").getImage().getScaledInstance(widthbs, heightbs, Image.SCALE_DEFAULT))));
             }
         }
     }
@@ -1247,48 +1213,50 @@ public class MyFrame extends JFrame implements ActionListener {
     };
 
 
-    private class SelectWest extends AbstractAction{
+    private class SelectWest extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-           if(a == 1){
-           OptionConsequence(0);
-           a = 2;
-           }
+            if (a == 1) {
+                OptionConsequence(0);
+                a = 2;
+            }
 
         }
     }
 
-    private class SelectEast extends AbstractAction{
+    private class SelectEast extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(a == 1){
-            OptionConsequence(1);
-            a = 2;
+            if (a == 1) {
+                OptionConsequence(1);
+                a = 2;
             }
         }
     }
 
-    private class SelectNorth extends AbstractAction{
+    private class SelectNorth extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if(a == 1){
-            if (ev.getOptionNumber() == 3 || ev.getOptionNumber() == 4){
-                OptionConsequence(2);
-                a = 2;
-            } }
+            if (a == 1) {
+                if (ev.getOptionNumber() == 3 || ev.getOptionNumber() == 4) {
+                    OptionConsequence(2);
+                    a = 2;
+                }
+            }
 
         }
     }
 
-    private class SelectSouth extends AbstractAction{
+    private class SelectSouth extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(a == 1){
-            if( ev.getOptionNumber() == 4){
-                OptionConsequence(3);
-                a = 2;
-            }}
+            if (a == 1) {
+                if (ev.getOptionNumber() == 4) {
+                    OptionConsequence(3);
+                    a = 2;
+                }
+            }
         }
     }
 
@@ -1296,7 +1264,7 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            switch (a){
+            switch (a) {
                 case 0:
 
                     setShields();
@@ -1312,17 +1280,16 @@ public class MyFrame extends JFrame implements ActionListener {
                     revalidate();
                     repaint();
                     a = 0;
-                break;
+                    break;
 
                 case 2:
 
-                    for(int i = 0; i < 5; i++){  //i<4 o i <5?
-                        if (Hero.stats[i] == 100 || Hero.stats[i] == 0){
+                    for (int i = 0; i < 5; i++) {  //i<4 o i <5?
+                        if (Hero.stats[i] == 100 || Hero.stats[i] == 0) {
                             heroDied(i);
                             a = 3;
                             break;
-                        }
-                        else{
+                        } else {
                             ev.getEvent();
                             //this.add(eventimage, 2, 0);
                             //this.add(eventtext, 2,0);
@@ -1349,7 +1316,7 @@ public class MyFrame extends JFrame implements ActionListener {
     private class Escape extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-           System.exit(0);
+            System.exit(0);
         }
     }
 
@@ -1358,19 +1325,18 @@ public class MyFrame extends JFrame implements ActionListener {
      * (if not the space triggers the new game and I can't stop it;
      * in game this problem is being taken care of in a different way that here it didnt work)
      */
-   private class GoDown extends AbstractAction {
+    private class GoDown extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (b < 3)   {
+            if (b < 3) {
                 b++;
-            }
-            else {
+            } else {
                 b = 0;
             }
 
             if (b == 0) {
-              changeFocus(b_newgame);
+                changeFocus(b_newgame);
             }
             if (b == 1) {
                 changeFocus(b_load);
@@ -1390,10 +1356,9 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (b > 0)   {
+            if (b > 0) {
                 b--;
-            }
-            else {
+            } else {
                 b = 3;
             }
 
@@ -1417,26 +1382,27 @@ public class MyFrame extends JFrame implements ActionListener {
     private class GoDownLoad extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(s<3){
-                s++;}
-            else{
-                s = 1;}
+            if (s < 3) {
+                s++;
+            } else {
+                s = 1;
+            }
 
-            switch (s){
+            switch (s) {
                 case 1:
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
                     break;
                 case 2:
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
                     break;
                 case 3:
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
                     break;
 
 
@@ -1448,26 +1414,27 @@ public class MyFrame extends JFrame implements ActionListener {
     private class GoUpLoad extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(s<1){
-                s--;}
-            else{
-                s = 3;}
+            if (s < 1) {
+                s--;
+            } else {
+                s = 3;
+            }
 
-            switch (s){
+            switch (s) {
                 case 1:
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
                     break;
                 case 2:
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
                     break;
                 case 3:
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
                     break;
 
 
@@ -1479,17 +1446,16 @@ public class MyFrame extends JFrame implements ActionListener {
     private class LoadNewGame extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            switch (s){
+            switch (s) {
                 case 1:
                     remove(b_back);
                     remove(slotpanel);
                     revalidate();
                     repaint();
 
-                    if(isloading){
+                    if (isloading) {
                         ev.load(1);
-                    }
-                    else{
+                    } else {
                         ev.newGame();
                     }
 
@@ -1501,10 +1467,9 @@ public class MyFrame extends JFrame implements ActionListener {
                     revalidate();
                     repaint();
 
-                    if(isloading){
+                    if (isloading) {
                         ev.load(2);
-                    }
-                    else{
+                    } else {
                         ev.newGame();
                     }
 
@@ -1517,31 +1482,31 @@ public class MyFrame extends JFrame implements ActionListener {
                     revalidate();
                     repaint();
 
-                    if(isloading){
+                    if (isloading) {
                         ev.load(3);
-                    }
-                    else{
+                    } else {
                         ev.newGame();
                     }
 
                     newGame(3);
                     break;
             }
+        }
     }
-   }
 
 
     private class ChangeButtonDeath extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(p == 0){
-                b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                p = 1;}
-            else{
-                b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
-                p = 0;}
+            if (p == 0) {
+                b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                p = 1;
+            } else {
+                b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                p = 0;
+            }
 
         }
 
@@ -1551,12 +1516,11 @@ public class MyFrame extends JFrame implements ActionListener {
     private class AfterDeath extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(p == 0){
+            if (p == 0) {
                 System.exit(0);
-               }
-            else{
+            } else {
                 //new game
-             }
+            }
         }
 
     }
