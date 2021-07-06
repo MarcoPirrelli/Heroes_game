@@ -419,6 +419,15 @@ public class EventManager {
     }
 
     /**
+     * Returns the current save slot.
+     *
+     * @return save slot number
+     */
+    public int getSaveSlot() {
+        return saveSlot;
+    }
+
+    /**
      * Load a game from a previous save.
      *
      * @param saveId int between 1 and MAX_SAVES
