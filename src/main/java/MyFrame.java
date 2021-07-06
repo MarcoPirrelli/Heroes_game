@@ -86,7 +86,6 @@ public class MyFrame extends JFrame implements ActionListener {
     String name;
     JLabel overwrite;
 
-    final JOptionPane optionPane;
 
     Boolean isloading = true;
 
@@ -402,37 +401,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
         deathpanel.setOpaque(false);
 
-
-        /*GridBagConstraints con3 = new GridBagConstraints();
-
-        Insets i3 = new Insets(0,0,0,0);
-        con3.gridx = 0;
-        con3.gridy = 0;
-        con3.weightx = 2;
-        con3.anchor = GridBagConstraints.NORTH;
-        con3.insets = i3;
-        layout.add(heropanel, con3);
-
-        con3.gridx = 1;
-        con3.gridy = 0;
-        layout.add(statisticspanel, con3);
-
-        con3.gridx = 1;
-        con3.gridy = 1;
-        layout.add(eventimage, con3);
-
-        con3.gridx = 1;
-        con3.gridy = 2;
-        layout.add(eventtext, con3);
-
-        layout.setOpaque(false);*/
-        //Are you sure?
-        optionPane = new JOptionPane(
-                "Are you sure?",
-                JOptionPane.QUESTION_MESSAGE,
-                JOptionPane.YES_NO_OPTION);
-        //optionPane.addActionListener(this);
-
         //KEY
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         frame.getActionMap().put("Escape", new Escape());
@@ -459,7 +427,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
-
+    /**
+     * override for clicking on buttons
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -503,7 +474,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 case 2:
 
                     boolean died = false;
-                    for (int i = 0; i < 5; i++) {  //i<4 o i <5?
+                    for (int i = 0; i < 5; i++) {
                         if (Hero.stats[i] == 100 || Hero.stats[i] == 0) {
                             heroDied(i);
                             a = 3;
@@ -513,8 +484,6 @@ public class MyFrame extends JFrame implements ActionListener {
                     }
                     if (!died) {
                         ev.getEvent();
-                        //this.add(eventimage, 2, 0);
-                        //this.add(eventtext, 2,0);
                         setDescription(ev.getEventDescription());
                         a = 0;
                     }
@@ -522,7 +491,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
                 case 3:
                     afterDeath();
-
                     break;
 
 
@@ -618,9 +586,9 @@ public class MyFrame extends JFrame implements ActionListener {
 
         if (e.getSource() == b_d_newgame) {
 
-            //int currentSlot = ev.currentSlot)
-            //ev.deleteSave( currentSlot);
-            //ev.newGame(currentSlot));
+            int currentSlot = ev.getSaveSlot();
+            ev.deleteSave(currentSlot);
+            newGame(currentSlot);
             a = 0;
 
         }
@@ -633,7 +601,7 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * search free slot :)
+     * search free slot
      */
     public void searchSlot() {
         if (ev.firstEmptySlot() == 0) {
@@ -676,6 +644,9 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * NEW GAME
+     */
     public void newGame(int slot) {
 
         ev.setSaveSlot(slot);
@@ -684,6 +655,7 @@ public class MyFrame extends JFrame implements ActionListener {
         //remove menubuttons
         this.remove(buttonspanel);
         this.remove(overwrite);
+        this.remove(deathpanel);
 
         //Add and setting things
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
@@ -718,10 +690,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
         //event
 
-        this.add(eventimage, 2, 0);
-        this.add(eventtext, 2, 0);
+
         eventtext.setFont(eventtext.getFont().deriveFont(size1));
-        timerevent.schedule(taskevent, 700); //delay for the animation
+        resumetimer();
+        //timerevent.schedule(taskevent, 700); //delay for the animation
 
         //year
         this.add(textyear, 2, 0);
@@ -729,7 +701,8 @@ public class MyFrame extends JFrame implements ActionListener {
         float size2 = width / 90;
         textyear.setFont(textyear.getFont().deriveFont(size2));
         textyear.setForeground(Color.WHITE);
-        timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
+        resumetimertime();
+        //timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
 
         //statistics
         healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
@@ -815,14 +788,14 @@ public class MyFrame extends JFrame implements ActionListener {
         switch (stat) {
             case 0:
                 if (Hero.stats[0] == 0) {
-                    descDeath = "You have no energy to continue living, so you let yourself die under a tree";
+                    descDeath = "You have no energy to continue living, so you let yourself die under a tree.";
                 } else {
                     descDeath = "You feel so good and energetic and life is good. But Steve, a cripple, is envious of your good health and poison you.";
                 }
                 break;
             case 1:
                 if (Hero.stats[1] == 0) {
-                    descDeath = "Nobody recognize you anymore. You fell too lonely to continue to live.";
+                    descDeath = "Nobody recognize you anymore. You feel too lonely to continue to live.";
                 } else {
                     descDeath = "One of your fan tries to marry you, but at your rejection he kills you.";
                 }
@@ -856,6 +829,7 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     public void setDeath(String description, int stat, int valuestat) {
+
 
         eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + valuestat + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
@@ -899,16 +873,29 @@ public class MyFrame extends JFrame implements ActionListener {
         eventtext.setBounds(width * 100 / 266, height * 10 / 13, width / 4, height * 10 / 72);
 
 
+
     }
 
     public void afterDeath() {
+
+
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(backgroundimage, 4, 0);
         death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + ev.completedEvents + " events.");
         add(deathpanel, 5, 0);
         deathpanel.setBounds(0, 0, width, height);
+
+        remove(eventtext);
+        remove(eventimage);
+
         revalidate();
         repaint();
+
+        //this.timerevent.cancel();
+        Hero.reset();
+        ev.newGame();
+
+
 
         //KEY
         deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "ButtonDeath");
@@ -1051,8 +1038,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * set description of the options
-     *
-     * @param
+     * @param b
      * @param textbutton
      */
     public void setDescriptionShields(JButton b, String textbutton) {
@@ -1089,7 +1075,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * set description of the event/consequences
-     *
      * @param description
      */
     public void setDescription(String description) {
@@ -1138,12 +1123,13 @@ public class MyFrame extends JFrame implements ActionListener {
         eventtext.setBounds(width * 100 / 266, height * 10 / 13, width / 4, height * 10 / 72);
     }
 
+    /**
+     * set the consequences for the option selected
+     */
     public void OptionConsequence(int n) {
 
         setDescription(ev.getResult(n));
-
         removeShields();
-
         ev.pickOption(n);
 
         JLabel[] artifactslabel = {art0, art1, art2, art3};
@@ -1180,8 +1166,10 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
-
-    private void changeFocus(JButton button) {
+    /** change focus and image of the correct button
+     * @param button
+     */
+    public void changeFocus(JButton button) {
         button.requestFocus();
 
         for (JButton b : menubutton) {
@@ -1193,28 +1181,49 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
-    //timer for time
-    TimerTask timerchange = new TimerTask() {
+    /**
+     *  Timer and timertask work only once,
+     *  so every new game the timers and timertask needs to be recreated
+     *  override run()TimerTask to put the image and text after the animation
+     *  and to change years of service and age
+     */
+    public void resumetimer() {
+
+        timertask taskevent = new timertask();
+        timerevent = new Timer();
+        timerevent.schedule(taskevent, 700); //timerevent.schedule(taskevent, 700);
+
+    }
+    
+    public class timertask extends TimerTask {
+        @Override
+        public void run() {
+            add(eventimage, 2, 0);
+            add(eventtext, 2, 0);
+            setDescription(ev.getEventDescription());
+
+        }
+    }
+    public void resumetimertime(){
+        timerchange taskchange = new timerchange();
+        timertime = new Timer();
+        timertime.schedule(taskchange, 0, 5000);
+
+    }
+    public class timerchange extends TimerTask{
         @Override
         public void run() {
             Hero.age++;
             Hero.yearsOfService++;
             textheroage.setText("Age: " + String.valueOf(Hero.getAge()));
             textyear.setText("Years of service: " + Hero.getYearsOfService());
-
         }
-    };
+    }
 
-    //timer so that the event starts after the animation's end
-    TimerTask taskevent = new TimerTask() {
-        @Override
-        public void run() {
-            setDescription(ev.getEventDescription());
-
-        }
-    };
-
-
+    /**
+     *  override for keyboard
+     *  selection for the shields/option
+     */
     private class SelectWest extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1262,13 +1271,20 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     *  override for keyboard
+     *  case 0 = the user can see the events
+     *  case 1 = the user can see the shields and select and option or press space again
+     *           if space is pressed, the shield disappear
+     *  case 2 = check if hero is dead, if yes set the current function,
+     *           if not, pick a new event
+     */
     private class Continue extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
 
             switch (a) {
                 case 0:
-
                     setShields();
                     revalidate();
                     repaint();
@@ -1285,36 +1301,32 @@ public class MyFrame extends JFrame implements ActionListener {
                     break;
 
                 case 2:
-
-                    for (int i = 0; i < 5; i++) {  //i<4 o i <5?
+                    boolean died = false;
+                    for (int i = 0; i < 5; i++) {
                         if (Hero.stats[i] == 100 || Hero.stats[i] == 0) {
                             heroDied(i);
                             a = 3;
+                            died = true;
                             break;
-                        } else {
-                            ev.getEvent();
-                            //this.add(eventimage, 2, 0);
-                            //this.add(eventtext, 2,0);
-                            setDescription(ev.getEventDescription());
-                            a = 0;
                         }
+                    }
+                    if (!died) {
+                        ev.getEvent();
+                        setDescription(ev.getEventDescription());
+                        a = 0;
                     }
                     break;
 
                 case 3:
                     afterDeath();
-                  /*  backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-                    death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + ev.completedEvents + " events.");
-                    add(deathpanel, 5, 0);
-                    deathpanel.setBounds(0,0, width,height);
-                    revalidate();
-                    repaint();*/
                     break;
             }
         }
     }
 
-
+    /**
+     * Override esc
+     */
     private class Escape extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1323,9 +1335,9 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * the space key select the focused button; so for the menu --> change the focus
-     * (if not the space triggers the new game and I can't stop it;
-     * in game this problem is being taken care of in a different way that here it didnt work)
+     *  override for keyboard
+     *  go up and down in the menu buttons
+     *  the focus is changed so space triggers the correct button
      */
     private class GoDown extends AbstractAction {
         @Override
@@ -1354,6 +1366,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
+
     private class GoUp extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1381,6 +1394,11 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * override for keyboard
+     * in load and overwrite to go down and up the buttons
+     * the image is change accordingly
+     */
     private class GoDownLoad extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1445,6 +1463,10 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * override for keyboard
+     * load or delete a slot
+     */
     private class LoadNewGame extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1496,7 +1518,10 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
-
+    /**
+     * override for keyboard
+     * change the button during death hero
+     */
     private class ChangeButtonDeath extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1514,14 +1539,20 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
-
+    /**
+     * override fo keyboard
+     * can create a new game or exit accordingly with the current button selected
+     */
     private class AfterDeath extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (p == 0) {
                 System.exit(0);
             } else {
-                //new game
+                int currentSlot = ev.getSaveSlot();
+                ev.deleteSave(currentSlot);
+                newGame(currentSlot);
+                a = 0;
             }
         }
 
