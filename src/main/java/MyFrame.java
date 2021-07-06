@@ -11,7 +11,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     //remember to change it
     String path_resources = "src/main/resources/";
-    Font f = new Font("serif", Font.PLAIN, 10);
+    //Font f = new Font("serif", Font.PLAIN, 10);
 
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -21,8 +21,8 @@ public class MyFrame extends JFrame implements ActionListener {
       //int width = 960;
      // int height = 540;
 
-    int widthbs = (int)(width/3);
-    int heightbs = (int)(height/10);
+    int widthbs = width/3;
+    int heightbs = height/10;
 
     int widthshield = width*100/685;
     int heightshield = height*100/327;
@@ -70,16 +70,22 @@ public class MyFrame extends JFrame implements ActionListener {
     private final JButton b_back, b_exitgame;
     private final JButton click;
     private final JButton b_w, b_e, b_n, b_s;
-    JButton[] menubutton, slotbutton;
+    JButton[] menubutton;
     JPanel buttonspanel;
     private final JButton b_slot1, b_slot2, b_slot3;
     JPanel slotpanel;
+    private final JButton b_d_newgame, b_d_exit;
+    JPanel deathpanel;
+    JLabel death;
+
 
     //Variables
-    int a = 100;
+    int a = 0;
     int b = 0;
     int s = 1;
+    int p = 0;
     String name;
+    JLabel overwrite;
 
     final JOptionPane optionPane;
 
@@ -99,6 +105,8 @@ public class MyFrame extends JFrame implements ActionListener {
         backgroundimage = new JLabel(new ImageIcon());
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         back.add(backgroundimage);
+
+
 
         //Menu Buttons
         b_newgame = new JButton("New Game");
@@ -285,6 +293,7 @@ public class MyFrame extends JFrame implements ActionListener {
         artifactspanel.setOpaque(false);
 
         //LOAD
+        overwrite = new JLabel("The slots are full, which saving do you want to overwrite?");
 
         b_slot1 = new JButton();
         b_slot2 = new JButton();
@@ -331,7 +340,7 @@ public class MyFrame extends JFrame implements ActionListener {
         back.setBounds(0,0,width,height);
         buttonspanel.setBounds(0,0 , width, 4*height/5);
 
-
+        //Button exit TOP RIGHT
         b_back = new JButton();
         b_back.addActionListener(this);
         b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
@@ -345,6 +354,56 @@ public class MyFrame extends JFrame implements ActionListener {
         b_exitgame.setContentAreaFilled(false);
         b_exitgame.setBorderPainted(false);
         b_exitgame.setOpaque(false);
+
+        //death
+        b_d_newgame = new JButton();
+        b_d_exit = new JButton();
+
+        float size2 = width/90;
+
+        b_d_newgame.addActionListener(this);
+        b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+        b_d_newgame.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
+        b_d_newgame.setVerticalTextPosition(JButton.CENTER);
+        b_d_newgame.setContentAreaFilled(false);
+        b_d_newgame.setBorderPainted(false);
+        b_d_newgame.setFont(b_d_newgame.getFont().deriveFont(size2));
+        b_d_newgame.setText("New Game");
+
+        b_d_exit.addActionListener(this);
+        b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+        b_d_exit.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
+        b_d_exit.setVerticalTextPosition(JButton.CENTER);
+        b_d_exit.setContentAreaFilled(false);
+        b_d_exit.setBorderPainted(false);
+        b_d_exit.setFont(b_d_exit.getFont().deriveFont(size2));
+        b_d_exit.setText("Exit");
+
+        death = new JLabel("You Died.");
+        float size0 = width/75;
+        death.setForeground(Color.WHITE);
+        death.setFont(death.getFont().deriveFont(size0));
+
+
+        deathpanel = new JPanel(new GridBagLayout());
+
+        GridBagConstraints con6 = new GridBagConstraints();
+        Insets i6= new Insets(height/12,0,0,0);
+
+        con6.gridx = 1;
+        con6.gridy = 1;
+        con6.insets = i6;
+        deathpanel.add(death, con6);
+
+        con6.gridx = 1;
+        con6.gridy = 2;
+        deathpanel.add(b_d_newgame, con6);
+
+        con6.gridx = 1;
+        con6.gridy = 3;
+        deathpanel.add(b_d_exit, con6);
+
+        deathpanel.setOpaque(false);
 
 
         /*GridBagConstraints con3 = new GridBagConstraints();
@@ -445,13 +504,27 @@ public class MyFrame extends JFrame implements ActionListener {
             break;
 
             case 2:
-                ev.getEvent();
-                this.add(eventimage, 2, 0);
-                this.add(eventtext, 2,0);
-                setDescription(ev.getEventDescription());
-                a = 0;
 
-                break;
+                for(int i = 0; i < 5; i++){  //i<4 o i <5?
+                    if (Hero.stats[i] == 100 || Hero.stats[i] == 0){
+                         heroDied(i);
+                         a = 3;
+                         break;
+                    }
+                    else{
+                        ev.getEvent();
+                        //this.add(eventimage, 2, 0);
+                        //this.add(eventtext, 2,0);
+                        setDescription(ev.getEventDescription());
+                        a = 0;
+                    }
+                }
+            break;
+
+            case 3:
+              afterDeath();
+
+            break;
 
 
         }
@@ -547,17 +620,31 @@ public class MyFrame extends JFrame implements ActionListener {
             newGame(3);
         }
 
+        if(e.getSource() == b_d_newgame){
+
+            //int currentSlot = ev.currentSlot)
+            //ev.deleteSave( currentSlot);
+            //ev.newGame(currentSlot));
+            a = 0;
+
+        }
+
+        if(e.getSource() == b_d_exit){
+            System.exit(0);
+        }
+
 
     }
 
     /**
-     * new game :)
+     * search free slot :)
      */
     public void searchSlot(){
         if(ev.firstEmptySlot() == 0){
             //chiedi agli utenti di scegliere che slot sovraccaricare
             this.remove(buttonspanel);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+            b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
 
             ev.load(1);
             b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
@@ -566,12 +653,28 @@ public class MyFrame extends JFrame implements ActionListener {
             ev.load(3);
             b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
 
+            float size0 = width/75;
+            overwrite.setForeground(Color.WHITE);
+            overwrite.setFont(overwrite.getFont().deriveFont(size0));
+            this.add(overwrite, 4,0);
+            overwrite.setBounds(width/3, height/20, 1000, 160);
 
             this.add(slotpanel, 3, 0);
             slotpanel.setBounds(0,0, width, height*4/5);
             isloading = false;
             revalidate();
             repaint();
+
+            slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "DownLoad");
+            slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "DownLoad");
+            slotpanel.getActionMap().put("DownLoad", new GoDownLoad());
+
+            slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "UpLoad");
+            slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "UpLoad");
+            slotpanel.getActionMap().put("UpLoad", new GoUpLoad());
+
+            slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
+            slotpanel.getActionMap().put("LoadNewGame", new LoadNewGame());
         }
         else{
         newGame(ev.firstEmptySlot());
@@ -585,9 +688,11 @@ public class MyFrame extends JFrame implements ActionListener {
 
         //remove menubuttons
         this.remove(buttonspanel);
+        this.remove(overwrite);
 
         //Add and setting things
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        add(backgroundimage, 1, 0);
         b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width/10, height/15, Image.SCALE_DEFAULT)));
         this.add(b_exitgame,4, 0);
         b_exitgame.setBounds(width*100/113, height/30,  width/10, height/15);
@@ -649,6 +754,9 @@ public class MyFrame extends JFrame implements ActionListener {
 
         a = 0;
 
+        click.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
+        click.getActionMap().put("Continue", new Continue());
+
     }
 
     /**
@@ -704,6 +812,131 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
+
+    public void heroDied(int stat){
+
+        String descDeath = "";
+        switch (stat){
+            case 0:
+                if (Hero.stats[0] == 0){
+                    descDeath = "You have no energy to continue living, so you let yourself die under a tree";
+                }
+                else{
+                    descDeath = "You feel so good and energetic and life is good. But Steve, a cripple, is envious of your good health and poison you.";
+                }
+                break;
+            case 1:
+                if (Hero.stats[1] == 0){
+                    descDeath = "Nobody recognize you anymore. You fell too lonely to continue to live.";
+                }
+                else{
+                    descDeath = "One of your fan tries to marry you, but at your rejection he kills you.";
+                }
+                break;
+            case 2:
+                if (Hero.stats[2] == 0){
+                    descDeath = "The king doesn't like your unwillingness to obey. So he sentence you to an horrible death.";
+                }
+                else{
+                    descDeath = "You are so loyal to the king that people start calling you 'the loyal dog'. Some rebels decide to kill you to damage the king.";
+                }
+                break;
+            case 3:
+                if (Hero.stats[3] == 0){
+                    descDeath = "You are hungry, but there is no more money left. You die miserably.";
+                }
+                else{
+                    descDeath = "You are now one of the richest man in town. Some thieves want to steal from your home and in the process they kill you.";
+                }
+                break;
+            case 4:
+                if (Hero.stats[4] == 0){
+                    descDeath = "You try to light a fire, but the spell is too strong and take away your life.";
+                }
+                else{
+                    descDeath = "The mana inside you is too much, you explode.";
+                }
+                break;
+        }
+
+        setDeath(descDeath, stat , Hero.stats[stat]);
+
+
+
+    }
+
+    public void setDeath(String description, int stat, int valuestat){
+
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + valuestat +".png").getImage().getScaledInstance(width*10/48 , height*100/168, Image.SCALE_DEFAULT)));
+        eventimage.setBounds(width*100/252,height*100/677,width*10/48, height*100/168);
+
+        //text event on screen so that every line isn't interrupted
+        if(description.length() <= 40){
+            eventtext.setText(description);
+        }
+
+        else {
+            int c = 40;
+            while (description.charAt(c) != ' '){
+                c--;
+            }
+
+            int d = description.length() - c;
+
+            if (d <= 40 ){
+                eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,description.length()) + "</div><html>");
+            }
+
+            else{
+                int e = c + 40;
+                while (description.charAt(e) != ' '){
+                    e--;
+                }
+
+                int f = description.length() - c - e;
+                if (f <= 40){
+                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1)+ "</div><html>");
+                }
+
+                else {
+                    int g = c + e + 40;
+                    while (description.charAt(g) != ' '){
+                        g--;
+                    }
+
+                    eventtext.setText("<html><div style='text-align: center;'>"+ description.substring(0, c) + "<br>" + description.substring(c + 1,e)  + "<br>" + description.substring(e+1, g)+ "<br>" +description.substring(g+1) + "</div><html>");
+                }
+
+
+            }
+
+        }
+
+        eventtext.setBounds(width*100/266,height*10/13, width/4, height*10/72);
+
+
+    }
+
+    public void afterDeath(){
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        add(backgroundimage, 4, 0);
+        death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + ev.completedEvents + " events.");
+        add(deathpanel, 5, 0);
+        deathpanel.setBounds(0,0, width,height);
+        revalidate();
+        repaint();
+
+        //KEY
+        deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "ButtonDeath");
+        deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "ButtonDeath");
+        deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "ButtonDeath");
+        deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "ButtonDeath");
+        deathpanel.getActionMap().put("ButtonDeath", new ChangeButtonDeath());
+
+        deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "AfterDeath");
+        deathpanel.getActionMap().put("AfterDeath", new AfterDeath());
+
+    }
     /**
      * Put the shields (options) on screen based on how many options there are
      */
@@ -884,8 +1117,7 @@ public class MyFrame extends JFrame implements ActionListener {
      */
     public void setDescription(String description){
 
-        //va cambiato con l'immagine risultante
-        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "e" + ev.getEventNumber() +".jpg").getImage().getScaledInstance(width*10/48 , height*100/168, Image.SCALE_DEFAULT)));
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/e" + ev.getEventNumber() +".png").getImage().getScaledInstance(width*10/48 , height*100/168, Image.SCALE_DEFAULT)));
         eventimage.setBounds(width*100/252,height*100/677,width*10/48, height*100/168);
 
         //text event on screen so that every line isn't interrupted
@@ -951,7 +1183,7 @@ public class MyFrame extends JFrame implements ActionListener {
                artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width*10/256, height*10/144, Image.SCALE_DEFAULT)));
            }
 
-       }
+        }
 
         if(Hero.hasWand()){
                    con1.gridx = 4;
@@ -974,6 +1206,7 @@ public class MyFrame extends JFrame implements ActionListener {
         moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int)Hero.getMoney()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int)Hero.getLoyalty()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
         manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int)Hero.getMana()/10 +".png").getImage().getScaledInstance(width/16, height/10, Image.SCALE_DEFAULT))));
+
 
     }
 
@@ -1066,33 +1299,47 @@ public class MyFrame extends JFrame implements ActionListener {
             switch (a){
                 case 0:
 
-                    add(eventimage, 2, 0);
-                    add(eventtext, 2,0);
-
                     setShields();
+                    revalidate();
                     repaint();
 
-                    setDescription(ev.getEventDescription());
+                    //setDescription(ev.getEventDescription());
                     a = 1;
                     break;
 
                 case 1:
                     removeShields();
+                    revalidate();
                     repaint();
                     a = 0;
                 break;
 
                 case 2:
-                    ev.getEvent();
-                    add(eventimage, 2, 0);
-                    add(eventtext, 2,0);
 
-                    setShields();
-                    repaint();
+                    for(int i = 0; i < 5; i++){  //i<4 o i <5?
+                        if (Hero.stats[i] == 100 || Hero.stats[i] == 0){
+                            heroDied(i);
+                            a = 3;
+                            break;
+                        }
+                        else{
+                            ev.getEvent();
+                            //this.add(eventimage, 2, 0);
+                            //this.add(eventtext, 2,0);
+                            setDescription(ev.getEventDescription());
+                            a = 0;
+                        }
+                    }
+                    break;
 
-                    setDescription(ev.getEventDescription());
-
-                    a = 1;
+                case 3:
+                    afterDeath();
+                  /*  backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+                    death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + ev.completedEvents + " events.");
+                    add(deathpanel, 5, 0);
+                    deathpanel.setBounds(0,0, width,height);
+                    revalidate();
+                    repaint();*/
                     break;
             }
         }
@@ -1229,7 +1476,6 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
-
     private class LoadNewGame extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1283,4 +1529,36 @@ public class MyFrame extends JFrame implements ActionListener {
             }
     }
    }
+
+
+    private class ChangeButtonDeath extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(p == 0){
+                b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                p = 1;}
+            else{
+                b_d_newgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonload.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width/2, height*10/72, Image.SCALE_DEFAULT)));
+                p = 0;}
+
+        }
+
+    }
+
+
+    private class AfterDeath extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(p == 0){
+                System.exit(0);
+               }
+            else{
+                //new game
+             }
+        }
+
+    }
+
 }
