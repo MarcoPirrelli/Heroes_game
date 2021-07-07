@@ -954,7 +954,6 @@ public class MyFrame extends JFrame implements ActionListener {
         repaint();
 
         //this.timerevent.cancel();
-        Hero.reset();
         ev.newGame();
 
         //KEY
