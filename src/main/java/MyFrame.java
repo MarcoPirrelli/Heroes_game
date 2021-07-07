@@ -6,7 +6,13 @@ import java.awt.event.KeyEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * Main Frame
+ * List of functions:
+ * Constructor, action performed (buttons), searchSlot, newGame, load, settings, setDeath, afterDeath, setShields
+ * removeShields, setDescriptionShields, setDescription, optionConsequences, changeFocus, Timer (time and event),
+ * override for keyboard for all buttons on game
+ */
 public class MyFrame extends JFrame implements ActionListener {
 
     //remember to change it
@@ -476,7 +482,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     boolean died = false;
                     for (int i = 0; i < 5; i++) {
                         if (Hero.stats[i] == 100 || Hero.stats[i] == 0) {
-                            heroDied(i);
+                            setDeath(i);
                             a = 3;
                             died = true;
                             break;
@@ -602,6 +608,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * search free slot
+     * if there aren't free slots, the user have to choose which slot to overwrite
      */
     public void searchSlot() {
         if (ev.firstEmptySlot() == 0) {
@@ -796,7 +803,7 @@ public class MyFrame extends JFrame implements ActionListener {
      * take the currect phrase based on the statistics
      * @param stat
      */
-public void heroDied(int stat) {
+    public void setDeath(int stat) {
 
         String descDeath = "";
         switch (stat) {
@@ -837,45 +844,38 @@ public void heroDied(int stat) {
                 break;
         }
 
-        setDeath(descDeath, stat, Hero.stats[stat]);
-
-    }
-
-    public void setDeath(String description, int stat, int valuestat) {
-
-
-        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + valuestat + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat]+ ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
-        if (description.length() <= 40) {
-            eventtext.setText(description);
+        if (descDeath.length() <= 40) {
+            eventtext.setText(descDeath);
         } else {
             int c = 40;
-            while (description.charAt(c) != ' ') {
+            while (descDeath.charAt(c) != ' ') {
                 c--;
             }
 
-            int d = description.length() - c;
+            int d = descDeath.length() - c;
 
             if (d <= 40) {
-                eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, description.length()) + "</div><html>");
+                eventtext.setText("<html><div style='text-align: center;'>" + descDeath.substring(0, c) + "<br>" + descDeath.substring(c + 1, descDeath.length()) + "</div><html>");
             } else {
                 int e = c + 40;
-                while (description.charAt(e) != ' ') {
+                while (descDeath.charAt(e) != ' ') {
                     e--;
                 }
 
-                int f = description.length() - c - e;
+                int f = descDeath.length() - c - e;
                 if (f <= 40) {
-                    eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, e) + "<br>" + description.substring(e + 1) + "</div><html>");
+                    eventtext.setText("<html><div style='text-align: center;'>" + descDeath.substring(0, c) + "<br>" + descDeath.substring(c + 1, e) + "<br>" + descDeath.substring(e + 1) + "</div><html>");
                 } else {
                     int g = c + e + 40;
-                    while (description.charAt(g) != ' ') {
+                    while (descDeath.charAt(g) != ' ') {
                         g--;
                     }
 
-                    eventtext.setText("<html><div style='text-align: center;'>" + description.substring(0, c) + "<br>" + description.substring(c + 1, e) + "<br>" + description.substring(e + 1, g) + "<br>" + description.substring(g + 1) + "</div><html>");
+                    eventtext.setText("<html><div style='text-align: center;'>" + descDeath.substring(0, c) + "<br>" + descDeath.substring(c + 1, e) + "<br>" + descDeath.substring(e + 1, g) + "<br>" + descDeath.substring(g + 1) + "</div><html>");
                 }
 
 
@@ -889,6 +889,10 @@ public void heroDied(int stat) {
 
     }
 
+    /**
+     * The statistcs* of the game are displayed
+     * The user has to choose if starting a new game or exit
+     */
     public void afterDeath() {
 
 
@@ -907,8 +911,6 @@ public void heroDied(int stat) {
         //this.timerevent.cancel();
         Hero.reset();
         ev.newGame();
-
-
 
         //KEY
         deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "ButtonDeath");
@@ -1317,7 +1319,7 @@ public void heroDied(int stat) {
                     boolean died = false;
                     for (int i = 0; i < 5; i++) {
                         if (Hero.stats[i] == 100 || Hero.stats[i] == 0) {
-                            heroDied(i);
+                            setDeath(i);
                             a = 3;
                             died = true;
                             break;
