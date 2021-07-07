@@ -646,6 +646,9 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * NEW GAME
+     * ev methods are called to pick the saving slot and get the first event
+     * remove all useless component
+     * component in order: bg and exit, click, hero, event, time, statistics, artifacts, keyboard
      */
     public void newGame(int slot) {
 
@@ -657,12 +660,13 @@ public class MyFrame extends JFrame implements ActionListener {
         this.remove(overwrite);
         this.remove(deathpanel);
 
-        //Add and setting things
+        //Bg and exit
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(backgroundimage, 1, 0);
         b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
         this.add(b_exitgame, 4, 0);
         b_exitgame.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
+
         //click
         this.add(click, 3, 0);
         click.setOpaque(false);
@@ -680,20 +684,12 @@ public class MyFrame extends JFrame implements ActionListener {
         textheroage.setForeground(Color.WHITE);
         textheroage.setFont(textheroage.getFont().deriveFont(size1));
         textheroage.setText("Age: " + Hero.getAge());
-
         this.add(heropanel, 2, 0);
         heropanel.setBounds(0, 0, width / 6, height / 4);
 
-
-       /*this.add(layout,2 ,0);
-        layout.setBounds(0,0,width,height);*/
-
         //event
-
-
         eventtext.setFont(eventtext.getFont().deriveFont(size1));
         resumetimer();
-        //timerevent.schedule(taskevent, 700); //delay for the animation
 
         //year
         this.add(textyear, 2, 0);
@@ -702,18 +698,30 @@ public class MyFrame extends JFrame implements ActionListener {
         textyear.setFont(textyear.getFont().deriveFont(size2));
         textyear.setForeground(Color.WHITE);
         resumetimertime();
-        //timertime.schedule(timerchange, 0, 5000); //the age changes every 5 sec
+
 
         //statistics
+        statisticspanel.remove(manaimage);
+        int widthstat = width * 100 / 355;
+        statisticspanel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
         healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int) Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int) Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int) Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int) Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-
         this.add(statisticspanel, 2, 0);
-        int widthstat = width * 100 / 355;
-        statisticspanel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
+
+        //artifacts
+        JLabel[] artifactslabel = {art0, art1, art2, art3};
+
+        for (int i = 0; i < Hero.artefacts.length; i++) {
+            if (Hero.artefacts[i]) {
+                artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/" + i + ".png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+            } else {
+                artifactslabel[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts/Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+            }
+
+        }
 
         this.add(artifactspanel, 3, 0);
         artifactspanel.setBounds(width * 10 / 14, height * 10 / 12, width / 5, height * 10 / 63);
@@ -729,6 +737,8 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * LOAD
+     * remove useless components
+     * show three possible slot to load
      */
     public void load() {
 
@@ -769,6 +779,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * SETTINGS
+     *
      */
     public void settings() {
 
@@ -781,8 +792,11 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
-
-    public void heroDied(int stat) {
+    /**
+     * take the currect phrase based on the statistics
+     * @param stat
+     */
+public void heroDied(int stat) {
 
         String descDeath = "";
         switch (stat) {
@@ -824,7 +838,6 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         setDeath(descDeath, stat, Hero.stats[stat]);
-
 
     }
 
