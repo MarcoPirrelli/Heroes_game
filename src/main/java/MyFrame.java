@@ -454,8 +454,6 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == b_exit) {
-            // add(optionPane, 4, 0);
-            //optionPane.setBounds(100, 100, 400, 500);
             System.exit(0);
         }
 
@@ -904,6 +902,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         remove(eventtext);
         remove(eventimage);
+        remove(click);
 
         revalidate();
         repaint();
