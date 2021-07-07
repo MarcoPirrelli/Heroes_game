@@ -499,7 +499,7 @@ public class EventManager {
     public ResultSet getAllSaves() {
         ResultSet ret = null;
         try {
-            ret = statement.executeQuery("select SaveId, HeroName, HeroAge, Completed from saves");
+            ret = statement.executeQuery("select SaveId, HeroName, Service, Completed from saves where SaveId <= " + MAX_SAVES);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);

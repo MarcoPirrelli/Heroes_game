@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -295,7 +297,7 @@ public class MyFrame extends JFrame implements ActionListener {
         artifactspanel.setOpaque(false);
 
         //LOAD
-        overwrite = new JLabel("The slots are full, which saving do you want to overwrite?");
+        overwrite = new JLabel("The slots are full, which save do you want to overwrite?");
 
         b_slot1 = new JButton();
         b_slot2 = new JButton();
@@ -435,6 +437,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * override for clicking on buttons
+     *
      * @param e
      */
     @Override
@@ -614,13 +617,34 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(buttonspanel);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-
+            /*
             ev.load(1);
             b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
             ev.load(2);
             b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
             ev.load(3);
             b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
+            */
+            b_slot1.setText("Empty");
+            b_slot2.setText("Empty");
+            b_slot3.setText("Empty");
+            ResultSet r = ev.getAllSaves();
+            try {
+                while (r.next()) {
+                    if (r.getInt("SaveId") == 1) {
+                        b_slot1.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
+                    }
+                    if (r.getInt("SaveId") == 2) {
+                        b_slot2.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
+                    }
+                    if (r.getInt("SaveId") == 3) {
+                        b_slot3.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.exit(0);
+            }
 
             float size0 = width / 75;
             overwrite.setForeground(Color.WHITE);
@@ -755,12 +779,35 @@ public class MyFrame extends JFrame implements ActionListener {
 
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
+        /*
         ev.load(1);
         b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
         ev.load(2);
         b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
         ev.load(3);
         b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
+        */
+
+        b_slot1.setText("Empty");
+        b_slot2.setText("Empty");
+        b_slot3.setText("Empty");
+        ResultSet r = ev.getAllSaves();
+        try {
+            while (r.next()) {
+                if (r.getInt("SaveId") == 1) {
+                    b_slot1.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
+                }
+                if (r.getInt("SaveId") == 2) {
+                    b_slot2.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
+                }
+                if (r.getInt("SaveId") == 3) {
+                    b_slot3.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
 
         this.add(slotpanel, 3, 0);
         slotpanel.setBounds(0, 0, width, height * 4 / 5);
@@ -784,7 +831,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * SETTINGS
-     *
      */
     public void settings() {
 
@@ -799,6 +845,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * take the currect phrase based on the statistics
+     *
      * @param stat
      */
     public void setDeath(int stat) {
@@ -809,40 +856,40 @@ public class MyFrame extends JFrame implements ActionListener {
                 if (Hero.stats[0] == 0) {
                     descDeath = "You have no energy to continue living, so you let yourself die under a tree.";
                 } else {
-                    descDeath = "You feel so good and energetic and life is good. But Steve, a cripple, is envious of your good health and poison you.";
+                    descDeath = "You feel so good and energetic and life is good. But Steve, a cripple, is envious of your good health and poisons you.";
                 }
                 break;
             case 1:
                 if (Hero.stats[1] == 0) {
-                    descDeath = "Nobody recognize you anymore. You feel too lonely to continue to live.";
+                    descDeath = "Nobody recognizes you anymore. You feel too lonely to continue living.";
                 } else {
-                    descDeath = "One of your fan tries to marry you, but at your rejection he kills you.";
+                    descDeath = "One of your fan proposes to you, but upon your rejection, he kills you.";
                 }
                 break;
             case 2:
                 if (Hero.stats[2] == 0) {
-                    descDeath = "The king doesn't like your unwillingness to obey. So he sentence you to an horrible death.";
+                    descDeath = "The king doesn't like your unwillingness to obey. So he sentences you to an horrible death.";
                 } else {
-                    descDeath = "You are so loyal to the king that people start calling you 'the loyal dog'. Some rebels decide to kill you to damage the king.";
+                    descDeath = "You are so loyal to the king that people start calling you 'the loyal dog'. Some rebels decide to kill you to spite the king.";
                 }
                 break;
             case 3:
                 if (Hero.stats[3] == 0) {
                     descDeath = "You are hungry, but there is no more money left. You die miserably.";
                 } else {
-                    descDeath = "You are now one of the richest man in town. Some thieves want to steal from your home and in the process they kill you.";
+                    descDeath = "You are now one of the richest men in town. Some thieves want to steal from your home and in the process they kill you.";
                 }
                 break;
             case 4:
                 if (Hero.stats[4] == 0) {
-                    descDeath = "You try to light a fire, but the spell is too strong and take away your life.";
+                    descDeath = "You try to light a fire with a spell, but you're so devoid of mana, it takes away your life.";
                 } else {
                     descDeath = "The mana inside you is too much, you explode.";
                 }
                 break;
         }
 
-        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat]+ ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat] + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
@@ -882,7 +929,6 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         eventtext.setBounds(width * 100 / 266, height * 10 / 13, width / 4, height * 10 / 72);
-
 
 
     }
@@ -1052,6 +1098,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * set description of the options
+     *
      * @param b
      * @param textbutton
      */
@@ -1089,6 +1136,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     /**
      * set description of the event/consequences
+     *
      * @param description
      */
     public void setDescription(String description) {
@@ -1180,7 +1228,9 @@ public class MyFrame extends JFrame implements ActionListener {
 
     }
 
-    /** change focus and image of the correct button
+    /**
+     * change focus and image of the correct button
+     *
      * @param button
      */
     public void changeFocus(JButton button) {
@@ -1196,10 +1246,10 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     /**
-     *  Timer and timertask work only once,
-     *  so every new game the timers and timertask needs to be recreated
-     *  override run()TimerTask to put the image and text after the animation
-     *  and to change years of service and age
+     * Timer and timertask work only once,
+     * so every new game the timers and timertask needs to be recreated
+     * override run()TimerTask to put the image and text after the animation
+     * and to change years of service and age
      */
     public void resumetimer() {
 
@@ -1208,7 +1258,7 @@ public class MyFrame extends JFrame implements ActionListener {
         timerevent.schedule(taskevent, 700); //timerevent.schedule(taskevent, 700);
 
     }
-    
+
     public class timertask extends TimerTask {
         @Override
         public void run() {
@@ -1218,13 +1268,15 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
     }
-    public void resumetimertime(){
+
+    public void resumetimertime() {
         timerchange taskchange = new timerchange();
         timertime = new Timer();
         timertime.schedule(taskchange, 0, 5000);
 
     }
-    public class timerchange extends TimerTask{
+
+    public class timerchange extends TimerTask {
         @Override
         public void run() {
             Hero.age++;
@@ -1235,8 +1287,8 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     /**
-     *  override for keyboard
-     *  selection for the shields/option
+     * override for keyboard
+     * selection for the shields/option
      */
     private class SelectWest extends AbstractAction {
         @Override
@@ -1286,12 +1338,12 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     /**
-     *  override for keyboard
-     *  case 0 = the user can see the events
-     *  case 1 = the user can see the shields and select and option or press space again
-     *           if space is pressed, the shield disappear
-     *  case 2 = check if hero is dead, if yes set the current function,
-     *           if not, pick a new event
+     * override for keyboard
+     * case 0 = the user can see the events
+     * case 1 = the user can see the shields and select and option or press space again
+     * if space is pressed, the shield disappear
+     * case 2 = check if hero is dead, if yes set the current function,
+     * if not, pick a new event
      */
     private class Continue extends AbstractAction {
         @Override
@@ -1349,9 +1401,9 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     /**
-     *  override for keyboard
-     *  go up and down in the menu buttons
-     *  the focus is changed so space triggers the correct button
+     * override for keyboard
+     * go up and down in the menu buttons
+     * the focus is changed so space triggers the correct button
      */
     private class GoDown extends AbstractAction {
         @Override
