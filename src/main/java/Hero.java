@@ -19,6 +19,10 @@ public class Hero {
     final static int SCALE = 2;
     final static int CROW = 3;
 
+    static int currentId;
+    static int nextId;
+    static int completedEvents;
+
 
     /**
      * Resets the hero's statistics and generates a new random name.
@@ -42,6 +46,10 @@ public class Hero {
         stats[4] = 50; //mana
         luck = 10;
         Arrays.fill(artefacts, false);
+
+        currentId = 0;
+        nextId = 0;
+        completedEvents = 0;
     }
 
     /**
@@ -159,6 +167,15 @@ public class Hero {
      */
     public static boolean hasCrow() {
         return artefacts[CROW];
+    }
+
+    /**
+     * Return true if the hero has the crow and if the description will be altered this time.
+     *
+     * @return Boolean
+     */
+    public static boolean isCrowed() {
+        return hasCrow() && completedEvents % 3 == 0;
     }
 
     /**

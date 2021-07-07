@@ -9,10 +9,7 @@ import java.util.Random;
  * Only one object of such class should exist per project.
  */
 public class EventManager {
-    int currentId;
-    int nextId = 0;
     HashMap<Integer, WorldEvent> events = new HashMap<>();
-    int completedEvents = 0;
 
     Connection connection;
     Statement statement;
@@ -228,19 +225,7 @@ public class EventManager {
      * Does NOT need to be called when loading a save.
      */
     public void newGame() {
-        currentId = 0;
-        nextId = 0;
-        completedEvents = 0;
         Hero.reset();
-    }
-
-    /**
-     * Return true if the hero has the crow and if the description will be altered this time.
-     *
-     * @return Boolean
-     */
-    public boolean isCrowed(){
-        return Hero.hasCrow() && completedEvents % 3 == 0;
     }
 
     /**
@@ -250,25 +235,24 @@ public class EventManager {
      */
     private int getRandomEvent() {
         ArrayList<Integer> possibleEvents = new ArrayList<>();
-        if (completedEvents == 0) {
+        if (Hero.completedEvents == 0) {
             possibleEvents.add(1);
             possibleEvents.add(2);
         } else {
-            possibleEvents.add(20);
-            possibleEvents.add(21);
-            possibleEvents.add(22);
-            possibleEvents.add(23);
-            possibleEvents.add(24);
-            possibleEvents.add(25);
-            possibleEvents.add(26);
-            possibleEvents.add(30);
-            possibleEvents.add(31);
-            possibleEvents.add(32);
-            if (completedEvents > 5)
+            for (int i = 20; i <= 26; i++) {
+                if (Hero.currentId != i)
+                    possibleEvents.add(i);
+            }
+            if (Hero.currentId / 10 != 3) {
+                possibleEvents.add(30);
+                possibleEvents.add(31);
+                possibleEvents.add(32);
+            }
+            if (Hero.completedEvents > 5 &&  Hero.currentId / 10 != 1)
                 possibleEvents.add(10);
-            if (Hero.hasCurse())
+            if (Hero.hasCurse() && Hero.currentId != 13)
                 possibleEvents.add(13);
-            if (completedEvents > 10)
+            if (Hero.completedEvents > 10 && Hero.currentId / 10 != 4)
                 possibleEvents.add(40);
         }
         int weightSum = 0;
@@ -290,26 +274,26 @@ public class EventManager {
      * If there's no predetermined event to be played next, a random one will be chosen.
      */
     public void getEvent() {
-        if (nextId != 0) {
-            currentId = nextId;
-            nextId = 0;
+        if (Hero.nextId != 0) {
+            Hero.currentId = Hero.nextId;
+            Hero.nextId = 0;
         } else
-            currentId = getRandomEvent();
+            Hero.currentId = getRandomEvent();
 
-        if (completedEvents != 0)
+        if (Hero.completedEvents != 0)
             save();
     }
 
     /**
-     * Updates the hero's statistics when an option is chosen and incresed the completed events counter.
+     * Updates the hero's statistics when an option is chosen and increased the completed events counter.
      *
      * @param n The option number (0 to 3)
      */
     public void pickOption(int n) {
-        events.get(currentId).options[n].pick();
-        completedEvents++;
-        if (events.get(currentId).options[n].nextId != 0)
-            nextId = events.get(currentId).options[n].nextId;
+        events.get(Hero.currentId).options[n].pick();
+        Hero.completedEvents++;
+        if (events.get(Hero.currentId).options[n].nextId != 0)
+            Hero.nextId = events.get(Hero.currentId).options[n].nextId;
     }
 
     /**
@@ -319,7 +303,7 @@ public class EventManager {
      * @return int (1 is the first event)
      */
     public int getEventNumber() {
-        return currentId;
+        return Hero.currentId;
     }
 
     /**
@@ -329,10 +313,10 @@ public class EventManager {
      * @return String (Could be long)
      */
     public String getEventDescription() {
-        if (isCrowed()) {
+        if (Hero.isCrowed()) {
             return "The cawing of a thousand crows fills your mind.";
         }
-        return events.get(currentId).description;
+        return events.get(Hero.currentId).description;
     }
 
     /**
@@ -343,7 +327,7 @@ public class EventManager {
      */
     public int getOptionNumber() {
         int i = 0;
-        for (Option o : events.get(currentId).options) {
+        for (Option o : events.get(Hero.currentId).options) {
             if (o != null && (!o.magic || Hero.hasWand()))
                 i++;
         }
@@ -356,8 +340,8 @@ public class EventManager {
      * @param n The option number (0 to 3)
      * @return String (Normally pretty short)
      */
-    public String getDesc(int n) {
-        return events.get(currentId).options[n].description;
+    public String getOptionDescription(int n) {
+        return events.get(Hero.currentId).options[n].description;
     }
 
     /**
@@ -367,23 +351,23 @@ public class EventManager {
      * @return String (Could be several lines long)
      */
     public String getResult(int n) {
-        return events.get(currentId).options[n].result;
+        return events.get(Hero.currentId).options[n].result;
     }
 
     public int getDeltaHealth(int n) {
-        return events.get(currentId).options[n].deltaHealth;
+        return events.get(Hero.currentId).options[n].deltaHealth;
     }
 
     public int getDeltaFame(int n) {
-        return events.get(currentId).options[n].deltaFame;
+        return events.get(Hero.currentId).options[n].deltaFame;
     }
 
     public int getDeltaMoney(int n) {
-        return events.get(currentId).options[n].deltaMoney;
+        return events.get(Hero.currentId).options[n].deltaMoney;
     }
 
     public int getDeltaLoyalty(int n) {
-        return events.get(currentId).options[n].deltaLoyalty;
+        return events.get(Hero.currentId).options[n].deltaLoyalty;
     }
 
     /**
@@ -446,8 +430,8 @@ public class EventManager {
             Hero.setLoyalty(r.getInt("Loyalty"));
             Hero.setMana(r.getInt("Mana"));
             Hero.setLuck(r.getInt("Luck"));
-            completedEvents = r.getInt("Completed");
-            currentId = r.getInt("EventId");
+            Hero.completedEvents = r.getInt("Completed");
+            Hero.currentId = r.getInt("EventId");
             Hero.artefacts[Hero.WAND] = r.getBoolean("Wand");
             Hero.artefacts[Hero.CURSE] = r.getBoolean("Curse");
             Hero.artefacts[Hero.SCALE] = r.getBoolean("Scale");
@@ -485,8 +469,8 @@ public class EventManager {
             saveStatement.setInt(8, Hero.getLoyalty());
             saveStatement.setInt(9, Hero.getMana());
             saveStatement.setInt(10, Hero.getLuck());
-            saveStatement.setInt(11, completedEvents);
-            saveStatement.setInt(12, currentId);
+            saveStatement.setInt(11, Hero.completedEvents);
+            saveStatement.setInt(12, Hero.currentId);
             saveStatement.setInt(13, (Hero.artefacts[Hero.WAND] ? 1 : 0));
             saveStatement.setInt(14, (Hero.artefacts[Hero.CURSE] ? 1 : 0));
             saveStatement.setInt(15, (Hero.artefacts[Hero.SCALE] ? 1 : 0));
@@ -506,7 +490,7 @@ public class EventManager {
      * ResultSet r = ev.getAllSaves();
      * while(r.next()){
      * i=r.getInt("SaveId");
-     * arraypulsanti[i].setText(r.getString("HeroName"));
+     * buttonArray[i].setText(r.getString("HeroName"));
      * ...
      * }
      *

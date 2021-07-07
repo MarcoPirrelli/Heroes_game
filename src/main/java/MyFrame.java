@@ -616,11 +616,11 @@ public class MyFrame extends JFrame implements ActionListener {
             b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
 
             ev.load(1);
-            b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+            b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
             ev.load(2);
-            b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+            b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
             ev.load(3);
-            b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+            b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
 
             float size0 = width / 75;
             overwrite.setForeground(Color.WHITE);
@@ -756,11 +756,11 @@ public class MyFrame extends JFrame implements ActionListener {
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
         ev.load(1);
-        b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+        b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
         ev.load(2);
-        b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+        b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
         ev.load(3);
-        b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + ev.completedEvents);
+        b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
 
         this.add(slotpanel, 3, 0);
         slotpanel.setBounds(0, 0, width, height * 4 / 5);
@@ -896,7 +896,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(backgroundimage, 4, 0);
-        death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + ev.completedEvents + " events.");
+        death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + Hero.completedEvents + " events.");
         add(deathpanel, 5, 0);
         deathpanel.setBounds(0, 0, width, height);
 
@@ -938,10 +938,10 @@ public class MyFrame extends JFrame implements ActionListener {
                 b.setFont(heroname.getFont().deriveFont(size));
             }
 
-            setDescriptionShields(b_w, ev.getDesc(0));
-            setDescriptionShields(b_e, ev.getDesc(1));
-            setDescriptionShields(b_n, ev.getDesc(2));
-            setDescriptionShields(b_s, ev.getDesc(3));
+            setDescriptionShields(b_w, ev.getOptionDescription(0));
+            setDescriptionShields(b_e, ev.getOptionDescription(1));
+            setDescriptionShields(b_n, ev.getOptionDescription(2));
+            setDescriptionShields(b_s, ev.getOptionDescription(3));
 
 
             b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
@@ -980,9 +980,9 @@ public class MyFrame extends JFrame implements ActionListener {
                 b.setFont(heroname.getFont().deriveFont(size));
             }
 
-            setDescriptionShields(b_w, ev.getDesc(0));
-            setDescriptionShields(b_e, ev.getDesc(1));
-            setDescriptionShields(b_n, ev.getDesc(2));
+            setDescriptionShields(b_w, ev.getOptionDescription(0));
+            setDescriptionShields(b_e, ev.getOptionDescription(1));
+            setDescriptionShields(b_n, ev.getOptionDescription(2));
 
             b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
             b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
@@ -1011,8 +1011,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 b.setFont(heroname.getFont().deriveFont(size));
             }
 
-            setDescriptionShields(b_w, ev.getDesc(0));
-            setDescriptionShields(b_e, ev.getDesc(1));
+            setDescriptionShields(b_w, ev.getOptionDescription(0));
+            setDescriptionShields(b_e, ev.getOptionDescription(1));
 
             b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
             b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
@@ -1092,7 +1092,7 @@ public class MyFrame extends JFrame implements ActionListener {
      * @param description
      */
     public void setDescription(String description) {
-        if (ev.isCrowed())
+        if (Hero.isCrowed())
             eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         else
             eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/e" + ev.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
