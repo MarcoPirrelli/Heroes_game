@@ -1365,7 +1365,7 @@ public class MyFrame extends JFrame implements ActionListener {
         timertime.cancel();
         timertime = new Timer();
         timerchange taskchange = new timerchange();
-        timertime.schedule(taskchange, 0, 10000);
+        timertime.schedule(taskchange, 0, 5000);
 
     }
 
