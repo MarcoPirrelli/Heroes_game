@@ -540,6 +540,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(art);
             this.remove(click);
             this.removeShields();
+            this.remove(overwrite);
             this.remove(deathpanel);
 
             this.add(buttonspanel, 3, 0);
@@ -870,9 +871,9 @@ public class MyFrame extends JFrame implements ActionListener {
         this.remove(buttonspanel);
 
         this.add(b_back, 3, 0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.gif").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
         b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
-        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b3.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "tutorial.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
     }
 
@@ -1503,6 +1504,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 remove(click);
                 removeShields();
                 remove(deathpanel);
+                remove(overwrite);
 
 
                 add(buttonspanel, 3, 0);
