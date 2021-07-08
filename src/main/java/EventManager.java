@@ -358,27 +358,7 @@ public class EventManager {
      * @return String (Could be several lines long)
      */
     public String getResult(int n) {
-        String res = events.get(Hero.currentId).options[n].result;
-        if (res.equals("<fortuneTeller>")) {
-            switch ((Hero.getLuck() - 1) / 4) {
-                case 4 -> {
-                    return "Your stars are aligned. Great fortune will guide you on your journey.";
-                }
-                case 3 -> {
-                    return "The stars gently shine on your path. You'll experience above average luck.";
-                }
-                case 2 -> {
-                    return "The heavens feel neutral to your cause.";
-                }
-                case 1 -> {
-                    return "Your stars are in disarray. Be careful on your path, for bad fortune looms ahead.";
-                }
-                default -> {
-                    return "Great misfortune and adversity awaits you. You are doomed.";
-                }
-            }
-        }
-        return res;
+        return events.get(Hero.currentId).options[n].getResult();
     }
 
     public int getDeltaHealth(int n) {
