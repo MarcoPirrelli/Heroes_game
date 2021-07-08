@@ -540,6 +540,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(art);
             this.remove(click);
             this.removeShields();
+            this.remove(deathpanel);
 
             this.add(buttonspanel, 3, 0);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
@@ -604,7 +605,23 @@ public class MyFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == b_d_exit) {
-            System.exit(0);
+          //  System.exit(0);
+            menu = true;
+            this.remove(slotpanel);
+            this.remove(b_back);
+            this.remove(heropanel);
+            this.remove(eventimage);
+            this.remove(eventtext);
+            this.remove(statisticspanel);
+            this.remove(artifactspanel);
+            this.remove(textyear);
+            this.remove(art);
+            this.remove(click);
+            this.removeShields();
+            this.remove(deathpanel);
+
+            this.add(buttonspanel, 3, 0);
+            backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         }
 
 
@@ -865,6 +882,9 @@ public class MyFrame extends JFrame implements ActionListener {
      * @param stat
      */
     public void setDeath(int stat) {
+        isloading = false;
+        isgaming = false;
+        menu = false;
 
         String descDeath = "";
         switch (stat) {
@@ -955,16 +975,22 @@ public class MyFrame extends JFrame implements ActionListener {
      */
     public void afterDeath() {
 
+        remove(heropanel);
+        remove(artifactspanel);
+        remove(statisticspanel);
+        remove(eventtext);
+        remove(eventimage);
+        remove(textyear);
+        remove(click);
+        remove(b_back);
+        remove(art);
 
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-        add(backgroundimage, 4, 0);
         death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + Hero.completedEvents + " events.");
         add(deathpanel, 5, 0);
         deathpanel.setBounds(0, 0, width, height);
 
-        remove(eventtext);
-        remove(eventimage);
-        remove(click);
+
 
         revalidate();
         repaint();
@@ -1235,12 +1261,58 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
 
+        int health = (int) Hero.getHealth() / 10;
+        int fame = (int) Hero.getFame() / 10;
+        int money = (int) Hero.getFame() / 10;
+        int loyalty = (int) Hero.getLoyalty() / 10;
+        int mana = (int) Hero.getLoyalty() / 10;
 
-        healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int) Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int) Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int) Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int) Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        int [] statistics =  {Hero.getHealth(), Hero.getFame(), Hero.getFame() ,Hero.getLoyalty() , Hero.getLoyalty()};
+        for (int s : statistics){
+            if (s < 10 || s != 0){
+
+            }
+        }
+
+        if(Hero.getHealth() < 10 && Hero.getHealth() != 0){
+            healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + ((int) (Hero.getHealth() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+        else{
+            healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+
+        if(Hero.getFame() < 10 && Hero.getFame() != 0){
+            fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + ((int) (Hero.getFame() / 10 )+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+        else{
+            fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int) Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+
+        if(Hero.getMoney() < 10 && Hero.getMoney() != 0){
+            moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + ((int) (Hero.getMoney() / 10)+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+        else{
+            moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int) Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+        if(Hero.getLoyalty() < 10 && Hero.getLoyalty() != 0){
+            loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ((int) (Hero.getLoyalty() / 10) +1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+        else{
+            loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int) Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+
+        if(Hero.getMana() < 10 && Hero.getMana() != 0){
+            manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + ((int) (Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+        else{
+            manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int) Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        }
+
+
+
+
+
+
 
 
     }
@@ -1430,6 +1502,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 remove(art);
                 remove(click);
                 removeShields();
+                remove(deathpanel);
+
 
                 add(buttonspanel, 3, 0);
                 backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
@@ -1657,7 +1731,23 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (p == 0) {
-                System.exit(0);
+              //  System.exit(0);
+                menu = true;
+                remove(slotpanel);
+                remove(b_back);
+                remove(heropanel);
+                remove(eventimage);
+                remove(eventtext);
+                remove(statisticspanel);
+                remove(artifactspanel);
+                remove(textyear);
+                remove(art);
+                remove(click);
+                removeShields();
+                remove(deathpanel);
+
+                add(buttonspanel, 3, 0);
+                backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             } else {
                 int currentSlot = ev.getSaveSlot();
                 ev.deleteSave(currentSlot);
