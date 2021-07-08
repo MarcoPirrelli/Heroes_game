@@ -117,7 +117,7 @@ public class MyFrame extends JFrame implements ActionListener {
         //Menu Buttons
         b_newgame = new JButton("New Game");
         b_load = new JButton("Load");
-        b_settings = new JButton("Settings");
+        b_settings = new JButton("Tutorial");
         b_exit = new JButton("Exit");
 
         menubutton = new JButton[]{b_newgame, b_load, b_settings, b_exit};
