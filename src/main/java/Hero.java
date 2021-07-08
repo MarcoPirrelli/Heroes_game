@@ -34,7 +34,7 @@ public class Hero {
         Random rand = new Random();
         name = names[rand.nextInt(names.length)];
 
-        int max = 35;
+        int max = 25;
         int min = 13;
         age = rand.nextInt(max - min + 1) + min;
         yearsOfService = 0;

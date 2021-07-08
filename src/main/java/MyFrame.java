@@ -528,6 +528,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 
         if (e.getSource() == b_back) {
+            timerevent.cancel();
             menu = true;
             this.remove(slotpanel);
             this.remove(b_back);
@@ -1361,9 +1362,10 @@ public class MyFrame extends JFrame implements ActionListener {
     }
 
     public void resumetimertime() {
-        timerchange taskchange = new timerchange();
+        timertime.cancel();
         timertime = new Timer();
-        timertime.schedule(taskchange, 0, 5000);
+        timerchange taskchange = new timerchange();
+        timertime.schedule(taskchange, 0, 10000);
 
     }
 

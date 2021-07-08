@@ -68,31 +68,21 @@ public class EventManager {
             e.printStackTrace();
             System.exit(0);
         }
-        /*
-        [EventId=event]
-        1=babysitter
-        2=cat
-        10=investigation
-        11=catacombsEntrance
-        12=catacombs
-        13=exorcist
-        20=potionMerchant
-        21=massacre
-         */
+
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
         babysitter.setDescription("Every hero has to start somewhere... The local school's teacher has asked you to escort the children to the nearby village.");
         babysitter.setOption(0, new Option("Accept", "You safely escort the children and the teacher is grateful.", 0, 5, 0, 0, 0, 0));
-        babysitter.setOption(1, new Option("Accept and buy them breakfast", "You treat the children to a tasty breakfast on the road. That's all it takes to get them to like you.", 2, 10, -5, 0, 0, 0));
+        babysitter.setOption(1, new Option("Accept and buy them breakfast", "You treat the children to a tasty breakfast on the road. That's all it takes to get them to like you.", 3, 5, -5, 0, 0, 0));
         babysitter.setOption(2, new Option("Refuse", "Sometimes you'd rather just sleep...", 5, 0, 0, 0, 0, 0));
-        babysitter.setOption(3, new Option("Accept, but kill the children on the way there", "The village won't forget that.", 0, -25, 0, 0, 0, 0));
+        babysitter.setOption(3, new Option("Accept, but kill the children on the way there", "The people of the village won't forget that...", 0, -25, 0, 0, 0, 0));
 
         WorldEvent cat = new WorldEvent(1, 0, 0, 0, 0);
         events.put(2, cat);
         cat.setDescription("Every hero has to start somewhere... A lady has asked you to rescue her cat from a tree.");
         cat.setOption(0, new Option("Climb the tree and grab the cat", "The cat scratches your arm on the way down. Ouch!", -2, 5, 0, 0, 0, 0));
-        cat.setOption(1, new Option("Pet the cat and bring it back to the lady", "The cat seems to like you.", 0, 5, 0, 0, 0, 1));
-        cat.setOption(2, new Option("Walk away", "The lady seems disappointed.", 0, -3, 0, 0, 0, 0));
+        cat.setOption(1, new Option("Pet the cat and bring it back to the lady", "The cat seems to like you.", 0, 7, 0, 0, 0, 1));
+        cat.setOption(2, new Option("Walk away", "The lady seems disappointed.", 0, -5, 0, 0, 0, 0));
         cat.setOption(3, new Option("Chop down the tree", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 0));
 
         WorldEvent investigation = new WorldEvent(20, 0, 0, 0, 0);
@@ -113,17 +103,17 @@ public class EventManager {
         events.put(12, catacombs);
         catacombsEntrance.options[0].setNextEvent(12);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
-        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 15, 0, 0, 0, 0));
+        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 0));
         catacombs.options[0].setItem(Hero.CURSE, 1);
         catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3));
         catacombs.options[1].setItem(Hero.WAND, 1);
-        catacombs.setOption(2, new Option("Banish the demon with a spell", "With a zap of your magic wand, the demon is sent back to hell.", 0, 15, 0, 0, -20, 0));
+        catacombs.setOption(2, new Option("Banish the demon with a spell", "With a zap of your magic wand, the demon is sent back to hell.", 0, 20, 0, 0, -25, 0));
         catacombs.options[2].setMagic(true);
 
         WorldEvent exorcist = new WorldEvent(15, 0, 0, 0, 0);
         events.put(13, exorcist);
         exorcist.setDescription("An old man in a tunic approaches you saying he can perceive a curse upon you. He claims he can exorcise it.");
-        exorcist.setOption(0, new Option("Ask him to exorcise the curse", "The old man chants words you can't understand. The curse has been lifted.", 0, 0, 0, 0, -15, 0));
+        exorcist.setOption(0, new Option("Ask him to exorcise the curse", "The old man chants words you can't understand. The curse has been lifted.", 0, 0, 0, 0, -20, 0));
         exorcist.options[0].setItem(Hero.CURSE, -1);
         exorcist.setOption(1, new Option("Refuse", "The old man walks away yelling that you will only bring misfortune to the realm.", 0, -10, 0, 0, 0, 0));
         exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0, 0, 0, 0, 0, 0));
@@ -139,14 +129,14 @@ public class EventManager {
         WorldEvent massacre = new WorldEvent(0, 0, 0, 0, 0.2);
         events.put(21, massacre);
         massacre.setDescription("The king has requested your assistance in culling a village.");
-        massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 10, 0, 0));
-        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased.", 0, 0, 0, -10, 0, 0));
+        massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 15, 0, 0));
+        massacre.setOption(1, new Option("Refuse", "You refused. The king will we displeased.", 0, 0, 0, -15, 0, 0));
 
         WorldEvent slimes = new WorldEvent(40, 0, 0, 0, 0);
         events.put(22, slimes);
         slimes.setDescription("You've run into some slimes in the swamp.");
         slimes.setOption(0, new Option("Fight the slimes", "Killing slimes with a sword can be tough, but you managed to pull through.", -10, 10, 0, 0, 0, 0));
-        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -20, 0, 0, 0, 0, 0));
+        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -15, 0, 0, 0, 0, 0));
         slimes.setOption(2, new Option("Cast an explosion spell", "That worked better than you expected.", 0, 10, 0, 0, -10, 0));
         slimes.options[2].setMagic(true);
 
@@ -159,11 +149,11 @@ public class EventManager {
         WorldEvent flower = new WorldEvent(35, 0, 0, 0, 0);
         events.put(24, flower);
         flower.setDescription("A nurse has asked you to pick find a rare flower that grows in the north, to heal a comatose patient.");
-        flower.setOption(0, new Option("Head north to find the flower", "After a long journey, you manage to find the flower, but it wilts on the way back.", -5, -5, 0, 0, 0, 0));
-        flower.setOption(1, new Option("Look for merchants selling the flower", "You find a back alley merchant selling the flower and, although expensive, you purchase it.", 0, 10, -20, 0, 0, 0));
+        flower.setOption(0, new Option("Head north to find the flower", "After a long journey, you manage to find the flower, but it wilts on the way back.", -3, -5, 0, 0, 0, 0));
+        flower.setOption(1, new Option("Look for merchants selling the flower", "You find a back alley merchant selling the flower and, although expensive, you purchase it.", 0, 20, -20, 0, 0, 0));
         flower.setOption(2, new Option("Refuse", "The nurse walks away on the verge of tears.", 0, -10, 0, 0, 0, 0));
 
-        WorldEvent thief = new WorldEvent(40, 0, 0, 0, 0);
+        WorldEvent thief = new WorldEvent(30, 0, 0, 0, 0);
         events.put(25, thief);
         thief.setDescription("While walking at night you notice a thief trying to sneak into a house.");
         thief.setOption(0, new Option("Alert the guards", "The guards manage to detain the thief", 0, 0, 0, 10, 0, 0));
@@ -489,14 +479,6 @@ public class EventManager {
 
     /**
      * Returns a ResultSet containing the saves' information meant for display.
-     * <p>
-     * Example usage:
-     * ResultSet r = ev.getAllSaves();
-     * while(r.next()){
-     * i=r.getInt("SaveId");
-     * buttonArray[i].setText(r.getString("HeroName"));
-     * ...
-     * }
      *
      * @return ResultSet with 0 to MAX_SAVES rows
      */

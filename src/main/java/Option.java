@@ -87,7 +87,7 @@ public class Option {
             Hero.addMana(deltaMana);
         Hero.addLuck(deltaLuck);
 
-        Hero.addHealth(-(Hero.age / 50 + 1));
+        Hero.addHealth(-(Hero.age / 25 + 1));
 
         if (Hero.hasScale()) {
             int min = 101;
@@ -105,8 +105,8 @@ public class Option {
                     max = Hero.stats[i];
                 }
             }
-            Hero.stats[minIndex]++;
-            Hero.stats[maxIndex]--;
+            Hero.stats[minIndex] += 2;
+            Hero.stats[maxIndex] += 2;
         }
 
         if (Hero.getHealth() < 0) Hero.setHealth(0);
