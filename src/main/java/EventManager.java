@@ -9,7 +9,7 @@ import java.util.Random;
  * Only one object of such class should exist per project.
  */
 public class EventManager {
-    HashMap<Integer, WorldEvent> events = new HashMap<>();
+    static HashMap<Integer, WorldEvent> events = new HashMap<>();
 
     Connection connection;
     Statement statement;
@@ -169,7 +169,7 @@ public class EventManager {
         WorldEvent fortuneTeller = new WorldEvent(10, 0, 0, 0, 0);
         events.put(27, fortuneTeller);
         fortuneTeller.setDescription("You find a fortune teller. Should you ask her about your future?");
-        fortuneTeller.setOption(0, new Option("Yes", "<fortuneTeller>", 0, 0, -6, 0, 0, 0));
+        fortuneTeller.setOption(0, new Option("Yes", "", 0, 0, -6, 0, 0, 0));
         fortuneTeller.setOption(1, new Option("No", "You may choose to walk blind, but you'll find what the future holds in due time...", 0, 0, 0, 0, 0, 0));
 
         WorldEvent dice1 = new WorldEvent(40, 0, 0, 0, 0);

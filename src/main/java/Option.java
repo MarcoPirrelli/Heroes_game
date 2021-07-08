@@ -38,8 +38,13 @@ public class Option {
         }
     }
 
+    /**
+     * Returns the option result.
+     *
+     * @return String (May be long)
+     */
     public String getResult() {
-        if (result.equals("<fortuneTeller>")) {
+        if (this == EventManager.events.get(27).options[0]) {
             switch ((Hero.getLuck() - 1) / 4) {
                 case 4 -> {
                     return "Your stars are aligned. Great fortune will guide you on your journey.";
