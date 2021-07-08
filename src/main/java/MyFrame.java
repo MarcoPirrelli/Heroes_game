@@ -376,7 +376,7 @@ public class MyFrame extends JFrame implements ActionListener {
         b_d_exit.setContentAreaFilled(false);
         b_d_exit.setBorderPainted(false);
         b_d_exit.setFont(b_d_exit.getFont().deriveFont(size2));
-        b_d_exit.setText("Exit");
+        b_d_exit.setText("Menu");
 
         death = new JLabel("You Died.");
         float size0 = width / 75;
