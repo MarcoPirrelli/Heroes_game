@@ -103,7 +103,7 @@ public class EventManager {
         events.put(12, catacombs);
         catacombsEntrance.options[0].setNextEvent(12);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
-        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 3));
+        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 0));
         catacombs.options[0].setItem(Hero.CURSE, 1);
         catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3));
         catacombs.options[1].setItem(Hero.WAND, 1);
@@ -113,7 +113,7 @@ public class EventManager {
         WorldEvent exorcist = new WorldEvent(15, 0, 0, 0, 0);
         events.put(13, exorcist);
         exorcist.setDescription("An old man in a tunic approaches you saying he can perceive a curse upon you. He claims he can exorcise it.");
-        exorcist.setOption(0, new Option("Ask him to exorcise the curse", "The old man chants words you can't understand. The curse has been lifted.", 0, 0, 0, 0, -20, 0));
+        exorcist.setOption(0, new Option("Ask him to exorcise the curse", "The old man chants words you can't understand. The curse has been lifted.", 0, 0, 0, 0, -20, 3));
         exorcist.options[0].setItem(Hero.CURSE, -1);
         exorcist.setOption(1, new Option("Refuse", "The old man walks away yelling that you will only bring misfortune to the realm.", 0, -10, 0, 0, 0, 0));
         exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0, 0, 0, 0, 0, 0));
@@ -165,6 +165,12 @@ public class EventManager {
         crow.setOption(0, new Option("Give the crow some money", "The crow takes your money and flies away", 0, 0, -10, 0, 0, 0));
         crow.setOption(1, new Option("Kill the crow", "You kill the crow. You can hear a flow of crow cawing in the distance.", 0, 0, 0, 0, 0, 0));
         crow.options[1].setItem(Hero.CROW, 1);
+
+        WorldEvent fortuneTeller = new WorldEvent(10, 0, 0, 0, 0);
+        events.put(27, fortuneTeller);
+        fortuneTeller.setDescription("You find a fortune teller. Should you ask her about your future?");
+        fortuneTeller.setOption(0, new Option("Yes", "<fortuneTeller>", 0, 0, -6, 0, 0, 0));
+        fortuneTeller.setOption(1, new Option("No", "You may choose to walk blind, but you'll find what the future holds in due time...", 0, 0, 0, 0, 0, 0));
 
         WorldEvent dice1 = new WorldEvent(40, 0, 0, 0, 0);
         events.put(30, dice1);
@@ -232,24 +238,23 @@ public class EventManager {
             possibleEvents.add(2);
         } else {
             //Normal events
-            for (int i = 20; i <= 26; i++) {
+            for (int i = 20; i <= 27; i++) {
                 if (Hero.currentId != i)
                     possibleEvents.add(i);
             }
             //Dice events
             if (Hero.currentId / 10 != 3) {
                 int r = rand.nextInt(80) + Hero.getLuck();
-                if(r>40){
-                    if(r%2==0)
+                if (r > 40) {
+                    if (r % 2 == 0)
                         possibleEvents.add(31);
                     else
                         possibleEvents.add(32);
-                }
-                else
-                possibleEvents.add(30);
+                } else
+                    possibleEvents.add(30);
             }
             //Catacombs
-            if (Hero.completedEvents > 5 &&  Hero.currentId / 10 != 1)
+            if (Hero.completedEvents > 5 && Hero.currentId / 10 != 1)
                 possibleEvents.add(10);
             //Exorcist
             if (Hero.hasCurse() && Hero.currentId != 13)
@@ -353,7 +358,27 @@ public class EventManager {
      * @return String (Could be several lines long)
      */
     public String getResult(int n) {
-        return events.get(Hero.currentId).options[n].result;
+        String res = events.get(Hero.currentId).options[n].result;
+        if (res.equals("<fortuneTeller>")) {
+            switch ((Hero.getLuck() - 1) / 4) {
+                case 4 -> {
+                    return "Your stars are aligned. Great fortune will guide you on your journey.";
+                }
+                case 3 -> {
+                    return "The stars gently shine on your path. You'll experience above average luck.";
+                }
+                case 2 -> {
+                    return "The heavens feel neutral to your cause.";
+                }
+                case 1 -> {
+                    return "Your stars are in disarray. Be careful on your path, for bad fortune looms ahead.";
+                }
+                default -> {
+                    return "Great misfortune and adversity awaits you. You are doomed.";
+                }
+            }
+        }
+        return res;
     }
 
     public int getDeltaHealth(int n) {
