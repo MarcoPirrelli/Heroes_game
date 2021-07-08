@@ -886,6 +886,7 @@ public class MyFrame extends JFrame implements ActionListener {
         isloading = false;
         isgaming = false;
         menu = false;
+        ev.deleteSave(ev.getSaveSlot());
 
         String descDeath = "";
         switch (stat) {
@@ -1751,9 +1752,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 add(buttonspanel, 3, 0);
                 backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             } else {
-                int currentSlot = ev.getSaveSlot();
-                ev.deleteSave(currentSlot);
-                newGame(currentSlot);
+                newGame(ev.getSaveSlot());
                 a = 0;
             }
         }

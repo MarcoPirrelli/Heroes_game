@@ -419,7 +419,11 @@ public class EventManager {
     public void load(int saveId) {
         try {
             ResultSet r = statement.executeQuery("select * from saves where SaveId=" + saveId);
-            if (r.isAfterLast()) return;
+            if (r.isAfterLast()) {
+                setSaveSlot(saveId);
+                newGame();
+                return;
+            }
             saveSlot = r.getInt("SaveId");
             Hero.name = r.getString("HeroName");
             Hero.age = r.getInt("HeroAge");
