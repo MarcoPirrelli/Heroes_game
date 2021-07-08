@@ -74,7 +74,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
     //JButtons
     private final JButton b_newgame, b_load, b_settings, b_exit;
-    private final JButton b_back, b_exitgame;
+    private final JButton b_back;
     private final JButton click;
     private final JButton b_w, b_e, b_n, b_s;
     JButton[] menubutton;
@@ -94,8 +94,9 @@ public class MyFrame extends JFrame implements ActionListener {
     String name;
     JLabel overwrite;
 
-
+    Boolean isgaming = false;
     Boolean isloading = true;
+    Boolean menu = true;
 
 
     MyFrame() {
@@ -352,12 +353,6 @@ public class MyFrame extends JFrame implements ActionListener {
         b_back.setBorderPainted(false);
         b_back.setOpaque(false);
 
-        b_exitgame = new JButton();
-        b_exitgame.addActionListener(this);
-        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonback.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
-        b_exitgame.setContentAreaFilled(false);
-        b_exitgame.setBorderPainted(false);
-        b_exitgame.setOpaque(false);
 
         //death
         b_d_newgame = new JButton();
@@ -531,13 +526,21 @@ public class MyFrame extends JFrame implements ActionListener {
             a = 2;
         }
 
-        if (e.getSource() == b_exitgame) {
-            System.exit(0);
-        }
 
         if (e.getSource() == b_back) {
+            menu = true;
             this.remove(slotpanel);
             this.remove(b_back);
+            this.remove(heropanel);
+            this.remove(eventimage);
+            this.remove(eventtext);
+            this.remove(statisticspanel);
+            this.remove(artifactspanel);
+            this.remove(textyear);
+            this.remove(art);
+            this.remove(click);
+            this.removeShields();
+
             this.add(buttonspanel, 3, 0);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         }
@@ -612,6 +615,9 @@ public class MyFrame extends JFrame implements ActionListener {
      * if there aren't free slots, the user have to choose which slot to overwrite
      */
     public void searchSlot() {
+        menu = false;
+        isgaming = false;
+
         if (ev.firstEmptySlot() == 0) {
             //chiedi agli utenti di scegliere che slot sovraccaricare
             this.remove(buttonspanel);
@@ -680,6 +686,9 @@ public class MyFrame extends JFrame implements ActionListener {
      * component in order: bg and exit, click, hero, event, time, statistics, artifacts, keyboard
      */
     public void newGame(int slot) {
+        menu = false;
+        isgaming = true;
+        isloading = false;
 
         ev.setSaveSlot(slot);
         ev.getEvent();
@@ -692,9 +701,9 @@ public class MyFrame extends JFrame implements ActionListener {
         //Bg and exit
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(backgroundimage, 1, 0);
-        b_exitgame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
-        this.add(b_exitgame, 4, 0);
-        b_exitgame.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonexit.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        this.add(b_back, 4, 0);
+        b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
 
         //click
         this.add(click, 3, 0);
@@ -771,6 +780,11 @@ public class MyFrame extends JFrame implements ActionListener {
      */
     public void load() {
 
+        menu = false;
+        isloading = true;
+        isgaming = false;
+
+
         this.remove(buttonspanel);
 
         this.add(b_back, 3, 0);
@@ -812,7 +826,6 @@ public class MyFrame extends JFrame implements ActionListener {
         this.add(slotpanel, 3, 0);
         slotpanel.setBounds(0, 0, width, height * 4 / 5);
 
-        isloading = true;
         revalidate();
         repaint();
 
@@ -833,6 +846,9 @@ public class MyFrame extends JFrame implements ActionListener {
      * SETTINGS
      */
     public void settings() {
+        menu = false;
+        isloading = false;
+        isgaming = false;
 
         this.remove(buttonspanel);
 
@@ -1076,6 +1092,8 @@ public class MyFrame extends JFrame implements ActionListener {
      * remove buttons on click
      */
     public void removeShields() {
+
+        if(isgaming){
         if (ev.getOptionNumber() == 4) {
             this.remove(b_w);
             this.remove(b_e);
@@ -1091,7 +1109,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(b_e);
         }
         repaint();  //to remove components it is better to call it
-
+        }
     }
 
 
@@ -1395,7 +1413,34 @@ public class MyFrame extends JFrame implements ActionListener {
     private class Escape extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+
+            if(menu){
+                System.exit(0);
+            }
+
+            else{
+                remove(slotpanel);
+                remove(b_back);
+                remove(heropanel);
+                remove(eventimage);
+                remove(eventtext);
+                remove(statisticspanel);
+                remove(artifactspanel);
+                remove(textyear);
+                remove(art);
+                remove(click);
+                removeShields();
+
+                add(buttonspanel, 3, 0);
+                backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+
+                revalidate();
+                repaint();
+
+                menu = true;
+            }
+
+
         }
     }
 
