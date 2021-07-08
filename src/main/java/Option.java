@@ -106,7 +106,7 @@ public class Option {
                 }
             }
             Hero.stats[minIndex] += 2;
-            Hero.stats[maxIndex] += 2;
+            Hero.stats[maxIndex] -= 2;
         }
 
         if (Hero.getHealth() < 0) Hero.setHealth(0);

@@ -89,7 +89,7 @@ public class EventManager {
         events.put(10, investigation);
         investigation.setDescription("You've heard rumors of a mysterious figure roaming near the catacombs. Should you investigate?");
         investigation.setOption(0, new Option("Yes", "You arrive at night. As you approach the hooded figure, it runs into the catacombs.", 0, 0, 0, 0, 0, 0));
-        investigation.setOption(1, new Option("No", "Some things are best left in mystery...", 0, 0, 0, 0, 0, 0));
+        investigation.setOption(1, new Option("No", "Some things are best left in mystery...", 0, -5, 0, -5, 0, 0));
 
         WorldEvent catacombsEntrance = new WorldEvent(0, 0, 0, 0, 0);
         events.put(11, catacombsEntrance);
@@ -103,7 +103,7 @@ public class EventManager {
         events.put(12, catacombs);
         catacombsEntrance.options[0].setNextEvent(12);
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
-        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 0));
+        catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 3));
         catacombs.options[0].setItem(Hero.CURSE, 1);
         catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3));
         catacombs.options[1].setItem(Hero.WAND, 1);
@@ -118,7 +118,7 @@ public class EventManager {
         exorcist.setOption(1, new Option("Refuse", "The old man walks away yelling that you will only bring misfortune to the realm.", 0, -10, 0, 0, 0, 0));
         exorcist.setOption(2, new Option("Kill the old man", "He'd gone crazy. Better put him out of his misery...", 0, 0, 0, 0, 0, 0));
 
-        WorldEvent potionMerchant = new WorldEvent(30, -0.4, 0, 0, 0);
+        WorldEvent potionMerchant = new WorldEvent(40, -0.4, 0, 0, 0);
         events.put(20, potionMerchant);
         potionMerchant.setDescription("You arrive at a potion merchant's stand.");
         potionMerchant.setOption(0, new Option("Buy a health potion", "You drink the health potion and feel rejuvenated.", 15, 0, -10, 0, 0, 0));
@@ -126,7 +126,7 @@ public class EventManager {
         potionMerchant.setOption(2, new Option("Buy a mana potion", "You drink the mana potion and you suddenly feel attuned to the elements.", 0, 0, -10, 0, 15, 1));
         potionMerchant.options[2].setMagic(true);
 
-        WorldEvent massacre = new WorldEvent(0, 0, 0, 0, 0.2);
+        WorldEvent massacre = new WorldEvent(5, 0, 0, 0, 0.2);
         events.put(21, massacre);
         massacre.setDescription("The king has requested your assistance in culling a village.");
         massacre.setOption(0, new Option("Accept", "You must do what the king requests to not get on his bad side...", 0, -25, 15, 15, 0, 0));
@@ -135,15 +135,15 @@ public class EventManager {
         WorldEvent slimes = new WorldEvent(40, 0, 0, 0, 0);
         events.put(22, slimes);
         slimes.setDescription("You've run into some slimes in the swamp.");
-        slimes.setOption(0, new Option("Fight the slimes", "Killing slimes with a sword can be tough, but you managed to pull through.", -10, 10, 0, 0, 0, 0));
-        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -15, 0, 0, 0, 0, 0));
-        slimes.setOption(2, new Option("Cast an explosion spell", "That worked better than you expected.", 0, 10, 0, 0, -10, 0));
+        slimes.setOption(0, new Option("Fight the slimes", "Killing slimes with a sword can be tough, but you managed to pull through.", -8, 8, 0, 0, 0, 0));
+        slimes.setOption(1, new Option("Run away", "It's too hard to run when your feet sink in the swamp's mud and the slimes attack you.", -12, 0, 0, 0, 0, 0));
+        slimes.setOption(2, new Option("Cast an explosion spell", "That worked better than you expected.", 0, 8, 0, 0, -10, 0));
         slimes.options[2].setMagic(true);
 
         WorldEvent crystals = new WorldEvent(10, 0, 0, 0.1, 0);
         events.put(23, crystals);
         crystals.setDescription("The merchants guild has asked you to recover a lost shipment of magic crystals.");
-        crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0, 0, 10, 0, 30, 0));
+        crystals.setOption(0, new Option("Help the merchants", "You find a cart full of shiny crystals. You can feel the electricity in the air.", 0, 0, 15, 0, 30, 0));
         crystals.setOption(1, new Option("Refuse", "The merchants are disappointed.", 0, -5, 0, 0, 0, 0));
 
         WorldEvent flower = new WorldEvent(35, 0, 0, 0, 0);
@@ -156,8 +156,8 @@ public class EventManager {
         WorldEvent thief = new WorldEvent(30, 0, 0, 0, 0);
         events.put(25, thief);
         thief.setDescription("While walking at night you notice a thief trying to sneak into a house.");
-        thief.setOption(0, new Option("Alert the guards", "The guards manage to detain the thief", 0, 0, 0, 10, 0, 0));
-        thief.setOption(1, new Option("Intervene yourself", "You manage to detain thief without a fight", 0, 10, 0, 0, 0, 0));
+        thief.setOption(0, new Option("Alert the guards", "The guards manage to detain the thief", 0, 0, 0, 8, 0, 0));
+        thief.setOption(1, new Option("Intervene yourself", "You manage to detain thief without a fight", 0, 8, 0, 0, 0, 0));
 
         WorldEvent crow = new WorldEvent(15, 0, 0, 0, 0);
         events.put(26, crow);
@@ -166,31 +166,31 @@ public class EventManager {
         crow.setOption(1, new Option("Kill the crow", "You kill the crow. You can hear a flow of crow cawing in the distance.", 0, 0, 0, 0, 0, 0));
         crow.options[1].setItem(Hero.CROW, 1);
 
-        WorldEvent dice1 = new WorldEvent(20, 0, 0, 0, 0);
+        WorldEvent dice1 = new WorldEvent(40, 0, 0, 0, 0);
         events.put(30, dice1);
         dice1.setDescription("A man has challenged you to a game of dice for money.");
-        dice1.setOption(0, new Option("Throw the dice", "You lost. Better luck next time!", 0, 0, -15, 0, 0, 0));
+        dice1.setOption(0, new Option("Throw the dice", "You lost. Better luck next time!", 0, 0, -10, 0, 0, 0));
         dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
-        WorldEvent dice2 = new WorldEvent(5, 0, 0, 0, 0);
+        WorldEvent dice2 = new WorldEvent(40, 0, 0, 0, 0);
         events.put(31, dice2);
         dice2.setDescription("A man has challenged you to a game of dice for money.");
-        dice2.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 1));
+        dice2.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 10, 0, 0, 1));
         dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
-        WorldEvent dice3 = new WorldEvent(5, 0, 0, 0, 0);
+        WorldEvent dice3 = new WorldEvent(40, 0, 0, 0, 0);
         events.put(32, dice3);
         dice3.setDescription("A man has challenged you to a game of dice for money.");
-        dice3.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 15, 0, 0, 0));
+        dice3.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 10, 0, 0, 0));
         dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
         WorldEvent dragon1 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(40, dragon1);
         dragon1.setDescription("A dragon has been terrorizing the area and you've been asked to kill it.");
-        dragon1.setOption(0, new Option("Search for its lair and kill it", "After a hard fought battle you manage to defeat the dragon. You also obtain an enchanted scale!", -35, 25, 25, 25, 0, 0));
+        dragon1.setOption(0, new Option("Search for its lair and kill it", "After a hard fought battle you manage to defeat the dragon. You also obtain an enchanted scale!", -30, 25, 25, 25, 0, 0));
         dragon1.options[0].setItem(Hero.SCALE, 1);
         dragon1.setOption(1, new Option("Try to communicate with the dragon", "When you arrive at the dragon lair you realize the dragon can talk.", 0, 0, 0, 0, 0, 0));
-        dragon1.setOption(2, new Option("Refuse", "Still alive, the dragon burns down and entire village.", 0, -20, 0, -20, 0, 0));
+        dragon1.setOption(2, new Option("Refuse", "Still alive, the dragon burns down and entire village.", 0, -25, 0, -25, 0, 0));
 
         WorldEvent dragon2 = new WorldEvent(0, 0, 0, 0, 0);
         events.put(41, dragon2);
@@ -204,9 +204,9 @@ public class EventManager {
         events.put(42, dragonEgg);
         dragon2.options[2].setNextEvent(42);
         dragonEgg.setDescription("What will you do with the egg?");
-        dragonEgg.setOption(0, new Option("Keep it hidden", "You decide to keep it hidden. What happens when it hatches is a problem for another day...", 0, 0, 0, 0, 0, 2));
+        dragonEgg.setOption(0, new Option("Keep it hidden", "You decide to keep it hidden. What happens when it hatches is a problem for another day...", 0, 0, 0, 0, 0, 3));
         dragonEgg.setOption(1, new Option("Sell it", "You sell the egg for a considerable amount of money.", 0, 0, 35, 0, 0, 0));
-        dragonEgg.setOption(2, new Option("Cook it", "You cook a nice dragon egg omelet.", 40, 0, 0, 0, 0, 0));
+        dragonEgg.setOption(2, new Option("Cook it", "You cook a nice dragon egg omelet.", 35, 0, 0, 0, 0, 0));
         dragonEgg.setOption(3, new Option("Give it to the king", "You gift the egg to the king.", 0, 0, 0, 35, 0, 0));
     }
 
@@ -224,24 +224,37 @@ public class EventManager {
      * @return Int (Key of the event in "events"). Positive
      */
     private int getRandomEvent() {
+        Random rand = new Random();
         ArrayList<Integer> possibleEvents = new ArrayList<>();
+        //Starting events
         if (Hero.completedEvents == 0) {
             possibleEvents.add(1);
             possibleEvents.add(2);
         } else {
+            //Normal events
             for (int i = 20; i <= 26; i++) {
                 if (Hero.currentId != i)
                     possibleEvents.add(i);
             }
+            //Dice events
             if (Hero.currentId / 10 != 3) {
+                int r = rand.nextInt(80) + Hero.getLuck();
+                if(r>40){
+                    if(r%2==0)
+                        possibleEvents.add(31);
+                    else
+                        possibleEvents.add(32);
+                }
+                else
                 possibleEvents.add(30);
-                possibleEvents.add(31);
-                possibleEvents.add(32);
             }
+            //Catacombs
             if (Hero.completedEvents > 5 &&  Hero.currentId / 10 != 1)
                 possibleEvents.add(10);
+            //Exorcist
             if (Hero.hasCurse() && Hero.currentId != 13)
                 possibleEvents.add(13);
+            //Dragon
             if (Hero.completedEvents > 10 && Hero.currentId / 10 != 4)
                 possibleEvents.add(40);
         }
@@ -249,7 +262,6 @@ public class EventManager {
         for (int i : possibleEvents) {
             weightSum += events.get(i).fullWeight();
         }
-        Random rand = new Random();
         int r = rand.nextInt(weightSum) + 1;
         for (int i : possibleEvents) {
             r -= events.get(i).fullWeight();

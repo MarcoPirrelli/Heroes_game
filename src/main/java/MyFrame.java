@@ -895,7 +895,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 if (Hero.stats[0] == 0) {
                     descDeath = "You have no energy to continue living, so you let yourself die under a tree.";
                 } else {
-                    descDeath = "You feel so good and energetic and life is good. But Steve, a cripple, is envious of your good health and poisons you.";
+                    descDeath = "You've never felt better in your life, but a cripple is envious of your health and poisons you.";
                 }
                 break;
             case 1:
