@@ -174,11 +174,12 @@ public class EventManager {
 
         WorldEvent siren = new WorldEvent(15, 0, 0, 0, 0);
         events.put(28, siren);
-        siren.setDescription("You hear a sweet voice singing from the river");
-        siren.setOption(0, new Option("Go to her", "You get almost drowned to death.", 0, 0, -10, 0, 0, 0));
-        siren.setOption(1, new Option("Go away", "You get lost on your way home.", -2, -2, 0, 0, 0, 0));
-        siren.setOption(2, new Option("Curse at the creature", "The creature doesn't like it. She sings you a curse.", 0, 0, 0, 0, -20, -20));
-        siren.setOption(3, new Option("Kill the creature", "You heard siren meat brings immortality, so you kill the creature and make a broth.", 50, 0, 0, 0, 10, 0));
+        siren.setDescription("You hear a sweet voice singing from the river.");
+        siren.setOption(0, new Option("Go to her", "While under her charm, you almost drown to death.", 0, 0, -10, 0, 0, 0));
+        siren.setOption(1, new Option("Go away", "You get lost on your way home.", -2, -10, 0, 0, 0, 0));
+        siren.setOption(2, new Option("Curse at the creature", "The creature doesn't like it. She sings you a curse.", 0, 0, 0, 0, -20, 0));
+        siren.options[2].setItem(Hero.CURSE, 1);
+        siren.setOption(3, new Option("Kill the creature", "You heard siren meat brings immortality, so you kill the creature and make a broth.", 40, 0, 0, 0, 10, 0));
 
         WorldEvent dice1 = new WorldEvent(40, 0, 0, 0, 0);
         events.put(30, dice1);
@@ -246,7 +247,7 @@ public class EventManager {
             possibleEvents.add(2);
         } else {
             //Normal events
-            for (int i = 20; i <= 27; i++) {
+            for (int i = 20; i <= 28; i++) {
                 if (Hero.currentId != i)
                     possibleEvents.add(i);
             }
