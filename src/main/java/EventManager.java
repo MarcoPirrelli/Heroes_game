@@ -172,6 +172,14 @@ public class EventManager {
         fortuneTeller.setOption(0, new Option("Yes", "", 0, 0, -6, 0, 0, 0));
         fortuneTeller.setOption(1, new Option("No", "You may choose to walk blind, but you'll find what the future holds in due time...", 0, 0, 0, 0, 0, 0));
 
+        WorldEvent siren = new WorldEvent(15, 0, 0, 0, 0);
+        events.put(28, siren);
+        siren.setDescription("You hear a sweet voice singing from the river");
+        siren.setOption(0, new Option("Go to her", "You get almost drowned to death.", 0, 0, -10, 0, 0, 0));
+        siren.setOption(1, new Option("Go away", "You get lost on your way home.", -2, -2, 0, 0, 0, 0));
+        siren.setOption(2, new Option("Curse at the creature", "The creature doesn't like it. She sings you a curse.", 0, 0, 0, 0, -20, -20));
+        siren.setOption(3, new Option("Kill the creature", "You heard siren meat brings immortality, so you kill the creature and make a broth.", 50, 0, 0, 0, 10, 0));
+
         WorldEvent dice1 = new WorldEvent(40, 0, 0, 0, 0);
         events.put(30, dice1);
         dice1.setDescription("A man has challenged you to a game of dice for money.");
