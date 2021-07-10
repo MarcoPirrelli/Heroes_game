@@ -1,3 +1,7 @@
+/**
+ * Abstract class to represent options for world events.
+ * Needs the pick method implementation.
+ */
 public abstract class AbstractOption {
     String description;
     String result;

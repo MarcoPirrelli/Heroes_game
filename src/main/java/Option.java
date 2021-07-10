@@ -1,5 +1,6 @@
 /**
- * Small class to represent options that can be picked as a response to a game event.
+ * Class to represent options for world events.
+ * Standardized pick method.
  */
 public class Option extends AbstractOption {
     /**

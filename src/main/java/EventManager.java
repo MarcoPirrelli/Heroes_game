@@ -193,23 +193,30 @@ public class EventManager {
         siren.options[2].setItem(Hero.CURSE, 1);
         siren.setOption(3, new Option("Kill the creature", "You heard siren meat brings immortality, so you kill the creature and make a broth.", 40, 0, 0, 0, 10, 0));
 
-        WorldEvent dice1 = new WorldEvent(40, 0, 0, 0, 0);
-        events.put(30, dice1);
-        dice1.setDescription("A man has challenged you to a game of dice for money.");
-        dice1.setOption(0, new Option("Throw the dice", "You lost. Better luck next time!", 0, 0, -10, 0, 0, 0));
-        dice1.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
-
-        WorldEvent dice2 = new WorldEvent(40, 0, 0, 0, 0);
-        events.put(31, dice2);
-        dice2.setDescription("A man has challenged you to a game of dice for money.");
-        dice2.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 10, 0, 0, 1));
-        dice2.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
-
-        WorldEvent dice3 = new WorldEvent(40, 0, 0, 0, 0);
-        events.put(32, dice3);
-        dice3.setDescription("A man has challenged you to a game of dice for money.");
-        dice3.setOption(0, new Option("Throw the dice", "You won!", 0, 0, 10, 0, 0, 0));
-        dice3.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
+        WorldEvent dice = new WorldEvent(40, 0, 0, 0, 0);
+        events.put(29, dice);
+        dice.setDescription("A man has challenged you to a game of dice for money.");
+        dice.setOption(0, new AbstractOption("Throw the dice", "", 0, 0, 0, 0, 0, 0) {
+            @Override
+            public void pick() {
+                modifyStats();
+                Random rand = new Random();
+                int r = rand.nextInt(80) + Hero.getLuck();
+                if (r > 40) {
+                    Hero.addMoney(10);
+                    result = "You won!";
+                    if (r % 2 == 0)
+                        Hero.addLuck(1);
+                } else {
+                    Hero.addMoney(-10);
+                    result = "You lost. Better luck next time!";
+                }
+                modifyArtefacts();
+                applyScale();
+                checkStats();
+            }
+        });
+        dice.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
 
         WorldEvent dragon1 = new WorldEvent(5, 0, 0, 0, 0);
         events.put(40, dragon1);
@@ -259,20 +266,9 @@ public class EventManager {
             possibleEvents.add(2);
         } else {
             //Normal events
-            for (int i = 20; i <= 28; i++) {
+            for (int i = 20; i <= 29; i++) {
                 if (Hero.currentId != i)
                     possibleEvents.add(i);
-            }
-            //Dice events
-            if (Hero.currentId / 10 != 3) {
-                int r = rand.nextInt(80) + Hero.getLuck();
-                if (r > 40) {
-                    if (r % 2 == 0)
-                        possibleEvents.add(31);
-                    else
-                        possibleEvents.add(32);
-                } else
-                    possibleEvents.add(30);
             }
             //Catacombs
             if (Hero.completedEvents > 5 && Hero.currentId / 10 != 1)
