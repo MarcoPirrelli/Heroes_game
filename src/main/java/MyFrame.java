@@ -1236,9 +1236,9 @@ public class MyFrame extends JFrame implements ActionListener {
      */
     public void OptionConsequence(int n) {
 
+        ev.pickOption(n);
         setDescription(ev.getResult(n));
         removeShields();
-        ev.pickOption(n);
 
         JLabel[] artifactslabel = {art0, art1, art2, art3};
 

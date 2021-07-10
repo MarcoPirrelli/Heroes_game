@@ -169,7 +169,19 @@ public class EventManager {
         WorldEvent fortuneTeller = new WorldEvent(10, 0, 0, 0, 0);
         events.put(27, fortuneTeller);
         fortuneTeller.setDescription("You find a fortune teller. Should you ask her about your future?");
-        fortuneTeller.setOption(0, new Option("Yes", "", 0, 0, -6, 0, 0, 0));
+        fortuneTeller.setOption(0, new SpecialOption("Yes", "", 0, 0, -6, 0, 0, 0) {
+            @Override
+            public void pick() {
+                defaultPick();
+                switch ((Hero.getLuck() - 1) / 4) {
+                    case 4 -> result = "Your stars are aligned. Great fortune will guide you on your journey.";
+                    case 3 -> result = "The stars gently shine on your path. You'll experience above average luck.";
+                    case 2 -> result = "The heavens feel neutral to your cause.";
+                    case 1 -> result = "Your stars are in disarray. Be careful on your path, for bad fortune looms ahead.";
+                    default -> result = "Great misfortune and adversity awaits you. You are doomed.";
+                }
+            }
+        });
         fortuneTeller.setOption(1, new Option("No", "You may choose to walk blind, but you'll find what the future holds in due time...", 0, 0, 0, 0, 0, 0));
 
         WorldEvent siren = new WorldEvent(15, 0, 0, 0, 0);

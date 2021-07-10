@@ -44,25 +44,6 @@ public class Option {
      * @return String (May be long)
      */
     public String getResult() {
-        if (this == EventManager.events.get(27).options[0]) {
-            switch ((Hero.getLuck() - 1) / 4) {
-                case 4 -> {
-                    return "Your stars are aligned. Great fortune will guide you on your journey.";
-                }
-                case 3 -> {
-                    return "The stars gently shine on your path. You'll experience above average luck.";
-                }
-                case 2 -> {
-                    return "The heavens feel neutral to your cause.";
-                }
-                case 1 -> {
-                    return "Your stars are in disarray. Be careful on your path, for bad fortune looms ahead.";
-                }
-                default -> {
-                    return "Great misfortune and adversity awaits you. You are doomed.";
-                }
-            }
-        }
         return result;
     }
 
@@ -101,12 +82,28 @@ public class Option {
     }
 
     /**
+     * Applies all the effects of picking this option.
+     */
+    public void pick() {
+        defaultPick();
+    }
+
+    /**
+     * Standard effects of picking an option.
+     */
+    protected void defaultPick() {
+        modifyStats();
+        modifyArtefacts();
+        applyScale();
+        checkStats();
+    }
+
+    /**
      * Updates the hero's statistics as a consequence of picking this option.
      * Mana is only updated if the hero has the wand.
      * Applies health loss due to aging.
-     * Applies the effects of the enchanted scale.
      */
-    public void pick() {
+    protected void modifyStats() {
         Hero.addHealth(deltaHealth);
         Hero.addFame(deltaFame);
         Hero.addMoney(deltaMoney);
@@ -116,7 +113,24 @@ public class Option {
         Hero.addLuck(deltaLuck);
 
         Hero.addHealth(-(Hero.age / 25 + 1));
+    }
 
+    /**
+     * Updates artefacts as a consequence of picking this option.
+     */
+    protected void modifyArtefacts() {
+        for (int i = 0; i < Hero.artefacts.length; i++) {
+            if (deltaArtefacts[i] == 1)
+                Hero.artefacts[i] = true;
+            else if (deltaArtefacts[i] == -1)
+                Hero.artefacts[i] = false;
+        }
+    }
+
+    /**
+     * Applies effects of the enchanted scale if the hero has it.
+     */
+    protected void applyScale() {
         if (Hero.hasScale()) {
             int min = 101;
             int max = -1;
@@ -137,6 +151,12 @@ public class Option {
             Hero.stats[maxIndex] -= 2;
         }
 
+    }
+
+    /**
+     * Checks and sets stats to be within 0-100 bounds.
+     */
+    protected void checkStats() {
         if (Hero.getHealth() < 0) Hero.setHealth(0);
         else if (Hero.getHealth() > 100) Hero.setHealth(100);
 
@@ -154,12 +174,5 @@ public class Option {
 
         if (Hero.getLuck() < 0) Hero.setLuck(0);
         else if (Hero.getLuck() > 20) Hero.setLuck(20);
-
-        for (int i = 0; i < Hero.artefacts.length; i++) {
-            if (deltaArtefacts[i] == 1)
-                Hero.artefacts[i] = true;
-            else if (deltaArtefacts[i] == -1)
-                Hero.artefacts[i] = false;
-        }
     }
 }
