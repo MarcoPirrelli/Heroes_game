@@ -79,7 +79,7 @@ public abstract class AbstractOption {
     }
 
     /**
-     * Applies all the effects of picking this option.
+     * This function should apply all the effects of picking this special option.
      */
     public abstract void pick();
 

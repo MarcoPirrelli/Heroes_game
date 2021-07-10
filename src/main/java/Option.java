@@ -19,7 +19,7 @@ public class Option extends AbstractOption {
     }
 
     /**
-     * This function should apply all the effects of picking this special option.
+     * Applies all the effects of picking this option.
      */
     @Override
     public void pick() {
