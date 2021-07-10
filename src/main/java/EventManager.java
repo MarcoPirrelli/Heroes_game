@@ -199,7 +199,6 @@ public class EventManager {
         dice.setOption(0, new AbstractOption("Throw the dice", "", 0, 0, 0, 0, 0, 0) {
             @Override
             public void pick() {
-                modifyStats();
                 Random rand = new Random();
                 int r = rand.nextInt(80) + Hero.getLuck();
                 if (r > 40) {
@@ -211,9 +210,7 @@ public class EventManager {
                     Hero.addMoney(-10);
                     result = "You lost. Better luck next time!";
                 }
-                modifyArtefacts();
-                applyScale();
-                checkStats();
+                defaultPick();
             }
         });
         dice.setOption(1, new Option("Refuse", "The man calls you a chicken as you walk away.", 0, -3, 0, 0, 0, 0));
