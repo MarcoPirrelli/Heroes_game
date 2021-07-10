@@ -166,7 +166,7 @@ public class EventManager {
         crow.setOption(1, new Option("Kill the crow", "You kill the crow. You can hear a flow of crow cawing in the distance.", 0, 0, 0, 0, 0, 0));
         crow.options[1].setItem(Hero.CROW, 1);
 
-        WorldEvent fortuneTeller = new WorldEvent(10000, 0, 0, 0, 0);
+        WorldEvent fortuneTeller = new WorldEvent(10, 0, 0, 0, 0);
         events.put(27, fortuneTeller);
         fortuneTeller.setDescription("You find a fortune teller. Should you ask her about your future?");
         fortuneTeller.setOption(0, new AbstractOption("Yes", "", 0, 0, -6, 0, 0, 0) {
