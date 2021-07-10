@@ -3,7 +3,7 @@
  */
 public class WorldEvent {
     String description;
-    Option[] options = new Option[4];
+    AbstractOption[] options = new AbstractOption[4];
     int baseWeight;
     double healthWeight, fameWeight, moneyWeight, loyaltyWeight; //weight per point
 
@@ -50,10 +50,10 @@ public class WorldEvent {
     /**
      * Sets one of the options.
      *
-     * @param n Which option will be set
-     * @param option Option object
+     * @param n              Which option will be set
+     * @param abstractOption Option object
      */
-    public void setOption(int n, Option option) {
-        options[n] = option;
+    public void setOption(int n, AbstractOption abstractOption) {
+        options[n] = abstractOption;
     }
 }
