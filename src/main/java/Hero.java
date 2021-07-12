@@ -36,8 +36,8 @@ public class Hero {
 
         int max = 25;
         int min = 13;
-        age = rand.nextInt(max - min + 1) + min;
-        yearsOfService = 0;
+        age = rand.nextInt(max - min) + min;
+        yearsOfService = -1;
 
         stats[0] = 80; //health
         stats[1] = 50; //fame

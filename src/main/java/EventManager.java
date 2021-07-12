@@ -85,7 +85,7 @@ public class EventManager {
         cat.setOption(2, new Option("Walk away", "The lady seems disappointed.", 0, -5, 0, 0, 0, 0));
         cat.setOption(3, new Option("Chop down the tree", "The lady calls the king's guards, but they decide to help you, because the king hates that tree.", 0, -10, 0, +10, 0, 0));
 
-        WorldEvent investigation = new WorldEvent(20, 0, 0, 0, 0);
+        WorldEvent investigation = new WorldEvent(25, 0, 0, 0, 0);
         events.put(10, investigation);
         investigation.setDescription("You've heard rumors of a mysterious figure roaming near the catacombs. Should you investigate?");
         investigation.setOption(0, new Option("Yes", "You arrive at night. As you approach the hooded figure, it runs into the catacombs.", 0, 0, 0, 0, 0, 0));
