@@ -25,8 +25,7 @@ public class Hero {
 
 
     /**
-     * Resets the hero's statistics and generates a new random name.
-     * Should be called when a new game is started.
+     * Resets the hero's statistics.
      */
     public static void reset() {
         //String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};

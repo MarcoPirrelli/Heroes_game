@@ -28,14 +28,12 @@ public class MyFrame extends JFrame implements ActionListener {
 
     //int width = 960;
     // int height = 540;
-
+    
     int widthbs = width / 3;
     int heightbs = height / 10;
 
     int widthshield = width * 100 / 685;
     int heightshield = height * 100 / 327;
-
-    EventManager ev = new EventManager();
 
     //Hero
     JLabel textyear;
@@ -439,7 +437,6 @@ public class MyFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == b_newgame) {
-            ev.newGame();
             searchSlot();
         }
 
@@ -485,8 +482,8 @@ public class MyFrame extends JFrame implements ActionListener {
                         }
                     }
                     if (!died) {
-                        ev.getEvent();
-                        setDescription(ev.getEventDescription());
+                        EventManager.newEvent();
+                        setDescription(EventManager.getEventDescription());
                         a = 0;
                     }
                     break;
@@ -557,9 +554,9 @@ public class MyFrame extends JFrame implements ActionListener {
             repaint();
 
             if (isloading) {
-                ev.load(1);
+                EventManager.db.load(1);
             } else {
-                ev.newGame();
+                EventManager.newGame();
             }
 
             newGame(1);
@@ -573,9 +570,9 @@ public class MyFrame extends JFrame implements ActionListener {
             repaint();
 
             if (isloading) {
-                ev.load(2);
+                EventManager.db.load(2);
             } else {
-                ev.newGame();
+                EventManager.newGame();
             }
 
             newGame(2);
@@ -589,9 +586,9 @@ public class MyFrame extends JFrame implements ActionListener {
             repaint();
 
             if (isloading) {
-                ev.load(3);
+                EventManager.db.load(3);
             } else {
-                ev.newGame();
+                EventManager.newGame();
             }
 
             newGame(3);
@@ -599,9 +596,9 @@ public class MyFrame extends JFrame implements ActionListener {
 
         if (e.getSource() == b_d_newgame) {
 
-            int currentSlot = ev.getSaveSlot();
-            ev.deleteSave(currentSlot);
+            int currentSlot = EventManager.db.getSaveSlot();
             newGame(currentSlot);
+            EventManager.newEvent();
             a = 0;
 
         }
@@ -637,23 +634,20 @@ public class MyFrame extends JFrame implements ActionListener {
         menu = false;
         isgaming = false;
 
-        if (ev.firstEmptySlot() == 0) {
+        if (EventManager.db.firstEmptySlot() == 0) {
             //chiedi agli utenti di scegliere che slot sovraccaricare
             this.remove(buttonspanel);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
             /*
-            ev.load(1);
+            EventManager.db.load(1);
             b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-            ev.load(2);
+            EventManager.db.load(2);
             b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-            ev.load(3);
+            EventManager.db.load(3);
             b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
             */
-            b_slot1.setText("Empty");
-            b_slot2.setText("Empty");
-            b_slot3.setText("Empty");
-            ResultSet r = ev.getAllSaves();
+            ResultSet r = EventManager.db.getAllSaves();
             try {
                 while (r.next()) {
                     if (r.getInt("SaveId") == 1) {
@@ -694,7 +688,8 @@ public class MyFrame extends JFrame implements ActionListener {
             slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
             slotpanel.getActionMap().put("LoadNewGame", new LoadNewGame());
         } else {
-            newGame(ev.firstEmptySlot());
+            newGame(EventManager.db.firstEmptySlot());
+            EventManager.newEvent();
         }
     }
 
@@ -709,8 +704,7 @@ public class MyFrame extends JFrame implements ActionListener {
         isgaming = true;
         isloading = false;
 
-        ev.setSaveSlot(slot);
-        ev.getEvent();
+        EventManager.db.setSaveSlot(slot);
 
         //remove menubuttons
         this.remove(buttonspanel);
@@ -813,18 +807,18 @@ public class MyFrame extends JFrame implements ActionListener {
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
         /*
-        ev.load(1);
+        EventManager.db.load(1);
         b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-        ev.load(2);
+        EventManager.db.load(2);
         b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-        ev.load(3);
+        EventManager.db.load(3);
         b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
         */
 
         b_slot1.setText("Empty");
         b_slot2.setText("Empty");
         b_slot3.setText("Empty");
-        ResultSet r = ev.getAllSaves();
+        ResultSet r = EventManager.db.getAllSaves();
         try {
             while (r.next()) {
                 if (r.getInt("SaveId") == 1) {
@@ -887,7 +881,7 @@ public class MyFrame extends JFrame implements ActionListener {
         isloading = false;
         isgaming = false;
         menu = false;
-        ev.deleteSave(ev.getSaveSlot());
+        EventManager.db.deleteSave(EventManager.db.getSaveSlot());
 
         String descDeath = "";
         switch (stat) {
@@ -999,7 +993,7 @@ public class MyFrame extends JFrame implements ActionListener {
         repaint();
 
         //this.timerevent.cancel();
-        ev.newGame();
+        EventManager.newGame();
 
         //KEY
         deathpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "ButtonDeath");
@@ -1017,7 +1011,7 @@ public class MyFrame extends JFrame implements ActionListener {
      * Put the shields (options) on screen based on how many options there are
      */
     public void setShields() {
-        if (ev.getOptionNumber() == 4) {
+        if (EventManager.getOptionNumber() == 4) {
             JButton[] d1 = {b_w, b_e, b_n, b_s};
 
             float size = 20;
@@ -1028,10 +1022,10 @@ public class MyFrame extends JFrame implements ActionListener {
                 b.setFont(heroname.getFont().deriveFont(size));
             }
 
-            setDescriptionShields(b_w, ev.getOptionDescription(0));
-            setDescriptionShields(b_e, ev.getOptionDescription(1));
-            setDescriptionShields(b_n, ev.getOptionDescription(2));
-            setDescriptionShields(b_s, ev.getOptionDescription(3));
+            setDescriptionShields(b_w, EventManager.getOptionDescription(0));
+            setDescriptionShields(b_e, EventManager.getOptionDescription(1));
+            setDescriptionShields(b_n, EventManager.getOptionDescription(2));
+            setDescriptionShields(b_s, EventManager.getOptionDescription(3));
 
 
             b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
@@ -1058,7 +1052,7 @@ public class MyFrame extends JFrame implements ActionListener {
             b_w.getActionMap().put("East", new SelectEast());
 
 
-        } else if (ev.getOptionNumber() == 3) {
+        } else if (EventManager.getOptionNumber() == 3) {
 
             JButton[] d1 = {b_w, b_e, b_n};
 
@@ -1070,9 +1064,9 @@ public class MyFrame extends JFrame implements ActionListener {
                 b.setFont(heroname.getFont().deriveFont(size));
             }
 
-            setDescriptionShields(b_w, ev.getOptionDescription(0));
-            setDescriptionShields(b_e, ev.getOptionDescription(1));
-            setDescriptionShields(b_n, ev.getOptionDescription(2));
+            setDescriptionShields(b_w, EventManager.getOptionDescription(0));
+            setDescriptionShields(b_e, EventManager.getOptionDescription(1));
+            setDescriptionShields(b_n, EventManager.getOptionDescription(2));
 
             b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
             b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
@@ -1089,7 +1083,7 @@ public class MyFrame extends JFrame implements ActionListener {
             b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
             b_w.getActionMap().put("West", new SelectWest());
 
-        } else if (ev.getOptionNumber() == 2) {
+        } else if (EventManager.getOptionNumber() == 2) {
 
             JButton[] d1 = {b_w, b_e};
 
@@ -1101,8 +1095,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 b.setFont(heroname.getFont().deriveFont(size));
             }
 
-            setDescriptionShields(b_w, ev.getOptionDescription(0));
-            setDescriptionShields(b_e, ev.getOptionDescription(1));
+            setDescriptionShields(b_w, EventManager.getOptionDescription(0));
+            setDescriptionShields(b_e, EventManager.getOptionDescription(1));
 
             b_w.setBounds(width * 100 / 339, height / 3, widthshield, heightshield);
             b_e.setBounds(width * 100 / 179, height / 3, widthshield, heightshield);
@@ -1123,17 +1117,17 @@ public class MyFrame extends JFrame implements ActionListener {
     public void removeShields() {
 
         if(isgaming){
-        if (ev.getOptionNumber() == 4) {
+        if (EventManager.getOptionNumber() == 4) {
             this.remove(b_w);
             this.remove(b_e);
             this.remove(b_n);
             this.remove(b_s);
 
-        } else if (ev.getOptionNumber() == 3) {
+        } else if (EventManager.getOptionNumber() == 3) {
             this.remove(b_w);
             this.remove(b_e);
             this.remove(b_n);
-        } else if (ev.getOptionNumber() == 2) {
+        } else if (EventManager.getOptionNumber() == 2) {
             this.remove(b_w);
             this.remove(b_e);
         }
@@ -1189,7 +1183,7 @@ public class MyFrame extends JFrame implements ActionListener {
         if (Hero.isCrowed())
             eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         else
-            eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/e" + ev.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+            eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/e" + EventManager.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
@@ -1236,8 +1230,8 @@ public class MyFrame extends JFrame implements ActionListener {
      */
     public void OptionConsequence(int n) {
 
-        ev.pickOption(n);
-        setDescription(ev.getResult(n));
+        EventManager.pickOption(n);
+        setDescription(EventManager.getResult(n));
         removeShields();
 
         JLabel[] artifactslabel = {art0, art1, art2, art3};
@@ -1356,7 +1350,7 @@ public class MyFrame extends JFrame implements ActionListener {
         public void run() {
             add(eventimage, 2, 0);
             add(eventtext, 2, 0);
-            setDescription(ev.getEventDescription());
+            setDescription(EventManager.getEventDescription());
 
         }
     }
@@ -1409,7 +1403,7 @@ public class MyFrame extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
             if (a == 1) {
-                if (ev.getOptionNumber() == 3 || ev.getOptionNumber() == 4) {
+                if (EventManager.getOptionNumber() == 3 || EventManager.getOptionNumber() == 4) {
                     OptionConsequence(2);
                     a = 2;
                 }
@@ -1422,7 +1416,7 @@ public class MyFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (a == 1) {
-                if (ev.getOptionNumber() == 4) {
+                if (EventManager.getOptionNumber() == 4) {
                     OptionConsequence(3);
                     a = 2;
                 }
@@ -1448,7 +1442,7 @@ public class MyFrame extends JFrame implements ActionListener {
                     revalidate();
                     repaint();
 
-                    //setDescription(ev.getEventDescription());
+                    //setDescription(EventManager.getEventDescription());
                     a = 1;
                     break;
 
@@ -1470,8 +1464,8 @@ public class MyFrame extends JFrame implements ActionListener {
                         }
                     }
                     if (!died) {
-                        ev.getEvent();
-                        setDescription(ev.getEventDescription());
+                        EventManager.newEvent();
+                        setDescription(EventManager.getEventDescription());
                         a = 0;
                     }
                     break;
@@ -1667,9 +1661,9 @@ public class MyFrame extends JFrame implements ActionListener {
                     repaint();
 
                     if (isloading) {
-                        ev.load(1);
+                        EventManager.db.load(1);
                     } else {
-                        ev.newGame();
+                        EventManager.newGame();
                     }
 
                     newGame(1);
@@ -1681,9 +1675,9 @@ public class MyFrame extends JFrame implements ActionListener {
                     repaint();
 
                     if (isloading) {
-                        ev.load(2);
+                        EventManager.db.load(2);
                     } else {
-                        ev.newGame();
+                        EventManager.newGame();
                     }
 
                     newGame(2);
@@ -1696,9 +1690,9 @@ public class MyFrame extends JFrame implements ActionListener {
                     repaint();
 
                     if (isloading) {
-                        ev.load(3);
+                        EventManager.db.load(3);
                     } else {
-                        ev.newGame();
+                        EventManager.newGame();
                     }
 
                     newGame(3);
@@ -1754,7 +1748,7 @@ public class MyFrame extends JFrame implements ActionListener {
                 add(buttonspanel, 3, 0);
                 backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             } else {
-                newGame(ev.getSaveSlot());
+                newGame(EventManager.db.getSaveSlot());
                 a = 0;
             }
         }
