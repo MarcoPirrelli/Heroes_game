@@ -26,9 +26,6 @@ public class MyFrame extends JFrame implements ActionListener {
     int width = screenSize.width;
     int height = screenSize.height;
 
-    //int width = 960;
-    // int height = 540;
-    
     int widthbs = width / 3;
     int heightbs = height / 10;
 
@@ -640,14 +637,7 @@ public class MyFrame extends JFrame implements ActionListener {
             this.remove(buttonspanel);
             backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonloadsel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-            /*
-            EventManager.db.load(1);
-            b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-            EventManager.db.load(2);
-            b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-            EventManager.db.load(3);
-            b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-            */
+
             ResultSet r = EventManager.db.getAllSaves();
             try {
                 while (r.next()) {
@@ -808,14 +798,6 @@ public class MyFrame extends JFrame implements ActionListener {
 
         backgroundimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
-        /*
-        EventManager.db.load(1);
-        b_slot1.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-        EventManager.db.load(2);
-        b_slot2.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-        EventManager.db.load(3);
-        b_slot3.setText(Hero.getHeroName() + ",     Years of Service: " + Hero.getYearsOfService() + ",     Completed Events: " + Hero.completedEvents);
-        */
 
         b_slot1.setText("Empty");
         b_slot2.setText("Empty");
@@ -1262,51 +1244,39 @@ public class MyFrame extends JFrame implements ActionListener {
 
         }
 
-        int health = (int) Hero.getHealth() / 10;
-        int fame = (int) Hero.getFame() / 10;
-        int money = (int) Hero.getFame() / 10;
-        int loyalty = (int) Hero.getLoyalty() / 10;
-        int mana = (int) Hero.getLoyalty() / 10;
-
-        int [] statistics =  {Hero.getHealth(), Hero.getFame(), Hero.getFame() ,Hero.getLoyalty() , Hero.getLoyalty()};
-        for (int s : statistics){
-            if (s < 10 || s != 0){
-
-            }
-        }
 
         if(Hero.getHealth() < 10 && Hero.getHealth() != 0){
-            healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + ((int) (Hero.getHealth() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + ((Hero.getHealth() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
         else{
-            healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + (int) Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            healthimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
         if(Hero.getFame() < 10 && Hero.getFame() != 0){
-            fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + ((int) (Hero.getFame() / 10 )+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + ( (Hero.getFame() / 10 )+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
         else{
-            fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + (int) Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            fameimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" +  Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
         if(Hero.getMoney() < 10 && Hero.getMoney() != 0){
-            moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + ((int) (Hero.getMoney() / 10)+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + ((Hero.getMoney() / 10)+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
         else{
-            moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + (int) Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            moneyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" +  Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
         if(Hero.getLoyalty() < 10 && Hero.getLoyalty() != 0){
-            loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ((int) (Hero.getLoyalty() / 10) +1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ( (Hero.getLoyalty() / 10) +1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
         else{
-            loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + (int) Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            loyaltyimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
         if(Hero.getMana() < 10 && Hero.getMana() != 0){
-            manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + ((int) (Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + ( (Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
         else{
-            manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + (int) Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            manaimage.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" +  Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
 
@@ -1372,7 +1342,7 @@ public class MyFrame extends JFrame implements ActionListener {
         public void run() {
             Hero.age++;
             Hero.yearsOfService++;
-            textheroage.setText("Age: " + String.valueOf(Hero.getAge()));
+            textheroage.setText("Age: " + Hero.getAge());
             textyear.setText("Years of service: " + Hero.getYearsOfService());
         }
     }
