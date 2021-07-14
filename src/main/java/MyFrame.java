@@ -630,7 +630,6 @@ public class MyFrame extends JFrame implements ActionListener {
     public void searchSlot() {
         menu = false;
         isgaming = false;
-        Hero.reset();
 
         if (EventManager.db.firstEmptySlot() == 0) {
             //chiedi agli utenti di scegliere che slot sovraccaricare
@@ -679,9 +678,8 @@ public class MyFrame extends JFrame implements ActionListener {
             slotpanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
             slotpanel.getActionMap().put("LoadNewGame", new LoadNewGame());
         } else {
+            EventManager.newGame();
             newGame(EventManager.db.firstEmptySlot());
-            EventManager.newEvent();
-
         }
     }
 
