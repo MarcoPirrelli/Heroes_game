@@ -633,6 +633,7 @@ public class MyFrame extends JFrame implements ActionListener {
     public void searchSlot() {
         menu = false;
         isgaming = false;
+        Hero.reset();
 
         if (EventManager.db.firstEmptySlot() == 0) {
             //chiedi agli utenti di scegliere che slot sovraccaricare
@@ -690,6 +691,7 @@ public class MyFrame extends JFrame implements ActionListener {
         } else {
             newGame(EventManager.db.firstEmptySlot());
             EventManager.newEvent();
+
         }
     }
 
@@ -883,6 +885,8 @@ public class MyFrame extends JFrame implements ActionListener {
         menu = false;
         EventManager.db.deleteSave(EventManager.db.getSaveSlot());
 
+
+
         String descDeath = "";
         switch (stat) {
             case 0:
@@ -921,8 +925,8 @@ public class MyFrame extends JFrame implements ActionListener {
                 }
                 break;
         }
-
-        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat] + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/eDeath.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+       // eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat] + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         eventimage.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
