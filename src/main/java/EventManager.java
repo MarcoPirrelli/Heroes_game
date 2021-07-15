@@ -9,10 +9,12 @@ import java.util.Random;
 public class EventManager {
     static DBManager db;
     static HashMap<Integer, WorldEvent> events;
+    static ArrayList<AchievementListener> listeners;
 
     static {
         db = new DBManager();
         events = new HashMap<>();
+        listeners = new ArrayList<>();
 
         WorldEvent babysitter = new WorldEvent(1, 0, 0, 0, 0);
         events.put(1, babysitter);
@@ -318,5 +320,14 @@ public class EventManager {
      */
     static public String getResult(int n) {
         return events.get(Hero.currentId).options[n].getResult();
+    }
+
+    public static void addAchievementListener(AchievementListener achievementListener){
+        listeners.add(achievementListener);
+    }
+
+    public static void newAchievement(String achievement){
+        for(AchievementListener i : listeners)
+            i.achievementObtained(achievement);
     }
 }

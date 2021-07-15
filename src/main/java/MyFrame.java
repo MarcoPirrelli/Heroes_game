@@ -15,7 +15,7 @@ import java.util.TimerTask;
  * removeShields, setDescriptionShields, setDescription, optionConsequences, changeFocus, Timer (time and event),
  * override for keyboard for all buttons on game
  */
-public class MyFrame extends JFrame implements ActionListener {
+public class MyFrame extends JFrame implements ActionListener, AchievementListener {
 
     String path_resources = "src/main/resources/";
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -83,6 +83,7 @@ public class MyFrame extends JFrame implements ActionListener {
 
 
     MyFrame() {
+        EventManager.addAchievementListener(this);
 
         layout = new JPanel(new GridBagLayout());
 
@@ -424,6 +425,16 @@ public class MyFrame extends JFrame implements ActionListener {
         setResizable(false);
         setVisible(true);
 
+    }
+
+    @Override
+    public void achievementObtained(String achievement) {
+        if (achievement.equals("Odysseus")){
+            //TODO Fai apparire l'achievement per Odysseus
+        }
+        else if (achievement.equals("Achilles")){
+            //TODO Fai apparire l'achievement per Achilles
+        }
     }
 
     /**
