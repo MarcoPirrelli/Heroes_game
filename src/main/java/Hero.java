@@ -28,13 +28,11 @@ public class Hero {
      * Resets the hero's statistics.
      */
     public static void reset() {
-        //String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};
-        String[] names = new String[]{"Certosino", "Guglielmo", "Destiny", "Megan"};
-        Random rand = new Random();
-        name = names[rand.nextInt(names.length)];
+        name = EventManager.db.getRandomName();
 
         int max = 25;
         int min = 13;
+        Random rand = new Random();
         age = rand.nextInt(max - min) + min;
         yearsOfService = -1;
 

@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * Class that creates and manages game events and options.
+ * AchievementListeners can be added to be notified when an achievement is obtained.
  * Also contains db (a DBManager object).
  */
 public class EventManager {
@@ -134,7 +135,13 @@ public class EventManager {
         WorldEvent siren = new WorldEvent(15, 0, 0, 0, 0);
         events.put(28, siren);
         siren.setDescription("You hear a sweet voice singing from the river.");
-        siren.setOption(0, new Option("Go to her", "While under her charm, you almost drown to death.", 0, 0, -10, 0, 0, 0));
+        siren.setOption(0, new AbstractOption("Go to her", "While under her charm, you almost drown to death.", 0, 0, -10, 0, 0, 0) {
+            @Override
+            public void pick() {
+                defaultPick();
+                newAchievement("Odysseus");
+            }
+        });
         siren.setOption(1, new Option("Go away", "You get lost on your way home.", -2, -10, 0, 0, 0, 0));
         siren.setOption(2, new Option("Curse at the creature", "The creature doesn't like it. She sings you a curse.", 0, 0, 0, 0, -20, 0));
         siren.options[2].setItem(Hero.CURSE, 1);
@@ -260,6 +267,8 @@ public class EventManager {
     static public void pickOption(int n) {
         events.get(Hero.currentId).options[n].pick();
         Hero.completedEvents++;
+        if (Hero.completedEvents == 100)
+            newAchievement("Achilles");
         if (events.get(Hero.currentId).options[n].nextId != 0)
             Hero.nextId = events.get(Hero.currentId).options[n].nextId;
     }
@@ -322,11 +331,23 @@ public class EventManager {
         return events.get(Hero.currentId).options[n].getResult();
     }
 
+    /**
+     * Parameter object will be notified when achievements are obtained.
+     *
+     * @param achievementListener Object to be notified
+     */
     public static void addAchievementListener(AchievementListener achievementListener){
         listeners.add(achievementListener);
     }
 
+    /**
+     * Notifies listeners that the achievement has been obtained.
+     *
+     * @param achievement String with the name of the achievement.
+     */
     public static void newAchievement(String achievement){
+        if(db.isNameAvailable(achievement)) return;
+        db.addName(achievement);
         for(AchievementListener i : listeners)
             i.achievementObtained(achievement);
     }

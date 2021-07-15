@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Random;
 
 /**
  * Class to create and manage a connection to the db.
@@ -12,7 +13,7 @@ public class DBManager {
 
     /**
      * Creates a connection, a statement and a prepared statement.
-     * Checks for database integrity and resets the table if necessary.
+     * Checks for database integrity and resets the tables if necessary.
      */
     public DBManager() {
         try {
@@ -47,6 +48,21 @@ public class DBManager {
                         Scale int check(Scale in (0, 1)),
                         Crow int check(Crow in (0, 1))
                         )""");
+            } catch (Exception e2) {
+                e2.printStackTrace();
+                System.exit(0);
+            }
+        }
+        try {
+            statement.executeQuery("select Name from names");
+        } catch (SQLException e) {
+            try {
+                statement.executeUpdate("drop table if exists names");
+                statement.executeUpdate("""
+                        create table names(
+                        Name text primary key
+                        )""");
+                statement.executeUpdate("insert into names values ('Certosino'), ('Destiny'), ('Guglielmo'), ('Megan')");
             } catch (Exception e2) {
                 e2.printStackTrace();
                 System.exit(0);
@@ -192,5 +208,82 @@ public class DBManager {
             System.exit(0);
         }
         return ret;
+    }
+
+    /**
+     * Returns how many names are available.
+     *
+     * @return positive int
+     */
+    public int countNames(){
+        int ret = 0;
+        try {
+            ResultSet r = statement.executeQuery("select count(Name) from names");
+            if (r.isAfterLast()) {
+                throw new RuntimeException("countNames ResultSet unexpectedly empty");
+            }
+            ret = r.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return ret;
+    }
+
+    /**
+     * Adds a name to the batabase.
+     *
+     * @param name name to be added
+     */
+    public void addName(String name){
+        try{
+            statement.executeUpdate("insert into names values('" + name + "')");
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Returns true is the name is already present in the database.
+     *
+     * @param name Name to be checked
+     * @return true if present
+     */
+    public boolean isNameAvailable(String name){
+        try{
+            ResultSet r = statement.executeQuery("select Name from names where Name like '" + name +"'");
+            if(!r.isAfterLast()){
+                return true;
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return false;
+    }
+
+    /**
+     * Returns a random name from the database.
+     *
+     * @return String name
+     */
+    public String getRandomName(){
+        Random rand = new Random();
+        int random = rand.nextInt(countNames()) + 1;
+        String name = "";
+        try {
+            ResultSet r = statement.executeQuery("select Name from names");
+            for(int i = 0; i < random; i++){
+                r.next();
+            }
+            name = r.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return name;
     }
 }
