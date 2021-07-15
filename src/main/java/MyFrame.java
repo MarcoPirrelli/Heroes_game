@@ -184,6 +184,16 @@ public class MyFrame extends JFrame implements ActionListener {
         money_image = new JLabel(new ImageIcon());
         loyalty_image = new JLabel(new ImageIcon());
         mana_image = new JLabel(new ImageIcon());
+        float size_s = width / 110;
+
+        JLabel[] stat_label = {health_image, fame_image, money_image, loyalty_image, mana_image};
+
+        for(JLabel s : stat_label){
+        s.setHorizontalTextPosition(JLabel.CENTER); //to set the text on the center of the picture, if not the bg moves it
+        s.setVerticalTextPosition(JLabel.CENTER);
+        s.setForeground(Color.BLACK);
+        s.setFont(s.getFont().deriveFont(size_s));
+        }
 
         statistics_panel = new JPanel(new GridBagLayout());
         con1 = new GridBagConstraints();
@@ -733,6 +743,13 @@ public class MyFrame extends JFrame implements ActionListener {
         money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" +  Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" +  Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" +  Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+
+        health_image.setText(String.valueOf(Hero.getHealth()));
+        fame_image.setText(' ' + String.valueOf(Hero.getFame()));
+        money_image.setText(String.valueOf(Hero.getMoney())+ ' ');
+        loyalty_image.setText(String.valueOf(Hero.getLoyalty()));
+        mana_image.setText(String.valueOf(Hero.getMana()));
+
         this.add(statistics_panel, 2, 0);
 
         //artifacts
@@ -1260,12 +1277,11 @@ public class MyFrame extends JFrame implements ActionListener {
             mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" +  Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
-
-
-
-
-
-
+        health_image.setText(String.valueOf(Hero.getHealth()));
+        fame_image.setText(' ' + String.valueOf(Hero.getFame()));
+        money_image.setText(String.valueOf(Hero.getMoney()) + ' ');
+        loyalty_image.setText(String.valueOf(Hero.getLoyalty()));
+        mana_image.setText(String.valueOf(Hero.getMana()));
 
     }
 
