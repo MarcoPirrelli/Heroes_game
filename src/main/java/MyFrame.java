@@ -430,11 +430,9 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     @Override
     public void achievementObtained(String achievement) {
         if (achievement.equals("Odysseus")){
-            System.out.println("Ottenuto Odysseus!");
             //TODO Fai apparire l'achievement per Odysseus
         }
         else if (achievement.equals("Achilles")){
-            System.out.println("Ottenuto Achilles!");
             //TODO Fai apparire l'achievement per Achilles
         }
     }
