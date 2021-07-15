@@ -53,8 +53,12 @@ public class MyFrame extends JFrame implements ActionListener {
     JLabel death;
     JPanel death_panel;
 
-    //overwrite
+    //Overwrite
     JLabel overwrite;
+
+    //Achievement
+    JLabel achie;
+    Timer timer_achievement = new Timer();
 
     //JButtons
     private final JButton b_newGame, b_load, b_tutorial, b_exit;
@@ -223,6 +227,9 @@ public class MyFrame extends JFrame implements ActionListener {
         //Timer
         hero_age = new JLabel(String.valueOf(Hero.getAge()));
         text_year = new JLabel(String.valueOf(Hero.getYearsOfService()));
+
+        //achievement
+        achie = new JLabel();
 
         //Hero
         hero_name = new JLabel();
@@ -713,7 +720,7 @@ public class MyFrame extends JFrame implements ActionListener {
         hero_name.setForeground(Color.WHITE);
         hero_name.setFont(hero_name.getFont().deriveFont(size0));
         hero_name.setText(Hero.getHeroName());
-        hero_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".jpg").getImage().getScaledInstance(width / 12, height / 7, Image.SCALE_DEFAULT)));
+        hero_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "Heroes/" + Hero.getHeroName() + ".png").getImage().getScaledInstance(width / 12, height / 7, Image.SCALE_DEFAULT)));
         float size1 = width / 100;
         hero_age.setForeground(Color.WHITE);
         hero_age.setFont(hero_age.getFont().deriveFont(size1));
@@ -773,6 +780,13 @@ public class MyFrame extends JFrame implements ActionListener {
 
         click.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         click.getActionMap().put("Continue", new Continue());
+ /*
+        //prova achievement
+         achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/Odysseus.png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
+        this.add(achie, 4, 0);
+        achie.setBounds(width * 100 / 142, height * 100 / 127,width * 10 / 34, height * 10 / 54 );
+        rt_achie();
+*/
 
     }
 
@@ -1343,6 +1357,23 @@ public class MyFrame extends JFrame implements ActionListener {
             text_year.setText("Years of service: " + Hero.getYearsOfService());
         }
     }
+    public void rt_achie() {
+        timer_achievement.cancel();
+        timer_achievement = new Timer();
+        timer_achie t_achie = new timer_achie();
+        timer_achievement.schedule(t_achie, 5000);
+
+    }
+
+    public class timer_achie extends TimerTask {
+        @Override
+        public void run() {
+            remove(achie);
+            revalidate();
+            repaint();
+        }
+    }
+
 
     /**
      * override for keyboard

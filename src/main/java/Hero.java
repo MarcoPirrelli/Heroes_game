@@ -29,7 +29,7 @@ public class Hero {
      */
     public static void reset() {
         //String[] names = new String[]{"Certosino", "Guglielmo", "Tenebroso", "Kight", "Hero", "Ben", "John", "Mikela", "Sister Graziana"};
-        String[] names = new String[]{"Certosino", "Guglielmo"};
+        String[] names = new String[]{"Certosino", "Guglielmo", "Destiny", "Megan"};
         Random rand = new Random();
         name = names[rand.nextInt(names.length)];
 
