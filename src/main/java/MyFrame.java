@@ -60,6 +60,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     JLabel achie;
     Timer timer_achievement = new Timer();
 
+
     //JButtons
     private final JButton b_newGame, b_load, b_tutorial, b_exit;
     private final JButton b_back;
@@ -77,9 +78,9 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     int state_menuButton = 0;
     int state_loadButton = 1;
     int state_deathButton = 0;
-    Boolean is_gaming = false;
-    Boolean is_loading = true;
-    Boolean menu = true;
+    boolean is_gaming = false;
+    boolean is_loading = true;
+    boolean menu = true;
 
 
     MyFrame() {
@@ -89,6 +90,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
         JLayeredPane frame = new JLayeredPane();
 
+        JPanel game_panel = new JPanel(new FlowLayout());
 
         JPanel back = new JPanel(new BorderLayout());
 
@@ -96,6 +98,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         background_image = new JLabel(new ImageIcon());
         background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         back.add(background_image);
+
 
 
         //Menu Buttons
@@ -416,6 +419,9 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         buttons_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         buttons_panel.getActionMap().put("Continue", new Continue());
 
+       // game_pane.add(statistics_panel);
+        game_panel.add(hero_panel);
+        game_panel.setOpaque(false);
 
         setContentPane(frame);
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -430,10 +436,16 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     @Override
     public void achievementObtained(String achievement) {
         if (achievement.equals("Odysseus")){
-            //TODO Fai apparire l'achievement per Odysseus
+            achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/Odysseus.png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
+            this.add(achie, 4, 0);
+            achie.setBounds(width * 100 / 142, height * 100 / 127,width * 10 / 34, height * 10 / 54 );
+            rt_achie();
         }
         else if (achievement.equals("Achilles")){
-            //TODO Fai apparire l'achievement per Achilles
+            achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/Achilles.png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
+            this.add(achie, 4, 0);
+            achie.setBounds(width * 100 / 142, height * 100 / 127,width * 10 / 34, height * 10 / 54 );
+            rt_achie();
         }
     }
 
@@ -479,6 +491,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
                     break;
 
                 case 2:
+
 
                     boolean died = false;
                     for (int i = 0; i < 5; i++) {
@@ -739,6 +752,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         this.add(hero_panel, 2, 0);
         hero_panel.setBounds(0, 0, width / 6, height / 4);
 
+
         //event
         event_text.setFont(event_text.getFont().deriveFont(size1));
         resumetimer();
@@ -791,13 +805,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
         click.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         click.getActionMap().put("Continue", new Continue());
- /*
-        //prova achievement
-         achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/Odysseus.png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
-        this.add(achie, 4, 0);
-        achie.setBounds(width * 100 / 142, height * 100 / 127,width * 10 / 34, height * 10 / 54 );
-        rt_achie();
-*/
+
 
     }
 
@@ -1189,6 +1197,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
      * @param description desc of the event/death
      */
     public void setDescription(String description) {
+
         if (Hero.isCrowed())
             event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         else
