@@ -2,10 +2,12 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 
 public class Sounds {
 
+    String path_sounds = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Sounds" + File.separator;
     private Clip soundtrack;
     private Clip death_sound;
     private Clip tap_sound;
@@ -17,7 +19,7 @@ public class Sounds {
 
         if(sound_is_on){
             try{
-                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream("src/main/resources/Sounds/TheRealm.wav")));
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(path_sounds + "TheRealm.wav")));
                 soundtrack = AudioSystem.getClip();
                 soundtrack.open(inputStream);}
             catch (Exception e){
@@ -34,7 +36,7 @@ public class Sounds {
     public void getDeathSound(){
         if(sound_is_on){
             try{
-                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream("src/main/resources/Sounds/Death.wav")));
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(path_sounds + "Death.wav")));
                 death_sound = AudioSystem.getClip();
                 death_sound.open(inputStream);}
             catch (Exception e){
@@ -50,7 +52,7 @@ public class Sounds {
     public void getTapSound(){
         if(sound_is_on){
             try{
-                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream("src/main/resources/Sounds/Tap.wav")));
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(path_sounds + "Tap.wav")));
                 tap_sound = AudioSystem.getClip();
                 tap_sound.open(inputStream);}
             catch (Exception e){
