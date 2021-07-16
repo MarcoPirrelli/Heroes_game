@@ -153,7 +153,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         //Event Image and Description
         event_image = new JLabel(new ImageIcon());
-        event_text = new JLabel("Questo è l'evento");
+        event_text = new JLabel("This is the event");
         event_text.setHorizontalAlignment(SwingConstants.CENTER);
         float size_event = width / 100;
         event_text.setFont(event_text.getFont().deriveFont(size_event));
@@ -311,8 +311,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         b_slot2 = new JButton();
         b_slot3 = new JButton();
 
-        JButton[] slotbutton = {b_slot1, b_slot2, b_slot3};
-        for (JButton b : slotbutton) {
+        JButton[] slot_button = {b_slot1, b_slot2, b_slot3};
+        for (JButton b : slot_button) {
             b.addActionListener(this);
             b.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
             b.setHorizontalTextPosition(JButton.CENTER);
