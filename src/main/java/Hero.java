@@ -44,6 +44,10 @@ public class Hero {
         luck = 10;
         Arrays.fill(artefacts, false);
 
+        if (name.equals("Merlin")){
+            artefacts[WAND] = true;
+        }
+
         currentId = 0;
         nextId = 0;
         completedEvents = 0;
