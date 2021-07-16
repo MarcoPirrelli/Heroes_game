@@ -82,6 +82,8 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     boolean is_loading = true;
     boolean menu = true;
 
+    //private Clip sounds;
+    Sounds sound = new Sounds();
 
     MyFrame() {
         EventManager.addAchievementListener(this);
@@ -223,6 +225,10 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         con1.gridx = 3;
         con1.gridy = 0;
         statistics_panel.add(money_image, con1);
+
+        con1.gridx = 4;
+        con1.gridy = 0;
+        statistics_panel.add(mana_image, con1);
 
         statistics_panel.setOpaque(false);
 
@@ -418,6 +424,10 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         buttons_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         buttons_panel.getActionMap().put("Continue", new Continue());
 
+        back.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("P"), "StopSound");
+        back.getActionMap().put("StopSound", new StopSound());
+
+
         // game_pane.add(statistics_panel);
         game_panel.add(hero_panel);
         game_panel.setOpaque(false);
@@ -430,6 +440,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         setResizable(false);
         setVisible(true);
 
+        sound.getSoundtrack();
     }
 
     @Override
@@ -447,6 +458,8 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        sound.getTapSound();
 
         if (e.getSource() == b_newGame) {
             searchSlot();
@@ -759,9 +772,19 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
 
         //statistics
-        statistics_panel.remove(mana_image);
-        int widthstat = width * 100 / 355;
-        statistics_panel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
+        if (Hero.hasWand()) {
+            con1.gridx = 4;
+            con1.gridy = 0;
+            statistics_panel.add(mana_image, con1);
+            int widthstat = width * 100 / 250;
+            statistics_panel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
+        } else {
+            statistics_panel.remove(mana_image);
+            int widthstat = width * 100 / 355;
+            statistics_panel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
+
+        }
+
         health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
@@ -889,6 +912,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         is_gaming = false;
         menu = false;
         EventManager.db.deleteSave(EventManager.db.getSaveSlot());
+        sound.getDeathSound();
 
 
         String descDeath = "";
@@ -930,7 +954,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
                 break;
         }
         event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/eDeath.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
-        // eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat] + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
@@ -999,7 +1022,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         revalidate();
         repaint();
 
-        //this.timerevent.cancel();
         EventManager.newGame();
 
         //KEY
@@ -1761,4 +1783,12 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
     }
 
+
+    private class StopSound extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            sound.stop();
+        }
+
+    }
 }
