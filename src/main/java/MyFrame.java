@@ -100,7 +100,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         back.add(background_image);
 
 
-
         //Menu Buttons
         b_newGame = new JButton("New Game");
         b_load = new JButton("Load");
@@ -117,7 +116,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
         }
-        b_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstartsel.png").getImage().getScaledInstance(width / 3,height / 10, Image.SCALE_DEFAULT)));
+        b_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonstartsel.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_DEFAULT)));
 
 
         buttons_panel = new JPanel(new GridBagLayout());
@@ -196,11 +195,11 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
         JLabel[] stat_label = {health_image, fame_image, money_image, loyalty_image, mana_image};
 
-        for(JLabel s : stat_label){
-        s.setHorizontalTextPosition(JLabel.CENTER); //to set the text on the center of the picture, if not the bg moves it
-        s.setVerticalTextPosition(JLabel.CENTER);
-        s.setForeground(Color.BLACK);
-        s.setFont(s.getFont().deriveFont(size_s));
+        for (JLabel s : stat_label) {
+            s.setHorizontalTextPosition(JLabel.CENTER); //to set the text on the center of the picture, if not the bg moves it
+            s.setVerticalTextPosition(JLabel.CENTER);
+            s.setForeground(Color.BLACK);
+            s.setFont(s.getFont().deriveFont(size_s));
         }
 
         statistics_panel = new JPanel(new GridBagLayout());
@@ -419,7 +418,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         buttons_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         buttons_panel.getActionMap().put("Continue", new Continue());
 
-       // game_pane.add(statistics_panel);
+        // game_pane.add(statistics_panel);
         game_panel.add(hero_panel);
         game_panel.setOpaque(false);
 
@@ -435,22 +434,15 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
     @Override
     public void achievementObtained(String achievement) {
-        if (achievement.equals("Odysseus")){
-            achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/Odysseus.png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
-            this.add(achie, 4, 0);
-            achie.setBounds(width * 100 / 142, height * 100 / 127,width * 10 / 34, height * 10 / 54 );
-            rt_achie();
-        }
-        else if (achievement.equals("Achilles")){
-            achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/Achilles.png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
-            this.add(achie, 4, 0);
-            achie.setBounds(width * 100 / 142, height * 100 / 127,width * 10 / 34, height * 10 / 54 );
-            rt_achie();
-        }
+        achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievement/" + achievement + ".png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
+        this.add(achie, 4, 0);
+        achie.setBounds(width * 100 / 142, height * 100 / 127, width * 10 / 34, height * 10 / 54);
+        rt_achie();
     }
 
     /**
      * override for clicking on buttons
+     *
      * @param e = buttons
      */
     @Override
@@ -625,7 +617,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         }
 
         if (e.getSource() == b_d_exit) {
-          //  System.exit(0);
+            //  System.exit(0);
             menu = true;
             this.remove(slot_panel);
             this.remove(b_back);
@@ -770,15 +762,15 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         statistics_panel.remove(mana_image);
         int widthstat = width * 100 / 355;
         statistics_panel.setBounds((width - widthstat) / 2, height / 91, widthstat, height / 10);
-        health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" +  Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" +  Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" +  Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" +  Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
 
         health_image.setText(String.valueOf(Hero.getHealth()));
         fame_image.setText(' ' + String.valueOf(Hero.getFame()));
-        money_image.setText(String.valueOf(Hero.getMoney())+ ' ');
+        money_image.setText(String.valueOf(Hero.getMoney()) + ' ');
         loyalty_image.setText(String.valueOf(Hero.getLoyalty()));
         mana_image.setText(String.valueOf(Hero.getMana()));
 
@@ -899,7 +891,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         EventManager.db.deleteSave(EventManager.db.getSaveSlot());
 
 
-
         String descDeath = "";
         switch (stat) {
             case 0:
@@ -939,7 +930,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
                 break;
         }
         event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "Events/eDeath.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
-       // eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat] + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        // eventimage.setIcon(new ImageIcon(new ImageIcon(path_resources + "Death/d" + stat + Hero.stats[stat] + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
@@ -1003,7 +994,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + Hero.completedEvents + " events.");
         add(death_panel, 5, 0);
         death_panel.setBounds(0, 0, width, height);
-
 
 
         revalidate();
@@ -1133,22 +1123,22 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
      */
     public void removeShields() {
 
-        if(is_gaming){
-        if (EventManager.getOptionNumber() == 4) {
-            this.remove(b_w);
-            this.remove(b_e);
-            this.remove(b_n);
-            this.remove(b_s);
+        if (is_gaming) {
+            if (EventManager.getOptionNumber() == 4) {
+                this.remove(b_w);
+                this.remove(b_e);
+                this.remove(b_n);
+                this.remove(b_s);
 
-        } else if (EventManager.getOptionNumber() == 3) {
-            this.remove(b_w);
-            this.remove(b_e);
-            this.remove(b_n);
-        } else if (EventManager.getOptionNumber() == 2) {
-            this.remove(b_w);
-            this.remove(b_e);
-        }
-        repaint();  //to remove components it is better to call it
+            } else if (EventManager.getOptionNumber() == 3) {
+                this.remove(b_w);
+                this.remove(b_e);
+                this.remove(b_n);
+            } else if (EventManager.getOptionNumber() == 2) {
+                this.remove(b_w);
+                this.remove(b_e);
+            }
+            repaint();  //to remove components it is better to call it
         }
     }
 
@@ -1156,7 +1146,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     /**
      * set description of the options
      *
-     * @param b shield button
+     * @param b          shield button
      * @param textbutton text on the shield
      */
     public void setDescriptionShields(JButton b, String textbutton) {
@@ -1277,38 +1267,33 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         }
 
 
-        if(Hero.getHealth() < 10 && Hero.getHealth() != 0){
+        if (Hero.getHealth() < 10 && Hero.getHealth() != 0) {
             health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + ((Hero.getHealth() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        }
-        else{
+        } else {
             health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Health" + Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
-        if(Hero.getFame() < 10 && Hero.getFame() != 0){
-            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + ( (Hero.getFame() / 10 )+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        }
-        else{
-            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" +  Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        if (Hero.getFame() < 10 && Hero.getFame() != 0) {
+            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + ((Hero.getFame() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        } else {
+            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Fame" + Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
-        if(Hero.getMoney() < 10 && Hero.getMoney() != 0){
-            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + ((Hero.getMoney() / 10)+1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        if (Hero.getMoney() < 10 && Hero.getMoney() != 0) {
+            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + ((Hero.getMoney() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        } else {
+            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" + Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
-        else{
-            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Money" +  Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        }
-        if(Hero.getLoyalty() < 10 && Hero.getLoyalty() != 0){
-            loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ( (Hero.getLoyalty() / 10) +1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        }
-        else{
+        if (Hero.getLoyalty() < 10 && Hero.getLoyalty() != 0) {
+            loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + ((Hero.getLoyalty() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        } else {
             loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Loyalty" + Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
-        if(Hero.getMana() < 10 && Hero.getMana() != 0){
-            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + ( (Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
-        }
-        else{
-            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" +  Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        if (Hero.getMana() < 10 && Hero.getMana() != 0) {
+            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + ((Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+        } else {
+            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics/Mana" + Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
         }
 
         health_image.setText(String.valueOf(Hero.getHealth()));
@@ -1377,6 +1362,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
             text_year.setText("Years of service: " + Hero.getYearsOfService());
         }
     }
+
     public void rt_achie() {
         timer_achievement.cancel();
         timer_achievement = new Timer();
@@ -1506,11 +1492,9 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if(menu){
+            if (menu) {
                 System.exit(0);
-            }
-
-            else{
+            } else {
                 remove(slot_panel);
                 remove(b_back);
                 remove(hero_panel);
@@ -1752,7 +1736,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         @Override
         public void actionPerformed(ActionEvent e) {
             if (state_deathButton == 0) {
-              //  System.exit(0);
+                //  System.exit(0);
                 menu = true;
                 remove(slot_panel);
                 remove(b_back);
