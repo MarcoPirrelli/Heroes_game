@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Class meant entirely for static usage.
@@ -9,6 +11,7 @@ public class Hero {
     static String name;
     static int age;
     static int yearsOfService;
+    static private Timer yearTimer;
 
     static int[] stats = new int[5];
     static int luck;
@@ -35,6 +38,18 @@ public class Hero {
         Random rand = new Random();
         age = rand.nextInt(max - min) + min;
         yearsOfService = -1;
+        if (yearTimer != null)
+            yearTimer.cancel();
+        yearTimer = new Timer();
+        yearTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Hero.age++;
+                Hero.yearsOfService++;
+                for (GameListener i : EventManager.listeners)
+                    i.heroAged();
+            }
+        }, 0, 5000);
 
         stats[0] = 80; //health
         stats[1] = 50; //fame
@@ -44,7 +59,7 @@ public class Hero {
         luck = 10;
         Arrays.fill(artefacts, false);
 
-        if (name.equals("Merlin")){
+        if (name.equals("Merlin")) {
             artefacts[WAND] = true;
         }
 
@@ -299,5 +314,4 @@ public class Hero {
     public static void addLuck(int luck) {
         Hero.luck += luck;
     }
-
 }

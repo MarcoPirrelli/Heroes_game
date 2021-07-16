@@ -1,11 +1,16 @@
 /**
  * Allows an object to be notified when and achievement is obtained.
  */
-public interface AchievementListener {
+public interface GameListener {
     /**
      * Method is called when an achievement is obtained.
      *
      * @param achievement String with the name of the achievement.
      */
-    public abstract void achievementObtained(String achievement);
+    void achievementObtained(String achievement);
+
+    /**
+     * Method is called when the hero age and years of service increase.
+     */
+    void heroAged();
 }

@@ -15,7 +15,7 @@ import java.util.TimerTask;
  * removeShields, setDescriptionShields, setDescription, optionConsequences, changeFocus, Timer (time and event),
  * override for keyboard for all buttons on game
  */
-public class MyFrame extends JFrame implements ActionListener, AchievementListener {
+public class MyFrame extends JFrame implements ActionListener, GameListener {
 
     String path_resources = "src/main/resources/";
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -30,7 +30,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
 
     //Hero
     JLabel text_year, hero_age, hero_name, hero_image;
-    Timer timer_time = new Timer();
     Timer timer_event = new Timer();
     JPanel hero_panel;
 
@@ -86,7 +85,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     Sounds sound = new Sounds();
 
     MyFrame() {
-        EventManager.addAchievementListener(this);
+        EventManager.addGameListener(this);
 
         layout = new JPanel(new GridBagLayout());
 
@@ -451,6 +450,12 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         rt_achie();
     }
 
+    @Override
+    public void heroAged(){
+        hero_age.setText("Age: " + Hero.getAge());
+        text_year.setText("Years of service: " + Hero.getYearsOfService());
+    }
+
     /**
      * override for clicking on buttons
      *
@@ -768,7 +773,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         float size2 = width / 90;
         text_year.setFont(text_year.getFont().deriveFont(size2));
         text_year.setForeground(Color.WHITE);
-        resumetimertime();
 
 
         //statistics
@@ -1367,23 +1371,6 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         }
     }
 
-    public void resumetimertime() {
-        timer_time.cancel();
-        timer_time = new Timer();
-        timerchange taskchange = new timerchange();
-        timer_time.schedule(taskchange, 0, 5000);
-
-    }
-
-    public class timerchange extends TimerTask {
-        @Override
-        public void run() {
-            Hero.age++;
-            Hero.yearsOfService++;
-            hero_age.setText("Age: " + Hero.getAge());
-            text_year.setText("Years of service: " + Hero.getYearsOfService());
-        }
-    }
 
     public void rt_achie() {
         timer_achievement.cancel();

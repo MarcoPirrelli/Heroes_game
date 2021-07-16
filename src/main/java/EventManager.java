@@ -4,13 +4,13 @@ import java.util.Random;
 
 /**
  * Class that creates and manages game events and options.
- * AchievementListeners can be added to be notified when an achievement is obtained.
+ * GameListeners can be added to be notified of certain game events like achievements and time passing.
  * Also contains db (a DBManager object).
  */
 public class EventManager {
     static DBManager db;
     static HashMap<Integer, WorldEvent> events;
-    static ArrayList<AchievementListener> listeners;
+    static ArrayList<GameListener> listeners;
 
     static {
         db = new DBManager();
@@ -344,12 +344,12 @@ public class EventManager {
     }
 
     /**
-     * Parameter object will be notified when achievements are obtained.
+     * Parameter object will be notified when achievements are obtained and an in-game year passes.
      *
-     * @param achievementListener Object to be notified
+     * @param gameListener Object to be notified
      */
-    public static void addAchievementListener(AchievementListener achievementListener) {
-        listeners.add(achievementListener);
+    public static void addGameListener(GameListener gameListener) {
+        listeners.add(gameListener);
     }
 
     /**
@@ -360,7 +360,7 @@ public class EventManager {
     public static void newAchievement(String achievement) {
         if (db.isNameAvailable(achievement)) return;
         db.addName(achievement);
-        for (AchievementListener i : listeners)
+        for (GameListener i : listeners)
             i.achievementObtained(achievement);
     }
 }
