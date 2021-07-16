@@ -1410,6 +1410,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            sound.getTapSound();
             switch (state_game) {
                 case 0:
                     setShields();
@@ -1456,9 +1457,11 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+
             if (menu) {
                 System.exit(0);
             } else {
+                sound.getTapSound();
                 remove(slot_panel);
                 removeGameObject();
                 remove(death_panel);
@@ -1615,6 +1618,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     private class LoadNewGame extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
+            sound.getTapSound();
             switch (state_loadButton) {
                 case 1:
                     remove(b_back);
@@ -1691,6 +1695,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     private class AfterDeath extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
+            sound.getTapSound();
             if (state_deathButton == 0) {
                 menu = true;
                 //remove(slot_panel);
