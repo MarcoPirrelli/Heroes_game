@@ -1,3 +1,4 @@
+import java.io.File;
 import java.sql.*;
 import java.util.Random;
 
@@ -18,7 +19,7 @@ public class DBManager {
     public DBManager() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:src\\main\\resources\\databases\\project.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:src" + File.separator + "main" + File.separator + "resources" + File.separator + "databases" + File.separator + "project.db");
             statement = connection.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
