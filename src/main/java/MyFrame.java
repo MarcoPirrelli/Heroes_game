@@ -470,7 +470,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         }
 
         if (e.getSource() == b_tutorial) {
-            settings();
+            tutorial();
         }
 
         if (e.getSource() == b_exit) {
@@ -888,7 +888,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
     /**
      * SETTINGS
      */
-    public void settings() {
+    public void tutorial() {
         menu = false;
         is_loading = false;
         is_gaming = false;
@@ -896,7 +896,7 @@ public class MyFrame extends JFrame implements ActionListener, AchievementListen
         this.remove(buttons_panel);
 
         this.add(b_back, 3, 0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.gif").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "buttonbacksettings.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
         b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
         background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "tutorial.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 

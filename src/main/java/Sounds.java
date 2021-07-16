@@ -41,10 +41,9 @@ public class Sounds {
                 // disable sound if something goes wrong
                 System.out.println(e.getMessage());
             }
-            death_sound.start(); }
-        else{
-            death_sound.stop();
+            death_sound.start();
         }
+
 
     }
 
@@ -60,9 +59,6 @@ public class Sounds {
             }
 
             tap_sound.start();
-        }
-        else{
-            tap_sound.stop();
         }
     }
 
