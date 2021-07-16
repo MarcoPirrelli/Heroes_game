@@ -53,7 +53,19 @@ public class EventManager {
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
         catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 0));
         catacombs.options[0].setItem(Hero.CURSE, 1);
-        catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3));
+        catacombs.setOption(1, new AbstractOption("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3) {
+            @Override
+            public void pick() {
+                defaultPick();
+                if (!db.isNameAvailable("Merlin")) {
+                    int t = db.getGameData(0);
+                    if (t < 5)
+                        db.setGameData(0, t + 1);
+                    if (t == 5)
+                        newAchievement("Merlin");
+                }
+            }
+        });
         catacombs.options[1].setItem(Hero.WAND, 1);
         catacombs.setOption(2, new Option("Banish the demon with a spell", "With a zap of your magic wand, the demon is sent back to hell.", 0, 20, 0, 0, -25, 0));
         catacombs.options[2].setMagic(true);
@@ -336,7 +348,7 @@ public class EventManager {
      *
      * @param achievementListener Object to be notified
      */
-    public static void addAchievementListener(AchievementListener achievementListener){
+    public static void addAchievementListener(AchievementListener achievementListener) {
         listeners.add(achievementListener);
     }
 
@@ -345,10 +357,10 @@ public class EventManager {
      *
      * @param achievement String with the name of the achievement.
      */
-    public static void newAchievement(String achievement){
-        if(db.isNameAvailable(achievement)) return;
+    public static void newAchievement(String achievement) {
+        if (db.isNameAvailable(achievement)) return;
         db.addName(achievement);
-        for(AchievementListener i : listeners)
+        for (AchievementListener i : listeners)
             i.achievementObtained(achievement);
     }
 }

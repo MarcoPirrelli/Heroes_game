@@ -69,6 +69,22 @@ public class DBManager {
             }
         }
         try {
+            statement.executeQuery("select Id, Value from gamedata");
+        } catch (SQLException e) {
+            try {
+                statement.executeUpdate("drop table if exists gamedata");
+                statement.executeUpdate("""
+                        create table gamedata(
+                        Id int primary key,
+                        Value int
+                        )""");
+                statement.executeUpdate("insert into gamedata values (0, 0)");
+            } catch (Exception e2) {
+                e2.printStackTrace();
+                System.exit(0);
+            }
+        }
+        try {
             saveStatement = connection.prepareStatement("insert or replace into saves values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,7 +231,7 @@ public class DBManager {
      *
      * @return positive int
      */
-    public int countNames(){
+    public int countNames() {
         int ret = 0;
         try {
             ResultSet r = statement.executeQuery("select count(Name) from names");
@@ -235,11 +251,10 @@ public class DBManager {
      *
      * @param name name to be added
      */
-    public void addName(String name){
-        try{
+    public void addName(String name) {
+        try {
             statement.executeUpdate("insert into names values('" + name + "')");
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
         }
@@ -251,14 +266,13 @@ public class DBManager {
      * @param name Name to be checked
      * @return true if present
      */
-    public boolean isNameAvailable(String name){
-        try{
-            ResultSet r = statement.executeQuery("select Name from names where Name like '" + name +"'");
-            if(!r.isAfterLast()){
+    public boolean isNameAvailable(String name) {
+        try {
+            ResultSet r = statement.executeQuery("select Name from names where Name like '" + name + "'");
+            if (!r.isAfterLast()) {
                 return true;
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
         }
@@ -270,13 +284,13 @@ public class DBManager {
      *
      * @return String name
      */
-    public String getRandomName(){
+    public String getRandomName() {
         Random rand = new Random();
         int random = rand.nextInt(countNames()) + 1;
         String name = "";
         try {
             ResultSet r = statement.executeQuery("select Name from names");
-            for(int i = 0; i < random; i++){
+            for (int i = 0; i < random; i++) {
                 r.next();
             }
             name = r.getString(1);
@@ -285,5 +299,41 @@ public class DBManager {
             System.exit(0);
         }
         return name;
+    }
+
+    /**
+     * Get gamedata with a certain id
+     *
+     * @param id db primary key
+     * @return int
+     */
+    public int getGameData(int id) {
+        int ret = -1;
+        try {
+            ResultSet r = statement.executeQuery("select Value from gamedata where Id = " + id);
+            if (!r.next()) {
+                throw new RuntimeException("gamedata ResultSet unexpectedly empty");
+            }
+            ret = r.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return ret;
+    }
+
+    /**
+     * Sets gamedata with a certain id to the given value
+     *
+     * @param id    db primary key
+     * @param value int
+     */
+    public void setGameData(int id, int value) {
+        try {
+            statement.executeUpdate("update gamedata set Value = " + value + " where Id = " + id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 }
