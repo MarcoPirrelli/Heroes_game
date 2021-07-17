@@ -272,6 +272,56 @@ public class EventManager {
     }
 
     /**
+     * search the cause of death and get the correct line
+     * @param stat the statistic that is 0 or 100
+     * @return description of the death
+     */
+
+    static public String getDeath(int stat){
+
+        String descDeath = "";
+        switch (stat) {
+            case 0:
+                if (Hero.stats[0] == 0) {
+                    descDeath = "You have no energy to continue living, so you let yourself die under a tree.";
+                } else {
+                    descDeath = "You've never felt better in your life, but a cripple is envious of your health and poisons you.";
+                }
+                break;
+            case 1:
+                if (Hero.stats[1] == 0) {
+                    descDeath = "Nobody recognizes you anymore. You feel too lonely to continue living.";
+                } else {
+                    descDeath = "One of your fan proposes to you, but upon your rejection, he kills you.";
+                }
+                break;
+            case 2:
+                if (Hero.stats[2] == 0) {
+                    descDeath = "The king doesn't like your unwillingness to obey. So he sentences you to an horrible death.";
+                } else {
+                    descDeath = "You are so loyal to the king that people start calling you 'the loyal dog'. Some rebels decide to kill you to spite the king.";
+                }
+                break;
+            case 3:
+                if (Hero.stats[3] == 0) {
+                    descDeath = "You are hungry, but there is no more money left. You die miserably.";
+                } else {
+                    descDeath = "You are now one of the richest men in town. Some thieves want to steal from your home and in the process they kill you.";
+                }
+                break;
+            case 4:
+                if (Hero.stats[4] == 0) {
+                    descDeath = "You try to light a fire with a spell, but you're so devoid of mana, it takes away your life.";
+                } else {
+                    descDeath = "The mana inside you is too much, you explode.";
+                }
+                break;
+        }
+
+        return descDeath;
+    }
+
+    /**
      * Updates the hero's statistics when an option is chosen and increased the completed events counter.
      *
      * @param n The option number (0 to 3)
@@ -349,7 +399,7 @@ public class EventManager {
      * @param gameListener Object to be notified
      */
     public static void addGameListener(GameListener gameListener) {
-        listeners.add(gameListener);
+       listeners.add(gameListener);
     }
 
     /**
@@ -363,4 +413,5 @@ public class EventManager {
         for (GameListener i : listeners)
             i.achievementObtained(achievement);
     }
+
 }

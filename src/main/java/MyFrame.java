@@ -453,6 +453,11 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         text_year.setText("Years of service: " + Hero.getYearsOfService());
     }
 
+    @Override
+    public void artifactObtained(){
+        sound.getArtifactSound();
+    }
+
     /**
      * override for clicking on buttons
      *
@@ -776,6 +781,9 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         click.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         click.getActionMap().put("Continue", new Continue());
+
+        revalidate();
+        repaint();
     }
 
     /**
@@ -866,45 +874,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         EventManager.db.deleteSave(EventManager.db.getSaveSlot());
         sound.getDeathSound();
 
+        String descDeath = EventManager.getDeath(stat);
 
-        String descDeath = "";
-        switch (stat) {
-            case 0:
-                if (Hero.stats[0] == 0) {
-                    descDeath = "You have no energy to continue living, so you let yourself die under a tree.";
-                } else {
-                    descDeath = "You've never felt better in your life, but a cripple is envious of your health and poisons you.";
-                }
-                break;
-            case 1:
-                if (Hero.stats[1] == 0) {
-                    descDeath = "Nobody recognizes you anymore. You feel too lonely to continue living.";
-                } else {
-                    descDeath = "One of your fan proposes to you, but upon your rejection, he kills you.";
-                }
-                break;
-            case 2:
-                if (Hero.stats[2] == 0) {
-                    descDeath = "The king doesn't like your unwillingness to obey. So he sentences you to an horrible death.";
-                } else {
-                    descDeath = "You are so loyal to the king that people start calling you 'the loyal dog'. Some rebels decide to kill you to spite the king.";
-                }
-                break;
-            case 3:
-                if (Hero.stats[3] == 0) {
-                    descDeath = "You are hungry, but there is no more money left. You die miserably.";
-                } else {
-                    descDeath = "You are now one of the richest men in town. Some thieves want to steal from your home and in the process they kill you.";
-                }
-                break;
-            case 4:
-                if (Hero.stats[4] == 0) {
-                    descDeath = "You try to light a fire with a spell, but you're so devoid of mana, it takes away your life.";
-                } else {
-                    descDeath = "The mana inside you is too much, you explode.";
-                }
-                break;
-        }
         event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eDeath.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
@@ -1466,6 +1437,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                 removeGameObject();
                 remove(death_panel);
                 remove(overwrite);
+                timer_event.cancel();
 
                 add(start_panel, 3, 0);
                 background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));

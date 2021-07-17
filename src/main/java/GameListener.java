@@ -13,4 +13,6 @@ public interface GameListener {
      * Method is called when the hero age and years of service increase.
      */
     void heroAged();
+
+    void artifactObtained();
 }

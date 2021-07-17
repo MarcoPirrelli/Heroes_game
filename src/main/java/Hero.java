@@ -46,6 +46,7 @@ public class Hero {
             public void run() {
                 Hero.age++;
                 Hero.yearsOfService++;
+                Hero.addFame(-1);
                 for (GameListener i : EventManager.listeners)
                     i.heroAged();
             }
