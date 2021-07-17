@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -441,7 +439,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
     @Override
     public void achievementObtained(String achievement) {
-        achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "achievement" + File.separator + achievement + ".png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
+        System.out.println(achievement);
+        achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievements" + File.separator + achievement + ".png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
         this.add(achie, 4, 0);
         achie.setBounds(width * 100 / 142, height * 100 / 127, width * 10 / 34, height * 10 / 54);
         rt_achie();
@@ -579,7 +578,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             repaint();
 
             if (is_loading) {
-                EventManager.db.load(1);
+                DBManager.load(1);
             } else {
                 EventManager.newGame();
             }
@@ -595,7 +594,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             repaint();
 
             if (is_loading) {
-                EventManager.db.load(2);
+                DBManager.load(2);
             } else {
                 EventManager.newGame();
             }
@@ -611,7 +610,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             repaint();
 
             if (is_loading) {
-                EventManager.db.load(3);
+                DBManager.load(3);
             } else {
                 EventManager.newGame();
             }
@@ -621,7 +620,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         if (e.getSource() == b_d_newGame) {
 
-            int currentSlot = EventManager.db.getSaveSlot();
+            int currentSlot = DBManager.getSaveSlot();
             newGame(currentSlot);
             EventManager.newEvent();
             state_game = 0;
@@ -650,30 +649,15 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         menu = false;
         is_gaming = false;
 
-        if (EventManager.db.firstEmptySlot() == 0) {
+        if (DBManager.firstEmptySlot() == 0) {
             //the user has to chose which slot to overwrite
             this.remove(start_panel);
             background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
 
-            ResultSet r = EventManager.db.getAllSaves();
-            try {
-                while (r.next()) {
-                    if (r.getInt("SaveId") == 1) {
-                        b_slot1.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
-                    }
-                    if (r.getInt("SaveId") == 2) {
-                        b_slot2.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
-                    }
-                    if (r.getInt("SaveId") == 3) {
-                        b_slot3.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.exit(0);
-            }
-
+            b_slot1.setText(DBManager.getHeroName(1) + ",     Years of Service: " + DBManager.getService(1) + ",     Completed Events: " + DBManager.getCompleted(1));
+            b_slot2.setText(DBManager.getHeroName(2) + ",     Years of Service: " + DBManager.getService(2) + ",     Completed Events: " + DBManager.getCompleted(2));
+            b_slot3.setText(DBManager.getHeroName(3) + ",     Years of Service: " + DBManager.getService(3) + ",     Completed Events: " + DBManager.getCompleted(3));
 
             this.add(overwrite, 4, 0);
             overwrite.setBounds(width / 3, height / 20, 1000, 160);
@@ -697,7 +681,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             slot_panel.getActionMap().put("LoadNewGame", new LoadNewGame());
         } else {
             EventManager.newGame();
-            newGame(EventManager.db.firstEmptySlot());
+            newGame(DBManager.firstEmptySlot());
         }
     }
 
@@ -712,7 +696,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         is_loading = false;
         is_gaming = true;
 
-        EventManager.db.setSaveSlot(slot);
+        DBManager.setSaveSlot(slot);
 
         //remove menu_buttons
         this.remove(start_panel);
@@ -805,27 +789,18 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
-
-        b_slot1.setText("Empty");
-        b_slot2.setText("Empty");
-        b_slot3.setText("Empty");
-        ResultSet r = EventManager.db.getAllSaves();
-        try {
-            while (r.next()) {
-                if (r.getInt("SaveId") == 1) {
-                    b_slot1.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
-                }
-                if (r.getInt("SaveId") == 2) {
-                    b_slot2.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
-                }
-                if (r.getInt("SaveId") == 3) {
-                    b_slot3.setText(r.getString("HeroName") + ",     Years of Service: " + r.getInt("Service") + ",     Completed Events: " + r.getInt("Completed"));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.exit(0);
-        }
+        if (DBManager.hasSave(1))
+            b_slot1.setText(DBManager.getHeroName(1) + ",     Years of Service: " + DBManager.getService(1) + ",     Completed Events: " + DBManager.getCompleted(1));
+        else
+            b_slot1.setText("Empty");
+        if (DBManager.hasSave(2))
+            b_slot2.setText(DBManager.getHeroName(2) + ",     Years of Service: " + DBManager.getService(2) + ",     Completed Events: " + DBManager.getCompleted(2));
+        else
+            b_slot2.setText("Empty");
+        if (DBManager.hasSave(3))
+            b_slot3.setText(DBManager.getHeroName(3) + ",     Years of Service: " + DBManager.getService(3) + ",     Completed Events: " + DBManager.getCompleted(3));
+        else
+            b_slot3.setText("Empty");
 
         this.add(slot_panel, 3, 0);
         slot_panel.setBounds(0, 0, width, height * 4 / 5);
@@ -872,7 +847,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         is_loading = false;
         is_gaming = false;
         menu = false;
-        EventManager.db.deleteSave(EventManager.db.getSaveSlot());
+        DBManager.deleteSave(DBManager.getSaveSlot());
         sound.getDeathSound();
 
         String descDeath = EventManager.getDeath(stat);
@@ -1606,7 +1581,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                     repaint();
 
                     if (is_loading) {
-                        EventManager.db.load(1);
+                        DBManager.load(1);
                     } else {
                         EventManager.newGame();
                     }
@@ -1620,7 +1595,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                     repaint();
 
                     if (is_loading) {
-                        EventManager.db.load(2);
+                        DBManager.load(2);
                     } else {
                         EventManager.newGame();
                     }
@@ -1635,7 +1610,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                     repaint();
 
                     if (is_loading) {
-                        EventManager.db.load(3);
+                        DBManager.load(3);
                     } else {
                         EventManager.newGame();
                     }
@@ -1684,7 +1659,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                 add(start_panel, 3, 0);
                 background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
             } else {
-                int currentSlot = EventManager.db.getSaveSlot();
+                int currentSlot = DBManager.getSaveSlot();
                 newGame(currentSlot);
                 EventManager.newEvent();
                 state_game = 0;

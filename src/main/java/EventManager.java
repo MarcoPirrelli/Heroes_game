@@ -8,12 +8,10 @@ import java.util.Random;
  * Also contains db (a DBManager object).
  */
 public class EventManager {
-    static DBManager db;
     static HashMap<Integer, WorldEvent> events;
     static ArrayList<GameListener> listeners;
 
     static {
-        db = new DBManager();
         events = new HashMap<>();
         listeners = new ArrayList<>();
 
@@ -53,19 +51,7 @@ public class EventManager {
         catacombs.setDescription("You follow the echoes of an ancient ritual until you find the hooded figure. It has transformed into a demon.");
         catacombs.setOption(0, new Option("Draw your sword and get ready to fight", "You manage to defeat the demon, but it's cursed you!", -10, 20, 0, 0, 0, 0));
         catacombs.options[0].setItem(Hero.CURSE, 1);
-        catacombs.setOption(1, new AbstractOption("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3) {
-            @Override
-            public void pick() {
-                defaultPick();
-                if (!db.isNameAvailable("Merlin")) {
-                    int t = db.getGameData(0);
-                    if (t < 5)
-                        db.setGameData(0, t + 1);
-                    if (t == 5)
-                        newAchievement("Merlin");
-                }
-            }
-        });
+        catacombs.setOption(1, new Option("Bargain for a pact with the demon", "The demon gives you a magic wand, but at what cost?", 0, 0, 0, 0, 0, -3));
         catacombs.options[1].setItem(Hero.WAND, 1);
         catacombs.setOption(2, new Option("Banish the demon with a spell", "With a zap of your magic wand, the demon is sent back to hell.", 0, 20, 0, 0, -25, 0));
         catacombs.options[2].setMagic(true);
@@ -268,7 +254,7 @@ public class EventManager {
             Hero.currentId = getRandomEvent();
 
         if (Hero.completedEvents != 0)
-            db.save();
+            DBManager.save();
     }
 
     /**
@@ -408,8 +394,8 @@ public class EventManager {
      * @param achievement String with the name of the achievement.
      */
     public static void newAchievement(String achievement) {
-        if (db.isNameAvailable(achievement)) return;
-        db.addName(achievement);
+        if (DBManager.isNameAvailable(achievement)) return;
+        DBManager.addName(achievement);
         for (GameListener i : listeners)
             i.achievementObtained(achievement);
     }

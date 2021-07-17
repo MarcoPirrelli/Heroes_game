@@ -119,12 +119,22 @@ public abstract class AbstractOption {
      */
     protected void modifyArtefacts() {
         for (int i = 0; i < Hero.artefacts.length; i++) {
-            if (deltaArtefacts[i] == 1 && !Hero.artefacts[i]){
+            if (deltaArtefacts[i] == 1 && !Hero.artefacts[i]) {
                 Hero.artefacts[i] = true;
-                for(GameListener l : EventManager.listeners)
+
+                for (GameListener l : EventManager.listeners)
                     l.artifactObtained(i);
-            }
-            else if (deltaArtefacts[i] == -1 && Hero.artefacts[i])
+
+                if (i == Hero.WAND && !DBManager.isNameAvailable("Merlin")) {
+                    int t = DBManager.getGameData("wandsTaken");
+                    if (t < 5) {
+                        t++;
+                        DBManager.setGameData("wandsTaken", t);
+                    }
+                    if (t == 5)
+                        EventManager.newAchievement("Merlin");
+                }
+            } else if (deltaArtefacts[i] == -1 && Hero.artefacts[i])
                 Hero.artefacts[i] = false;
         }
     }

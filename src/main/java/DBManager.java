@@ -6,17 +6,13 @@ import java.util.Random;
  * Class to create and manage a connection to the db.
  */
 public class DBManager {
-    Connection connection;
-    Statement statement;
-    PreparedStatement saveStatement;
-    int saveSlot;
-    final int MAX_SAVES = 3;
+    static Connection connection;
+    static PreparedStatement saveStatement;
+    static int saveSlot;
+    static final int MAX_SAVES = 3;
 
-    /**
-     * Creates a connection, a statement and a prepared statement.
-     * Checks for database integrity and resets the tables if necessary.
-     */
-    public DBManager() {
+    static {
+        Statement statement = null;
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:src" + File.separator + "main" + File.separator + "resources" + File.separator + "databases" + File.separator + "project.db");
@@ -70,16 +66,16 @@ public class DBManager {
             }
         }
         try {
-            statement.executeQuery("select Id, Value from gamedata");
+            statement.executeQuery("select Variable, Value from gamedata");
         } catch (SQLException e) {
             try {
                 statement.executeUpdate("drop table if exists gamedata");
                 statement.executeUpdate("""
                         create table gamedata(
-                        Id int primary key,
+                        Variable text primary key,
                         Value int
                         )""");
-                statement.executeUpdate("insert into gamedata values (0, 0)");
+                statement.executeUpdate("insert into gamedata values ('wandsTaken', 0)");
             } catch (Exception e2) {
                 e2.printStackTrace();
                 System.exit(0);
@@ -91,7 +87,11 @@ public class DBManager {
             e.printStackTrace();
             System.exit(0);
         }
-
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -99,8 +99,8 @@ public class DBManager {
      *
      * @param saveSlot int between 1 and maxSaves
      */
-    public void setSaveSlot(int saveSlot) {
-        this.saveSlot = saveSlot;
+    public static void setSaveSlot(int saveSlot) {
+        DBManager.saveSlot = saveSlot;
     }
 
     /**
@@ -108,7 +108,7 @@ public class DBManager {
      *
      * @return save slot number
      */
-    public int getSaveSlot() {
+    public static int getSaveSlot() {
         return saveSlot;
     }
 
@@ -118,10 +118,11 @@ public class DBManager {
      *
      * @return non-negative int
      */
-    public int firstEmptySlot() {
+    public static int firstEmptySlot() {
         int first = 0;
-        try {
-            ResultSet r = statement.executeQuery("select SaveId from saves where SaveId <= " + MAX_SAVES + " order by 1");
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select SaveId from saves where SaveId <= " + MAX_SAVES + " order by 1");
             for (int i = 1; i <= MAX_SAVES; i++) {
                 if (!r.next() || r.getInt("SaveId") > i) {
                     first = i;
@@ -131,6 +132,13 @@ public class DBManager {
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return first;
     }
@@ -140,9 +148,10 @@ public class DBManager {
      *
      * @param saveId int between 1 and maxSaves
      */
-    public void load(int saveId) {
-        try {
-            ResultSet r = statement.executeQuery("select * from saves where SaveId = " + saveId);
+    public static void load(int saveId) {
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select * from saves where SaveId = " + saveId);
             if (r.isAfterLast()) {
                 setSaveSlot(saveId);
                 EventManager.newGame();
@@ -164,9 +173,18 @@ public class DBManager {
             Hero.artefacts[Hero.CURSE] = r.getBoolean("Curse");
             Hero.artefacts[Hero.SCALE] = r.getBoolean("Scale");
             Hero.artefacts[Hero.CROW] = r.getBoolean("Crow");
+
+            Hero.restartTimer();
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -175,8 +193,8 @@ public class DBManager {
      *
      * @param saveId int between 1 and MAX_SAVES
      */
-    public void deleteSave(int saveId) {
-        try {
+    public static void deleteSave(int saveId) {
+        try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("delete from saves where SaveId = " + saveId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,7 +202,7 @@ public class DBManager {
         }
     }
 
-    public void save() throws RuntimeException {
+    public static void save() throws RuntimeException {
         if (saveSlot <= 0 || saveSlot > MAX_SAVES) throw new RuntimeException("Error: Illegal save slot!");
         try {
             saveStatement.setInt(1, saveSlot);
@@ -212,19 +230,114 @@ public class DBManager {
     }
 
     /**
-     * Returns a ResultSet containing the saves' information meant for display.
+     * Returns true if the save is present.
      *
-     * @return ResultSet with 0 to MAX_SAVES rows
+     * @param saveId SaveId to be checked.
+     * @return True if present
      */
-    public ResultSet getAllSaves() {
-        ResultSet ret = null;
-        try {
-            ret = statement.executeQuery("select SaveId, HeroName, Service, Completed from saves where SaveId <= " + MAX_SAVES);
-        } catch (Exception e) {
+    public static boolean hasSave(int saveId) {
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select SaveId from saves where SaveId = " + saveId);
+            if (!r.isAfterLast()) {
+                return true;
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return ret;
+        return false;
+    }
+
+    /**
+     * Returns HeroName of the specified save.
+     *
+     * @param saveId Positive int
+     * @return String HeroName or null if save is absent
+     */
+    public static String getHeroName(int saveId) {
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select HeroName from saves where SaveId = " + saveId);
+            if (r.isAfterLast()) {
+                return null;
+            }
+            return r.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns Service of the specified save.
+     *
+     * @param saveId Positive int
+     * @return Positive int or 0 if save is absent
+     */
+    public static int getService(int saveId) {
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select Service from saves where SaveId = " + saveId);
+            if (r.isAfterLast()) {
+                return 0;
+            }
+            return r.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Returns Completed of the specified save.
+     *
+     * @param saveId Positive int
+     * @return Positive int or 0 if save is absent
+     */
+    public static int getCompleted(int saveId) {
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select Completed from saves where SaveId = " + saveId);
+            if (r.isAfterLast()) {
+                return 0;
+            }
+            return r.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
     }
 
     /**
@@ -232,10 +345,11 @@ public class DBManager {
      *
      * @return positive int
      */
-    public int countNames() {
+    public static int countNames() {
         int ret = 0;
-        try {
-            ResultSet r = statement.executeQuery("select count(Name) from names");
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select count(Name) from names");
             if (r.isAfterLast()) {
                 throw new RuntimeException("countNames ResultSet unexpectedly empty");
             }
@@ -243,17 +357,24 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return ret;
     }
 
     /**
-     * Adds a name to the batabase.
+     * Adds a name to the database.
      *
      * @param name name to be added
      */
-    public void addName(String name) {
-        try {
+    public static void addName(String name) {
+        try (Statement statement = connection.createStatement()) {
             statement.executeUpdate("insert into names values('" + name + "')");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -267,15 +388,23 @@ public class DBManager {
      * @param name Name to be checked
      * @return true if present
      */
-    public boolean isNameAvailable(String name) {
-        try {
-            ResultSet r = statement.executeQuery("select Name from names where Name like '" + name + "'");
+    public static boolean isNameAvailable(String name) {
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select Name from names where Name like '" + name + "'");
             if (!r.isAfterLast()) {
                 return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }
@@ -285,12 +414,13 @@ public class DBManager {
      *
      * @return String name
      */
-    public String getRandomName() {
+    public static String getRandomName() {
+        ResultSet r = null;
         Random rand = new Random();
         int random = rand.nextInt(countNames()) + 1;
         String name = "";
-        try {
-            ResultSet r = statement.executeQuery("select Name from names");
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select Name from names");
             for (int i = 0; i < random; i++) {
                 r.next();
             }
@@ -298,20 +428,28 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return name;
     }
 
     /**
-     * Get gamedata with a certain id
+     * Get gamedata variable.
      *
-     * @param id db primary key
+     * @param var Variable name
      * @return int
      */
-    public int getGameData(int id) {
+    public static int getGameData(String var) {
         int ret = -1;
-        try {
-            ResultSet r = statement.executeQuery("select Value from gamedata where Id = " + id);
+        ResultSet r = null;
+        try (Statement statement = connection.createStatement()) {
+            r = statement.executeQuery("select Value from gamedata where Variable = '" + var + "'");
             if (!r.next()) {
                 throw new RuntimeException("gamedata ResultSet unexpectedly empty");
             }
@@ -319,19 +457,26 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);
+        } finally {
+            try {
+                if (r != null)
+                    r.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return ret;
     }
 
     /**
-     * Sets gamedata with a certain id to the given value
+     * Sets gamedata variable to the given value
      *
-     * @param id    db primary key
+     * @param var   Variable name
      * @param value int
      */
-    public void setGameData(int id, int value) {
-        try {
-            statement.executeUpdate("update gamedata set Value = " + value + " where Id = " + id);
+    public static void setGameData(String var, int value) {
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("update gamedata set Value = " + value + " where Variable = '" + var + "'");
         } catch (SQLException e) {
             e.printStackTrace();
             System.exit(0);

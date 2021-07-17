@@ -31,26 +31,14 @@ public class Hero {
      * Resets the hero's statistics.
      */
     public static void reset() {
-        name = EventManager.db.getRandomName();
+        name = DBManager.getRandomName();
 
         int max = 25;
         int min = 13;
         Random rand = new Random();
         age = rand.nextInt(max - min) + min;
         yearsOfService = -1;
-        if (yearTimer != null)
-            yearTimer.cancel();
-        yearTimer = new Timer();
-        yearTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Hero.age++;
-                Hero.yearsOfService++;
-                Hero.addFame(-1);
-                for (GameListener i : EventManager.listeners)
-                    i.heroAged();
-            }
-        }, 0, 5000);
+        restartTimer();
 
         stats[0] = 80; //health
         stats[1] = 50; //fame
@@ -67,6 +55,22 @@ public class Hero {
         currentId = 0;
         nextId = 0;
         completedEvents = 0;
+    }
+
+    public static void restartTimer(){
+        if (yearTimer != null)
+            yearTimer.cancel();
+        yearTimer = new Timer();
+        yearTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Hero.age++;
+                Hero.yearsOfService++;
+                Hero.addFame(-1);
+                for (GameListener i : EventManager.listeners)
+                    i.heroAged();
+            }
+        }, 0, 5000);
     }
 
     /**
