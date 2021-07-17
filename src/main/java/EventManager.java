@@ -5,7 +5,6 @@ import java.util.Random;
 /**
  * Class that creates and manages game events and options.
  * GameListeners can be added to be notified of certain game events like achievements and time passing.
- * Also contains db (a DBManager object).
  */
 public class EventManager {
     static HashMap<Integer, WorldEvent> events;
