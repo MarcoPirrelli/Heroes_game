@@ -57,6 +57,17 @@ public class Hero {
         completedEvents = 0;
     }
 
+    /**
+     * Stops hero aging.
+     */
+    public static void stopTimer(){
+        if (yearTimer != null)
+            yearTimer.cancel();
+    }
+
+    /**
+     * Starts hero aging.
+     */
     public static void restartTimer(){
         if (yearTimer != null)
             yearTimer.cancel();
