@@ -66,7 +66,7 @@ public class Hero {
             public void run() {
                 Hero.age++;
                 Hero.yearsOfService++;
-                Hero.addFame(-1);
+                //Hero.addFame(-1); !!!Dangerous
                 for (GameListener i : EventManager.listeners)
                     i.heroAged();
             }
