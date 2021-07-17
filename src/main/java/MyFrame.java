@@ -1123,8 +1123,10 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
      */
     public void setDescription(String description) {
 
-        if (Hero.isCrowed())
+        if (Hero.isCrowed()) {
             event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+            sound.getCrowSound();
+        }
         else
             event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "e" + EventManager.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
         event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
