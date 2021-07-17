@@ -128,18 +128,12 @@ public class Sounds {
         }
     }
 
-    public void getArtifactSound(){
-        if(Hero.artefacts[0]){
-            getMagicSound();
-        }
-        else if (Hero.artefacts[1]){
-            getCurseSound();
-        }
-        else if (Hero.artefacts[1]){
-            getScaleSound();
-        }
-        else if (Hero.artefacts[1]){
-            getCrowSound();
+    public void getArtifactSound(int artefact){
+        switch(artefact){
+            case 0-> getMagicSound();
+            case 1-> getCurseSound();
+            case 2-> getScaleSound();
+            case 3-> getCrowSound();
         }
     }
     public void stop(){

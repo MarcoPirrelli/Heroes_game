@@ -119,9 +119,12 @@ public abstract class AbstractOption {
      */
     protected void modifyArtefacts() {
         for (int i = 0; i < Hero.artefacts.length; i++) {
-            if (deltaArtefacts[i] == 1)
+            if (deltaArtefacts[i] == 1 && !Hero.artefacts[i]){
                 Hero.artefacts[i] = true;
-            else if (deltaArtefacts[i] == -1)
+                for(GameListener l : EventManager.listeners)
+                    l.artifactObtained(i);
+            }
+            else if (deltaArtefacts[i] == -1 && Hero.artefacts[i])
                 Hero.artefacts[i] = false;
         }
     }

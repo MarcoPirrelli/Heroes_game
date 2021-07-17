@@ -14,5 +14,10 @@ public interface GameListener {
      */
     void heroAged();
 
-    void artifactObtained();
+    /**
+     * Method is called when an artefact is obtained.
+     *
+     * @param artefact The artefact number
+     */
+    void artifactObtained(int artefact);
 }

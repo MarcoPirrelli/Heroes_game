@@ -454,8 +454,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     }
 
     @Override
-    public void artifactObtained(){
-        sound.getArtifactSound();
+    public void artifactObtained(int artefact){
+        sound.getArtifactSound(artefact);
     }
 
     /**
