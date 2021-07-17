@@ -1126,15 +1126,14 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
      * @param type        0=initial description, 1=result
      */
     public void setDescription(String description, int type) {
-
-        if (type == 0 && Hero.isCrowed()) {
-            event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
-            sound.getCrowSound();
+        if (type == 0) {
+            if (Hero.isCrowed()) {
+                event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+                sound.getCrowSound();
+            } else
+                event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "e" + EventManager.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+            event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
         }
-        else
-            event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "e" + EventManager.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
-        event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
-
         if (description.length() <= 40) {
             event_text.setText(description);
         } else {
