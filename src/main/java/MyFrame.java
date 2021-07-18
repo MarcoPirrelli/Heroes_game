@@ -22,10 +22,11 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     //some dimensions
     int width = screenSize.width;
     int height = screenSize.height;
+   // int width = 1280;
+   // int height = 720;
 
     int width_shield = width * 100 / 685;
     int height_shield = height * 100 / 327;
-
 
     //Hero
     JLabel text_year, hero_age, hero_name, hero_image;
@@ -106,14 +107,14 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         start_button = new JButton[]{b_newGame, b_load, b_tutorial, b_exit};
         for (JButton b : start_button) {
             b.addActionListener(this);
-            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_start.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_DEFAULT)));
+            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_start.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_SMOOTH)));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
             b.setContentAreaFilled(false);
             b.setBorderPainted(false);
             b.setFont(b.getFont().deriveFont(size_start));
         }
-        b_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_start_sel.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_DEFAULT)));
+        b_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_start_sel.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_SMOOTH)));
 
         start_panel = new JPanel(new GridBagLayout());
         GridBagConstraints con = new GridBagConstraints();
@@ -171,7 +172,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         JButton[] d1 = {b_w, b_e, b_n, b_s};
         for (JButton b : d1) {
             b.addActionListener(this);
-            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "shield.png").getImage().getScaledInstance(width_shield, height_shield, Image.SCALE_DEFAULT))));
+            b.setIcon((new ImageIcon(new ImageIcon(path_resources + "shield.png").getImage().getScaledInstance(width_shield, height_shield, Image.SCALE_SMOOTH))));
             b.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
             b.setVerticalTextPosition(JButton.CENTER);
             b.setContentAreaFilled(false);
@@ -270,11 +271,11 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         art3 = new JLabel();
         art = new JLabel();
 
-        art0.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
-        art1.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
-        art2.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
-        art3.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
-        art.setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts.png").getImage().getScaledInstance(width / 5, height * 10 / 63, Image.SCALE_DEFAULT)));
+        art0.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
+        art1.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
+        art2.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
+        art3.setIcon(new ImageIcon(new ImageIcon(path_resources + "Artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
+        art.setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts.png").getImage().getScaledInstance(width / 5, height * 10 / 63, Image.SCALE_SMOOTH)));
 
         artifacts_panel = new JPanel(new GridBagLayout());
         con3 = new GridBagConstraints();
@@ -312,7 +313,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         JButton[] slot_button = {b_slot1, b_slot2, b_slot3};
         for (JButton b : slot_button) {
             b.addActionListener(this);
-            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+            b.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
             b.setHorizontalTextPosition(JButton.CENTER);
             b.setVerticalTextPosition(JButton.CENTER);
             float size_load = width / 90;
@@ -364,7 +365,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         float size2 = width / 90;
 
         b_d_newGame.addActionListener(this);
-        b_d_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+        b_d_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
         b_d_newGame.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
         b_d_newGame.setVerticalTextPosition(JButton.CENTER);
         b_d_newGame.setContentAreaFilled(false);
@@ -373,7 +374,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         b_d_newGame.setText("New Game");
 
         b_d_exit.addActionListener(this);
-        b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+        b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
         b_d_exit.setHorizontalTextPosition(JButton.CENTER); //to set the text on the center of the picture, if not the bg moves it
         b_d_exit.setVerticalTextPosition(JButton.CENTER);
         b_d_exit.setContentAreaFilled(false);
@@ -440,7 +441,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     @Override
     public void achievementObtained(String achievement) {
         System.out.println(achievement);
-        achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievements" + File.separator + achievement + ".png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_DEFAULT)));
+        achie.setIcon(new ImageIcon(new ImageIcon(path_resources + "Achievements" + File.separator + achievement + ".png").getImage().getScaledInstance(width * 10 / 34, height * 10 / 54, Image.SCALE_SMOOTH)));
         this.add(achie, 4, 0);
         achie.setBounds(width * 100 / 142, height * 100 / 127, width * 10 / 34, height * 10 / 54);
         rt_achie();
@@ -487,6 +488,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         if (e.getSource() == click) {
 
             //clicking makes the shields to appear and disappear
+            if(is_gaming) {
             switch (state_game) {
                 case 0:
                     setShields();
@@ -526,7 +528,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
 
             }
-
+            }
         }
 
         if (e.getSource() == b_w) {
@@ -557,16 +559,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
 
         if (e.getSource() == b_back) {
-            timer_event.cancel();
-            menu = true;
-            this.remove(slot_panel);
-            this.remove(b_back);
-            this.remove(overwrite);
-            this.remove(death_panel);
-            removeGameObject();
-
-            this.add(start_panel, 3, 0);
-            background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+            Menu();
         }
 
 
@@ -642,6 +635,30 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     }
 
     /**
+     *  Start Menu
+     *  remove all other panels and labels
+     */
+    public void Menu(){
+        timer_event.cancel();
+
+        menu = true;
+        is_loading = false;
+
+        this.remove(slot_panel);
+        this.remove(b_back);
+        this.remove(overwrite);
+        this.remove(death_panel);
+        removeGameObject();
+
+        this.add(start_panel, 3, 0);
+        background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+
+        revalidate();
+        repaint();
+
+    }
+
+    /**
      * search free slot
      * if there aren't free slots, the user have to choose which slot to overwrite
      */
@@ -653,14 +670,14 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             //the user has to chose which slot to overwrite
             this.remove(start_panel);
             background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-            b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+            b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
 
             b_slot1.setText(DBManager.getHeroName(1) + ",     Years of Service: " + DBManager.getService(1) + ",     Completed Events: " + DBManager.getCompleted(1));
             b_slot2.setText(DBManager.getHeroName(2) + ",     Years of Service: " + DBManager.getService(2) + ",     Completed Events: " + DBManager.getCompleted(2));
             b_slot3.setText(DBManager.getHeroName(3) + ",     Years of Service: " + DBManager.getService(3) + ",     Completed Events: " + DBManager.getCompleted(3));
 
             this.add(overwrite, 4, 0);
-            overwrite.setBounds(width / 3, height / 20, 1000, 160);
+            overwrite.setBounds(width / 3, height / 20, width * 10/19, height * 10/67);
 
             this.add(slot_panel, 3, 0);
             slot_panel.setBounds(0, 0, width, height * 4 / 5);
@@ -706,7 +723,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         //Bg and exit
         background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "arazzogif.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
         add(background_image, 1, 0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_game_back.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_game_back.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_SMOOTH)));
         this.add(b_back, 4, 0);
         b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
 
@@ -716,7 +733,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         //hero
         hero_name.setText(Hero.getHeroName());
-        hero_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "heroes" + File.separator + Hero.getHeroName() + ".png").getImage().getScaledInstance(width / 12, height / 7, Image.SCALE_DEFAULT)));
+        hero_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "heroes" + File.separator + Hero.getHeroName() + ".png").getImage().getScaledInstance(width / 12, height / 7, Image.SCALE_SMOOTH)));
         hero_age.setText("Age: " + Hero.getAge());
         this.add(hero_panel, 2, 0);
         hero_panel.setBounds(0, 0, width / 6, height / 4);
@@ -750,9 +767,9 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         for (int i = 0; i < Hero.artefacts.length; i++) {
             if (Hero.artefacts[i]) {
-                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + +i + ".png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + +i + ".png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
             } else {
-                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
             }
         }
 
@@ -784,10 +801,10 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         this.remove(start_panel);
 
         this.add(b_back, 3, 0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_back.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_back.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_SMOOTH)));
         b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
 
-        background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b2.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 
         if (DBManager.hasSave(1))
             b_slot1.setText(DBManager.getHeroName(1) + ",     Years of Service: " + DBManager.getService(1) + ",     Completed Events: " + DBManager.getCompleted(1));
@@ -832,7 +849,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         this.remove(start_panel);
 
         this.add(b_back, 3, 0);
-        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_tuto_back.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_DEFAULT)));
+        b_back.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_tuto_back.png").getImage().getScaledInstance(width / 10, height / 15, Image.SCALE_SMOOTH)));
         b_back.setBounds(width * 100 / 113, height / 30, width / 10, height / 15);
         background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "tutorial.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
 
@@ -852,7 +869,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         String descDeath = EventManager.getDeath(stat);
 
-        event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eDeath.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+        event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eDeath.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_SMOOTH)));
         event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
 
         //text event on screen so that every line isn't interrupted
@@ -903,7 +920,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         removeGameObject();
 
-        background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+        background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b4.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
         death.setText("You died. You did " + Hero.getYearsOfService() + " years of service and you completed " + Hero.completedEvents + " events.");
         add(death_panel, 5, 0);
         death_panel.setBounds(0, 0, width, height);
@@ -1049,6 +1066,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                 this.remove(b_w);
                 this.remove(b_e);
             }
+
             repaint();
         }
     }
@@ -1103,10 +1121,10 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     public void setDescription(String description, int type) {
         if (type == 0) {
             if (Hero.isCrowed()) {
-                event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+                event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_SMOOTH)));
                 sound.getCrowSound();
             } else
-                event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "e" + EventManager.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_DEFAULT)));
+                event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "e" + EventManager.getEventNumber() + ".png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_SMOOTH)));
             event_image.setBounds(width * 100 / 252, height * 100 / 677, width * 10 / 48, height * 100 / 168);
         }
         if (description.length() <= 40) {
@@ -1160,9 +1178,9 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         for (int i = 0; i < Hero.artefacts.length; i++) {
             if (Hero.artefacts[i]) {
-                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + i + ".png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + i + ".png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
             } else {
-                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_DEFAULT)));
+                artifacts_label[i].setIcon(new ImageIcon(new ImageIcon(path_resources + "artifacts" + File.separator + "Null.png").getImage().getScaledInstance(width * 10 / 256, height * 10 / 144, Image.SCALE_SMOOTH)));
             }
 
         }
@@ -1187,32 +1205,32 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     public void setStatistic() {
 
         if (Hero.getHealth() < 10 && Hero.getHealth() != 0) {
-            health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Health" + ((Hero.getHealth() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Health" + ((Hero.getHealth() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         } else {
-            health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics" + File.separator + "Health" + Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            health_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "Statistics" + File.separator + "Health" + Hero.getHealth() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         }
 
         if (Hero.getFame() < 10 && Hero.getFame() != 0) {
-            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Fame" + ((Hero.getFame() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Fame" + ((Hero.getFame() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         } else {
-            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Fame" + Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            fame_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Fame" + Hero.getFame() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         }
 
         if (Hero.getMoney() < 10 && Hero.getMoney() != 0) {
-            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Money" + ((Hero.getMoney() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Money" + ((Hero.getMoney() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         } else {
-            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Money" + Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            money_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Money" + Hero.getMoney() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         }
         if (Hero.getLoyalty() < 10 && Hero.getLoyalty() != 0) {
-            loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Loyalty" + ((Hero.getLoyalty() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Loyalty" + ((Hero.getLoyalty() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         } else {
-            loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Loyalty" + Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            loyalty_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Loyalty" + Hero.getLoyalty() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         }
 
         if (Hero.getMana() < 10 && Hero.getMana() != 0) {
-            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Mana" + ((Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Mana" + ((Hero.getMana() / 10) + 1) + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         } else {
-            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Mana" + Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_DEFAULT))));
+            mana_image.setIcon((new ImageIcon(new ImageIcon(path_resources + "statistics" + File.separator + "Mana" + Hero.getMana() / 10 + ".png").getImage().getScaledInstance(width / 16, height / 10, Image.SCALE_SMOOTH))));
         }
 
         health_image.setText(String.valueOf(Hero.getHealth()));
@@ -1234,6 +1252,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         this.remove(click);
         this.removeShields();
         this.remove(b_back);
+
+        is_gaming = false;
     }
 
     /**
@@ -1246,9 +1266,9 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         for (JButton b : start_button) {
             if (b == button) {
-                b.setIcon((new ImageIcon(new ImageIcon(path_resources + "b_start_sel.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_DEFAULT))));
+                b.setIcon((new ImageIcon(new ImageIcon(path_resources + "b_start_sel.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_SMOOTH))));
             } else {
-                b.setIcon((new ImageIcon(new ImageIcon(path_resources + "b_start.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_DEFAULT))));
+                b.setIcon((new ImageIcon(new ImageIcon(path_resources + "b_start.png").getImage().getScaledInstance(width / 3, height / 10, Image.SCALE_SMOOTH))));
             }
         }
     }
@@ -1263,7 +1283,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         timertask taskevent = new timertask();
         timer_event = new Timer();
-        timer_event.schedule(taskevent, 700); //timerevent.schedule(taskevent, 700);
+        timer_event.schedule(taskevent, 700);
 
     }
 
@@ -1272,6 +1292,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         public void run() {
             add(event_image, 2, 0);
             add(event_text, 2, 0);
+            background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1_ara.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
             setDescription(EventManager.getEventDescription(), 0);
 
         }
@@ -1363,6 +1384,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
+            if(is_gaming){
             sound.getTapSound();
             switch (state_game) {
                 case 0:
@@ -1400,7 +1422,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                     afterDeath();
                     break;
             }
-        }
+        }}
     }
 
     /**
@@ -1414,22 +1436,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             if (menu) {
                 System.exit(0);
             } else {
-                sound.getTapSound();
-                remove(slot_panel);
-                removeGameObject();
-                remove(death_panel);
-                remove(overwrite);
-                timer_event.cancel();
-
-                add(start_panel, 3, 0);
-                background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
-
-                revalidate();
-                repaint();
-
-                is_gaming = false;
-                is_loading = false;
-                menu = true;
+                Menu();
             }
 
 
@@ -1512,19 +1519,19 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
             switch (state_loadButton) {
                 case 1:
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                     break;
                 case 2:
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                     break;
                 case 3:
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                     break;
 
 
@@ -1544,19 +1551,19 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
             switch (state_loadButton) {
                 case 1:
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                     break;
                 case 2:
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                     break;
                 case 3:
-                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                    b_slot3.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot1.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                    b_slot2.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                     break;
 
 
@@ -1629,12 +1636,12 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (state_deathButton == 0) {
-                b_d_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                b_d_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                 state_deathButton = 1;
             } else {
-                b_d_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
-                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_DEFAULT)));
+                b_d_newGame.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
+                b_d_exit.setIcon(new ImageIcon(new ImageIcon(path_resources + "b_load_sel.png").getImage().getScaledInstance(width / 2, height * 10 / 72, Image.SCALE_SMOOTH)));
                 state_deathButton = 0;
             }
 
