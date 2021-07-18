@@ -10,8 +10,8 @@ import java.util.TimerTask;
 /**
  * Main Frame
  * List of functions:
- * Constructor, action performed (buttons), searchSlot, newGame, load, settings, setDeath, afterDeath, setShields
- * removeShields, setDescriptionShields, setDescription, optionConsequences, changeFocus, Timer (time and event),
+ * Constructor, game listener, action performed (buttons), Menu, searchSlot, newGame, load, settings, setDeath, afterDeath, setShields
+ * removeShields, setDescriptionShields, setDescription, optionConsequences, setStatistics, removeGameObject, changeFocus, Timer (time and event),
  * override for keyboard for all buttons on game
  */
 public class MyFrame extends JFrame implements ActionListener, GameListener {
@@ -22,8 +22,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     //some dimensions
     private final int width = screenSize.width;
     private final int height = screenSize.height;
-     // int width = 1280;
-   // int height = 720;
+    // int width = 1280;
+    // int height = 720;
 
     private final int width_shield = width * 100 / 685;
     private final int height_shield = height * 100 / 327;
@@ -397,23 +397,51 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         death_panel.setOpaque(false);
 
-        //KEYBOARD
+        //KEYBOARD!
         frame.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Escape");
         frame.getActionMap().put("Escape", new Escape());
+        back.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("P"), "StopSound");
+        back.getActionMap().put("StopSound", new StopSound());
 
         start_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "Down");
         start_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "Down");
         start_panel.getActionMap().put("Down", new GoDown());
-
         start_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "Up");
         start_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "Up");
         start_panel.getActionMap().put("Up", new GoUp());
-
         start_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "Continue");
         start_panel.getActionMap().put("Continue", new Continue());
 
-        back.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("P"), "StopSound");
-        back.getActionMap().put("StopSound", new StopSound());
+        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "DownLoad");
+        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "DownLoad");
+        slot_panel.getActionMap().put("DownLoad", new GoDownLoad());
+        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "UpLoad");
+        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "UpLoad");
+        slot_panel.getActionMap().put("UpLoad", new GoUpLoad());
+        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
+        slot_panel.getActionMap().put("LoadNewGame", new LoadNewGame());
+
+        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "ButtonDeath");
+        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "ButtonDeath");
+        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "ButtonDeath");
+        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "ButtonDeath");
+        death_panel.getActionMap().put("ButtonDeath", new ChangeButtonDeath());
+        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "AfterDeath");
+        death_panel.getActionMap().put("AfterDeath", new AfterDeath());
+
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
+        b_w.getActionMap().put("North", new SelectNorth());
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
+        b_w.getActionMap().put("South", new SelectSouth());
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
+        b_w.getActionMap().put("West", new SelectWest());
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "East");
+        b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("D"), "East");
+        b_w.getActionMap().put("East", new SelectEast());
+
 
         //SOUND
         sound.getSoundtrack();
@@ -433,6 +461,12 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
     }
 
+    /**
+     *  override of Game listener methods
+     *  here the achievement is displayed for 5 secs before being removed by a timer
+     *
+     * @param achievement String with the name of the achievement.
+     */
     @Override
     public void achievementObtained(String achievement) {
         System.out.println(achievement);
@@ -442,12 +476,20 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         rt_achie();
     }
 
+    /**
+     * override of Game listener methods
+     * here the hero's age and years of service are changed
+     */
     @Override
     public void heroAged() {
         hero_age.setText("Age: " + Hero.getAge());
         text_year.setText("Years of service: " + Hero.getYearsOfService());
     }
 
+    /**
+     * override of Game listener methods
+     * here when the hero take an artifact, a sound is displayed accordingly
+     */
     @Override
     public void artifactObtained(int artefact) {
         sound.getArtifactSound(artefact);
@@ -486,6 +528,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             if(is_gaming) {
             switch (state_game) {
                 case 0:
+
                     setShields();
                     state_game = 1;
 
@@ -499,7 +542,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                     break;
 
                 case 2:
-
 
                     boolean died = false;
                     for (int i = 0; i < 5; i++) {
@@ -534,12 +576,14 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         if (e.getSource() == b_e) {
 
+            removeShields();
             OptionConsequence(1);
             state_game = 2;
         }
 
         if (e.getSource() == b_n) {
 
+            removeShields();
             OptionConsequence(2);
             state_game = 2;
         }
@@ -555,7 +599,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         if (e.getSource() == b_back) {
             Menu();
         }
-
 
         if (e.getSource() == b_slot1) {
 
@@ -629,7 +672,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     }
 
     /**
-     *  Start Menu
+     *  START MENU
      *  remove all other panels and labels
      */
     public void Menu(){
@@ -646,6 +689,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         this.add(start_panel, 3, 0);
         background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b0.gif").getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT)));
+
+        b_newGame.requestFocus();
 
         revalidate();
         repaint();
@@ -679,17 +724,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             revalidate();
             repaint();
 
-            //KEYBOARD
-            slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "DownLoad");
-            slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "DownLoad");
-            slot_panel.getActionMap().put("DownLoad", new GoDownLoad());
 
-            slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "UpLoad");
-            slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "UpLoad");
-            slot_panel.getActionMap().put("UpLoad", new GoUpLoad());
-
-            slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
-            slot_panel.getActionMap().put("LoadNewGame", new LoadNewGame());
         } else {
             EventManager.newGame();
             newGame(DBManager.firstEmptySlot());
@@ -819,17 +854,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         revalidate();
         repaint();
 
-        //KEYBOARD
-        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "DownLoad");
-        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "DownLoad");
-        slot_panel.getActionMap().put("DownLoad", new GoDownLoad());
-
-        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "UpLoad");
-        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "UpLoad");
-        slot_panel.getActionMap().put("UpLoad", new GoUpLoad());
-
-        slot_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "LoadNewGame");
-        slot_panel.getActionMap().put("LoadNewGame", new LoadNewGame());
     }
 
     /**
@@ -924,15 +948,7 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         EventManager.newGame();
 
-        //KEYBOARD
-        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "ButtonDeath");
-        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "ButtonDeath");
-        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "ButtonDeath");
-        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "ButtonDeath");
-        death_panel.getActionMap().put("ButtonDeath", new ChangeButtonDeath());
 
-        death_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "AfterDeath");
-        death_panel.getActionMap().put("AfterDeath", new AfterDeath());
     }
 
     /**
@@ -965,22 +981,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                     b_n.setBounds(820, 80, 280, 330);
                     b_s.setBounds(820, 580, 280, 330);
 */
-
-            //KEYBOARD
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
-            b_w.getActionMap().put("North", new SelectNorth());
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
-            b_w.getActionMap().put("South", new SelectSouth());
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
-            b_w.getActionMap().put("West", new SelectWest());
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "East");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("D"), "East");
-            b_w.getActionMap().put("East", new SelectEast());
-
-
         } else if (EventManager.getOptionNumber() == 3) {
 
             JButton[] d1 = {b_w, b_e, b_n};
@@ -1001,16 +1001,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             b_e.setBounds(width * 100 / 179, height / 3, width_shield, height_shield);
             b_n.setBounds(width * 100 / 234, height * 10 / 135, width_shield, height_shield);
 
-            //Key binding KeyEvent.VK_SPACE
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
-            b_w.getActionMap().put("North", new SelectNorth());
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
-            b_w.getActionMap().put("South", new SelectSouth());
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "West");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "West");
-            b_w.getActionMap().put("West", new SelectWest());
 
         } else if (EventManager.getOptionNumber() == 2) {
 
@@ -1030,13 +1020,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
             b_w.setBounds(width * 100 / 339, height / 3, width_shield, height_shield);
             b_e.setBounds(width * 100 / 179, height / 3, width_shield, height_shield);
 
-
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "North");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("W"), "North");
-            b_w.getActionMap().put("North", new SelectNorth());
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "South");
-            b_w.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("S"), "South");
-            b_w.getActionMap().put("South", new SelectSouth());
         }
     }
 
@@ -1113,6 +1096,10 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
      * @param type        0=initial description, 1=result
      */
     public void setDescription(String description, int type) {
+
+        add(event_image, 2, 0);
+        add(event_text, 2, 0);;
+
         if (type == 0) {
             if (Hero.isCrowed()) {
                 event_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "events" + File.separator + "eCrows.png").getImage().getScaledInstance(width * 10 / 48, height * 100 / 168, Image.SCALE_SMOOTH)));
@@ -1237,6 +1224,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
     public void removeGameObject() {
         this.remove(hero_panel);
+        event_image.setBounds(0, 0, 0, 0);
+        event_text.setBounds(0, 0, 0, 0);
         this.remove(event_image);
         this.remove(event_text);
         this.remove(statistics_panel);
@@ -1246,7 +1235,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         this.remove(click);
         this.removeShields();
         this.remove(b_back);
-
         is_gaming = false;
     }
 
@@ -1284,8 +1272,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     public class timertask extends TimerTask {
         @Override
         public void run() {
-            add(event_image, 2, 0);
-            add(event_text, 2, 0);
             background_image.setIcon(new ImageIcon(new ImageIcon(path_resources + "b1_ara.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
             setDescription(EventManager.getEventDescription(), 0);
 
@@ -1425,7 +1411,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     private class Escape extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-
 
             if (menu) {
                 System.exit(0);
