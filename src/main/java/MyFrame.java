@@ -20,44 +20,43 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     //some dimensions
-    int width = screenSize.width;
-    int height = screenSize.height;
-   // int width = 1280;
+    private final int width = screenSize.width;
+    private final int height = screenSize.height;
+     // int width = 1280;
    // int height = 720;
 
-    int width_shield = width * 100 / 685;
-    int height_shield = height * 100 / 327;
+    private final int width_shield = width * 100 / 685;
+    private final int height_shield = height * 100 / 327;
 
     //Hero
-    JLabel text_year, hero_age, hero_name, hero_image;
-    Timer timer_event = new Timer();
-    JPanel hero_panel;
+    private final JLabel text_year, hero_age, hero_name, hero_image;
+    private Timer timer_event = new Timer();
+    private final JPanel hero_panel;
 
 
     //Bg and Event
-    JPanel layout;
-    JLabel background_image, event_image, event_text;
+    private final JLabel background_image, event_image, event_text;
 
     //Statistics
-    JLabel health_image, fame_image, money_image, loyalty_image, mana_image;
-    JPanel statistics_panel;
-    GridBagConstraints con1;
+    private final JLabel health_image, fame_image, money_image, loyalty_image, mana_image;
+    private final JPanel statistics_panel;
+    private final GridBagConstraints con1;
 
     //Artifacts
-    JLabel art0, art1, art2, art3, art;
-    JPanel artifacts_panel;
-    GridBagConstraints con3;
+    private final JLabel art0, art1, art2, art3, art;
+    private final JPanel artifacts_panel;
+    private final GridBagConstraints con3;
 
     //Death
-    JLabel death;
-    JPanel death_panel;
+    private final JLabel death;
+    private final JPanel death_panel;
 
     //Overwrite
-    JLabel overwrite;
+    private final JLabel overwrite;
 
     //Achievement
-    JLabel achie;
-    Timer timer_achievement = new Timer();
+    private final JLabel achie;
+    private Timer timer_achievement = new Timer();
 
 
     //JButtons
@@ -67,28 +66,25 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
     private final JButton b_w, b_e, b_n, b_s;
     private final JButton b_slot1, b_slot2, b_slot3;
     private final JButton b_d_newGame, b_d_exit;
-    JButton[] start_button;
-    JPanel start_panel;
-    JPanel slot_panel;
+    private final JButton[] start_button;
+    private final JPanel start_panel;
+    private final JPanel slot_panel;
 
 
     //State variables
-    int state_game = 0;
-    int state_menuButton = 0;
-    int state_loadButton = 1;
-    int state_deathButton = 0;
-    boolean is_gaming = false;
-    boolean is_loading = true;
-    boolean menu = true;
+    private int state_game = 0;
+    private int state_menuButton = 0;
+    private int state_loadButton = 1;
+    private int state_deathButton = 0;
+    private boolean is_gaming = false;
+    private boolean is_loading = true;
+    private boolean menu = true;
 
-    //private Clip sounds;
     Sounds sound = new Sounds();
 
     MyFrame() {
         EventManager.addGameListener(this);
-
         JLayeredPane frame = new JLayeredPane();
-
 
         //Background Image
         JPanel back = new JPanel(new BorderLayout());
@@ -344,12 +340,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
 
         slot_panel.setOpaque(false);
 
-
-        frame.add(back, 0, 0);
-        frame.add(start_panel, 3, 0);
-        back.setBounds(0, 0, width, height);
-        start_panel.setBounds(0, 0, width, 4 * height / 5);
-
         //Button exit TOP RIGHT
         b_back = new JButton();
         b_back.addActionListener(this);
@@ -428,7 +418,12 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
         //SOUND
         sound.getSoundtrack();
 
-        //Main Container
+        //Main Container and Start Menu
+        frame.add(back, 0, 0);
+        frame.add(start_panel, 3, 0);
+        back.setBounds(0, 0, width, height);
+        start_panel.setBounds(0, 0, width, 4 * height / 5);
+
         setContentPane(frame);
         setSize(width, height);
         setUndecorated(true);
@@ -525,7 +520,6 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
                 case 3:
                     afterDeath();
                     break;
-
 
             }
             }
@@ -861,8 +855,8 @@ public class MyFrame extends JFrame implements ActionListener, GameListener {
      * @param stat statistic
      */
     public void setDeath(int stat) {
+
         is_loading = false;
-        is_gaming = false;
         menu = false;
         DBManager.deleteSave(DBManager.getSaveSlot());
         sound.getDeathSound();
