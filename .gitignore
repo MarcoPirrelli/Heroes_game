@@ -10,6 +10,3 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
-
-# Ignoring db changes
-src/main/resources/databases/project.db
